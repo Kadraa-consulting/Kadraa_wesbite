@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Pack - Agence Freelance</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+.body-business-pack {
+    background-color: #0a0a0a;
+    color: #f7f2ec;
+    font-family: 'Oswald', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ===== BARRE NAV ===== */
+.burger-menu-starter {
+    width: 100%;
+    background-color: rgba(15, 15, 20, 0.95);
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.burger-logo img {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.nav-items-starter {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-items-starter li {
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-items-starter li:hover {
+    color: #ff4d4d;
+}
+
+.nav-items-starter li a {
+    color: #f7f2ec;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-items-starter li a:hover {
+    color: #ff4d4d;
+}
+
+.nav-item-submenu:hover .submenu-starter {
+    display: block;
+}
+
+.submenu-starter {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    background-color: #111;
+    border-radius: 6px;
+    padding: 10px;
+    min-width: 200px;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.3);
+    z-index: 10;
+}
+
+.submenu-starter li {
+    margin: 5px 0;
+    color: #f7f2ec;
+}
+
+.submenu-detail {
+    display: none;
+    margin-left: 15px;
+    margin-top: 12px;
+}
+
+.submenu-starter li:hover .submenu-detail {
+    display: block;
+}
+
+.cta-contact-starter {
+    background-color: #f7f2ec;
+    text-decoration: none;
+    color: #0a0a0a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.cta-contact-starter:hover {
+    transform: scale(1.05);
+    background-color: #ff4d4d;
+    color: #fff;
+}
+
+/* ===== MOBILE BURGER MENU ===== */
+.mobile-burger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.mobile-burger-btn span {
+    width: 30px;
+    height: 3px;
+    background: linear-gradient(90deg, #ff4d4d, #ff8080);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.mobile-burger-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-burger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-burger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+    transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.mobile-sidebar.open {
+    right: 0;
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 77, 77, 0.3);
+}
+
+.mobile-logo-animated {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    animation: pulseRed 2s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+}
+
+@keyframes pulseRed {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 20px rgba(255, 77, 77, 0.5); 
+    }
+    50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 0 30px rgba(255, 77, 77, 0.8); 
+    }
+}
+
+.mobile-close-btn {
+    background: transparent;
+    border: none;
+    color: #f7f2ec;
+    font-size: 32px;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.mobile-close-btn:hover {
+    transform: rotate(90deg);
+    color: #ff4d4d;
+}
+
+.mobile-menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.mobile-menu-item {
+    margin-bottom: 10px;
+}
+
+.mobile-menu-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    color: #f7f2ec;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.mobile-menu-link:hover {
+    background: rgba(255, 77, 77, 0.1);
+    transform: translateX(10px);
+    color: #ff4d4d;
+}
+
+.mobile-arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.mobile-arrow.rotate {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-left: 20px;
+}
+
+.mobile-dropdown.active {
+    max-height: 500px;
+}
+
+.mobile-subdropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-left: 20px;
+}
+
+.mobile-subdropdown.active {
+    max-height: 300px;
+}
+
+.mobile-cta-btn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff4d4d 0%, #ff8080 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+    animation: btnPulseRed 2s ease-in-out infinite;
+}
+
+@keyframes btnPulseRed {
+    0%, 100% { box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3); }
+    50% { box-shadow: 0 8px 25px rgba(255, 77, 77, 0.6); }
+}
+
+.mobile-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 77, 77, 0.5);
+}
+
+.mobile-cta-btn a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ===== HERO ===== */
+.hero-content-business-pack {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 10%;
+    position: relative;
+}
+
+.hero-text-business h1 {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.hero-text-business h3 {
+    font-size: 24px;
+    color: #ff4d4d;
+    margin-bottom: 20px;
+}
+
+.hero-text-business p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.cta-hero-business {
+    background-color: #f7f2ec;
+    color: #0a0a0a;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 30px;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.cta-hero-business:hover {
+    transform: scale(1.05);
+    background-color: #ff4d4d;
+    color: #fff;
+}
+
+.hero-image-business img {
+    width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 77, 77, 0.4);
+    animation: float 4s ease-in-out infinite;
+}
+
+/* ===== Pack Details ===== */
+.business-pack-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 60px 10%;
+    justify-content: center;
+}
+
+.pack-detail-list {
+    margin-top: 12px;
+    padding-left: 18px;
+    list-style-type: disc;
+    color: rgba(247, 242, 236, 0.85);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.pack-detail-list li {
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+}
+
+.pack-detail-list li:hover {
+    color: #ff4d4d;
+}
+
+.pack-box-business {
+    background-color: #111;
+    padding: 25px;
+    border-radius: 15px;
+    width: 300px;
+    transition: transform 0.3s;
+    border: 1px solid transparent;
+}
+
+.pack-box-business:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+    border: 1px solid #ff4d4d;
+}
+
+.pack-box-business h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.pack-box-business p {
+    font-size: 16px;
+    color: #f7f2ec;
+}
+
+.business-pack-pricing {
+    margin: 20px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.business-pack-pricing-old span {
+    text-decoration: line-through;
+    color: rgba(255,255,255,0.5);
+    font-size: 18px;
+}
+
+.business-pack-pricing-current span {
+    color: #ff4d4d;
+    font-weight: 700;
+    font-size: 28px;
+    background: linear-gradient(90deg, #ff4d4d, #ff8080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.5);
+}
+
+.business-pack-cta {
+    background-color: rgba(15,23,36,0.9);
+    padding: 40px 30px;
+    margin: 50px auto;
+    border-radius: 12px;
+    max-width: 900px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.business-pack-cta h2 {
+    font-size: 32px;
+    color: #f7f2ec;
+    margin-bottom: 20px;
+}
+
+.business-pack-cta p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(247,242,236,0.9);
+    margin-bottom: 15px;
+}
+
+.business-pack-cta-btn {
+    background-color: #f7f2ec;
+    color: #0a0a0a;
+    font-size: 18px;
+    margin-top: 10px;
+    font-weight: 700;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+}
+
+.business-pack-cta-btn:hover {
+    background-color: #ff4d4d;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.6);
+}
+
+/* Animation simple */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Liens vers autres packs ===== */
+.business-pack-links {
+    background-color: #0a0a0a;
+    text-align: center;
+    padding: 60px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.business-pack-links h2 {
+    font-size: 28px;
+    color: #f7f2ec;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(255, 77, 77, 0.3);
+    letter-spacing: 1px;
+}
+
+.business-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.business-link-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 50px;
+    background-color: #0a0a0a;
+    color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.2);
+}
+
+.business-link-btn:hover {
+    background-color: #ff4d4d;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.6);
+}
+
+/* ===== FOOTER ===== */
+.footer-business-pack {
+    background-color: #0f0f12;
+    color: #f7f2ec;
+    padding: 40px 10%;
+    margin-top: 50px;
+}
+
+.footer-sections-business {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-sections-business h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer-sections-business p, 
+.footer-sections-business a {
+    color: #f7f2ec;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-sections-business a:hover {
+    color: #ff4d4d;
+    text-decoration: underline;
+}
+
+.footer-bottom-business {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #ff4d4d;
+}
+
+.footer-bottom-business a {
+    color: #ff4d4d;
+}
+
+#mouse-tracker {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 77, 77, 0.7);
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.8);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+    z-index: 9999;
+}
+
+/* ===== Animations ===== */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .nav-items-starter {
+        display: none;
+    }
+    
+    .cta-contact-starter {
+        display: none;
+    }
+    
+    .mobile-burger-btn {
+        display: flex;
+    }
+    
+    .hero-content-business-pack {
+        flex-direction: column;
+        padding: 40px 5%;
+        text-align: center;
+    }
+    
+    .hero-text-business h1 {
+        font-size: 40px;
+    }
+    
+    .hero-text-business h3 {
+        font-size: 20px;
+    }
+    
+    .hero-image-business img {
+        width: 100%;
+        max-width: 400px;
+        margin-top: 30px;
+    }
+    
+    .cta-hero-business {
+        margin-top: 20px;
+    }
+    
+    .business-pack-details {
+        padding: 40px 5%;
+    }
+    
+    .pack-box-business {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    #mouse-tracker {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .burger-menu-starter {
+        padding: 10px 15px;
+    }
+    
+    .burger-logo img {
+        width: 70px;
+    }
+    
+    .hero-text-business h1 {
+        font-size: 32px;
+    }
+    
+    .hero-text-business h3 {
+        font-size: 18px;
+    }
+    
+    .hero-text-business p {
+        font-size: 16px;
+    }
+    
+    .cta-hero-business {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    
+    .hero-image-business img {
+        max-width: 300px;
+    }
+    
+    .pack-box-business h2 {
+        font-size: 20px;
+    }
+    
+    .business-pack-cta {
+        padding: 30px 20px;
+        margin: 30px 15px;
+    }
+    
+    .business-pack-cta h2 {
+        font-size: 26px;
+    }
+    
+    .business-pack-cta p {
+        font-size: 16px;
+    }
+    
+    .business-pack-links h2 {
+        font-size: 24px;
+    }
+    
+    .business-link-btn {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+    
+    .footer-business-pack {
+        padding: 30px 5%;
+    }
+    
+    .footer-sections-business {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-business h1 {
+        font-size: 28px;
+    }
+    
+    .hero-text-business h3 {
+        font-size: 16px;
+    }
+    
+    .mobile-sidebar {
+        width: 90%;
+    }
+    
+    .business-pack-pricing-current span {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+<body class="body-business-pack">
+<!-- Overlay pour mobile -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- Navigation Desktop/Mobile -->
+<nav class="burger-menu-starter">
+<div class="burger-logo">
+<img src="logo.png" alt="Logo Business Pack">
+</div>
+
+<!-- Menu Desktop -->
+<ul class="nav-items-starter">
+<li><a href="index.html">Accueil</a></li>
+<li class="nav-item-submenu">Nos services
+<ul class="submenu-starter">
+<li>Site Web
+<ul class="submenu-detail">
+<li><a href="offre-principal.html">Principal</a></li>
+<li><a href="offre-secondaire.html">Secondaire</a></li>
+<li><a href="offre-pro.html">Professionnelle</a></li>
+</ul>
+</li>
+<li><a href="reseaux-sociaux.html">Réseaux sociaux</a></li>
+</ul>
+</li>
+<li class="nav-item-submenu">Nos compétences
+<ul class="submenu-starter">
+<li><a href="abouts_us.html">À propos de nous</a></li>
+<li><a href="portfolio.html">Nos réalisations</a></li>
+</ul>
+</li>
+<li><a href="details-offre.html">Expérience client</a></li>
+</ul>
+
+<a class="cta-contact-starter" href="contact.html">Nous contacter</a>
+
+<!-- Burger Button Mobile -->
+<button class="mobile-burger-btn" id="mobileBurgerBtn">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</nav>
+
+<!-- Sidebar Mobile -->
+<div class="mobile-sidebar" id="mobileSidebar">
+<div class="mobile-sidebar-header">
+<img src="logo.png" alt="Logo" class="mobile-logo-animated">
+<button class="mobile-close-btn" id="mobileCloseBtn">&times;</button>
+</div>
+
+<ul class="mobile-menu-list">
+<li class="mobile-menu-item">
+<a href="index.html" class="mobile-menu-link">Accueil</a>
+</li>
+
+<li class="mobile-menu-item">
+<a href="#" class="mobile-menu-link" data-dropdown="services">
+Nos services
+<span class="mobile-arrow">▼</span>
+</a>
+<div class="mobile-dropdown" id="services-dropdown">
+<a href="#" class="mobile-menu-link" data-subdropdown="siteweb">
+Site Web
+<span class="mobile-arrow">▼</span>
+</a>
+<div class="mobile-subdropdown" id="siteweb-subdropdown">
+<a href="offre-principal.html" class="mobile-menu-link">Principal</a>
+<a href="offre-secondaire.html" class="mobile-menu-link">Secondaire</a>
+<a href="offre-pro.html" class="mobile-menu-link">Professionnelle</a>
+</div>
+<a href="reseaux-sociaux.html" class="mobile-menu-link">Réseaux sociaux</a>
+</div>
+</li>
+
+<li class="mobile-menu-item">
+<a href="details-offre.html" class="mobile-menu-link">Expérience client</a>
+</li>
+
+<li class="mobile-menu-item">
+<a href="#" class="mobile-menu-link" data-dropdown="competences">
+Nos compétences
+<span class="mobile-arrow">▼</span>
+</a>
+<div class="mobile-dropdown" id="competences-dropdown">
+<a href="portfolio.html" class="mobile-menu-link">Portfolio</a>
+<a href="abouts_us.html" class="mobile-menu-link">À propos</a>
+</div>
+</li>
+</ul>
+
+<button class="mobile-cta-btn">
+<a href="contact.html">Nous contacter</a>
+</button>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-content-business-pack">
+<div class="hero-text-business">
+<h1>Business Pack</h1>
+<h3>Idéal pour les micro-entreprises et petites structures</h3>
+<p>Profitez d'un pack complet et économisez environ 15% par rapport à l'achat séparé des services !</p>
+<a class="cta-hero-business" href="contact.html">Obtenez votre Business Pack</a>
+</div>
+<div class="hero-image-business">
+<img src="img illustration business pack.jpg" alt="Business Pack Illustration">
+</div>
+</section>
+
+<!-- Offres Business Pack -->
+<section class="business-pack-details">
+<div class="pack-box-business">
+<h2>Offre Secondaire : Site vitrine multi-pages</h2>
+<p>Prix : 390,99 €</p>
+<ul class="pack-detail-list">
+<li>Formulaire de contact intégré</li>
+<li>Maintenance et hébergement inclus 1 an</li>
+<li>Référencement SEO optimisé</li>
+<li>Nom de domaine offert la première année</li>
+</ul>
+</div>
+
+<div class="pack-box-business">
+<h2>Création de logo personnalisé</h2>
+<p>Prix : 19,99 €</p>
+<ul class="pack-detail-list">
+<li>Logo sur mesure selon vos préférences</li>
+<li>Révisions illimitées jusqu'à satisfaction</li>
+<li>Fichiers livrés en haute qualité (PNG, SVG, PDF)</li>
+</ul>
+</div>
+
+<div class="pack-box-business">
+<h2>Mise en place des réseaux sociaux + 4 posts de lancement</h2>
+<p>Prix : 49,99 €</p>
+<ul class="pack-detail-list">
+<li>Création des comptes demandés</li>
+<li>Ajout du logo et d'une biographie professionnelle</li>
+<li>Exemples de story à la une et contenu visuel</li>
+<li>Publication de 2 posts d'ouverture</li>
+</ul>
+</div>
+
+<div class="pack-box-business">
+<h2>Gestion de contenu réseaux sociaux (1 mois)</h2>
+<p>Prix : 129,99 €</p>
+<ul class="pack-detail-list">
+<li>Création et planification de posts professionnels</li>
+<li>Stratégie de publication optimisée</li>
+<li>Suivi de l'engagement et reporting basique</li>
+</ul>
+</div>
+
+<div class="business-pack-pricing">
+<p class="business-pack-pricing-old">Prix à l'unité : <span>590,96 €</span></p>
+<p class="business-pack-pricing-current">Prix Business Pack : <span>499,99 €</span></p>
+</div>
+</section>
+
+<!-- Section Explicative -->
+<div class="business-pack-cta">
+<h2>Pourquoi choisir le Business Pack ?</h2>
+<p>
+Le Business Pack s'adresse aux micro-entreprises et petites structures souhaitant une présence digitale professionnelle et complète.
+Vous bénéficiez d'un site vitrine multi-pages, d'un logo sur mesure et d'une mise en place efficace de vos réseaux sociaux.
+</p>
+<p>
+Grâce à ce pack, vous économisez environ <strong>90 €</strong> et gagnez du temps avec une solution clé-en-main, prête à booster votre activité.
+</p>
+<a class="business-pack-cta-btn" href="contact.html">Je choisis cette offre !</a>
+</div>
+
+<!-- Liens vers autres offres -->
+<section class="business-pack-links">
+<h2>Découvrez aussi nos autres offres</h2>
+<div class="business-links-container">
+<a href="starter-pack.html" class="business-link-btn">Découvrir le Starter Pack</a>
+<a href="package-pro.html" class="business-link-btn">Découvrir le Pro Pack</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer-business-pack">
+<div class="footer-sections-business">
+<div class="footer-about-business">
+<h3>À propos</h3>
+<p>Notre mission : accompagner les entreprises dans leur croissance digitale.</p>
+</div>
+<div class="footer-contact-business">
+<h3>Contact</h3>
+<p>Email : agence_freelance@yahoo.com</p>
+<p>Téléphone : +33 7 66 59 69 70</p>
+</div>
+<div class="footer-social-business">
+<h3>Suivez-nous</h3>
+<a href="#">Facebook</a> | 
+<a href="https://www.instagram.com/agence_freelance/">Instagram</a> | 
+<a href="#">LinkedIn</a>
+</div>
+</div>
+<div class="footer-bottom-business">
+<p>&copy; 2024 Agence Freelance. <a href="conditions_utilisations.html">Tous droits réservés.</a></p>
+</div>
+</footer>
+
+<div id="mouse-tracker"></div>
+
+<script>
+// Mouse tracker pour desktop (rouge pour Business Pack)
+const tracker = document.getElementById('mouse-tracker');
+document.addEventListener('mousemove', (e) => {
+    tracker.style.left = e.clientX + 'px';
+    tracker.style.top = e.clientY + 'px';
+});
+
+// Mobile Menu Logic
+(function() {
+    const burgerBtn = document.getElementById('mobileBurgerBtn');
+    const sidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('mobileOverlay');
+    const closeBtn = document.getElementById('mobileCloseBtn');
+
+    function openSidebar(e) {
+        if(e) e.preventDefault();
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        burgerBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar(e) {
+        if(e) e.preventDefault();
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        burgerBtn.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if(burgerBtn) burgerBtn.addEventListener('click', openSidebar);
+    if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+    if(overlay) overlay.addEventListener('click', closeSidebar);
+
+    // Dropdowns niveau 1
+    const dropdownLinks = sidebar.querySelectorAll('[data-dropdown]');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdownId = this.getAttribute('data-dropdown') + '-dropdown';
+            const dropdown = document.getElementById(dropdownId);
+            const arrow = this.querySelector('.mobile-arrow');
+            
+            if(dropdown) {
+                dropdown.classList.toggle('active');
+                if(arrow) arrow.classList.toggle('rotate');
+            }
+        });
+    });
+
+    // Sub-dropdowns niveau 2
+    const subdropdownLinks = sidebar.querySelectorAll('[data-subdropdown]');
+    subdropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const subdropdownId = this.getAttribute('data-subdropdown') + '-subdropdown';
+            const subdropdown = document.getElementById(subdropdownId);
+            const arrow = this.querySelector('.mobile-arrow');
+            
+            if(subdropdown) {
+                subdropdown.classList.toggle('active');
+                if(arrow) arrow.classList.toggle('rotate');
+            }
+        });
+    });
+
+    // Fermer le menu quand on clique sur un lien (sauf dropdowns)
+    const directLinks = sidebar.querySelectorAll('a[href]:not([data-dropdown]):not([data-subdropdown])');
+    directLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(closeSidebar, 300);
+        });
+    });
+})();
+</script>
+</body>
+</html>

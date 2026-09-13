@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions d'Utilisation - Agence Freelance</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #000000;
+            color: #f5f5f7;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, rgba(20, 20, 40, 0.8) 0%, #000000 50%);
+        }
+
+        .floating-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #0071e3, #00a8ff);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, #bf5af2, #8e44ad);
+            bottom: -250px;
+            right: -250px;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(45deg, #30d5c8, #0071e3);
+            top: 50%;
+            right: -175px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-50px, 100px) scale(0.9); }
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 0;
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            color: #0071e3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            background: rgba(0, 113, 227, 0.1);
+            transform: translateX(-4px);
+        }
+
+        .nav-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            transform: translateX(-4px);
+        }
+
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 120px 40px 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            opacity: 0;
+            animation: fadeInScale 1s ease forwards;
+        }
+
+        @keyframes fadeInScale {
+            from { 
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: #86868b;
+            font-weight: 400;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInScale 1s ease forwards 0.3s;
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 113, 227, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 113, 227, 0.15);
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f5f5f7;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #0071e3, #00a8ff);
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        p {
+            font-size: 18px;
+            color: #a1a1a6;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 24px 0;
+        }
+
+        li {
+            font-size: 18px;
+            color: #a1a1a6;
+            padding: 16px 0 16px 40px;
+            position: relative;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            color: #f5f5f7;
+            transform: translateX(8px);
+        }
+
+        li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #0071e3;
+            font-size: 24px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        li:hover::before {
+            color: #00a8ff;
+            transform: scale(1.2);
+        }
+
+        a {
+            color: #0071e3;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0071e3, #00a8ff);
+            transition: width 0.3s ease;
+        }
+
+        a:hover::after {
+            width: 100%;
+        }
+
+        a:hover {
+            color: #00a8ff;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.1), rgba(191, 90, 242, 0.1));
+            border-left: 4px solid #0071e3;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .highlight-box p {
+            color: #f5f5f7;
+            margin: 0;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #86868b;
+            font-size: 14px;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 16px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #0071e3;
+            transform: scale(1.5);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 40px; }
+            .hero-subtitle { font-size: 18px; }
+            .section { padding: 32px 24px; }
+            h2 { font-size: 24px; }
+            .content-container { padding: 0 20px 60px; }
+            .hero { padding: 80px 20px 60px; }
+            .scroll-indicator { display: none; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.25; }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    
+    <div class="floating-orbs">
+        <div class="orb orb1 pulse"></div>
+        <div class="orb orb2 pulse" style="animation-delay: 1s;"></div>
+        <div class="orb orb3 pulse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-link">Retour à l'accueil</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Conditions Générales<br> d'Utilisation</h1>
+        <p class="hero-subtitle">Des règles claires. Une transparence totale.</p>
+    </div>
+
+    <div class="content-container">
+        <div class="section">
+            <h2>
+                <span class="section-number">1</span>
+                Introduction
+            </h2>
+            <p>Bienvenue sur notre site. En utilisant ce site, vous acceptez les présentes conditions générales d'utilisation. Veuillez les lire attentivement.</p>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">2</span>
+                Accès au site
+            </h2>
+            <p>L'accès à notre site est gratuit. Nous nous réservons le droit de suspendre, modifier ou mettre fin à certains services sans préavis.</p>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">3</span>
+                Propriété intellectuelle
+            </h2>
+            <p>Tout contenu disponible sur ce site (textes, images, logos, etc.) est protégé par des droits d'auteur. Vous ne pouvez pas reproduire, distribuer ou utiliser ce contenu sans autorisation écrite préalable.</p>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">4</span>
+                Utilisation du site
+            </h2>
+            <ul>
+                <li>Vous vous engagez à utiliser ce site de manière légale et respectueuse.</li>
+                <li>Vous ne devez pas tenter de pirater, perturber ou altérer les fonctionnalités du site.</li>
+                <li>Les commentaires ou messages injurieux, illégaux ou inappropriés sont interdits.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">5</span>
+                Responsabilité
+            </h2>
+            <p>Nous ne pouvons être tenus responsables des dommages directs ou indirects résultant de l'utilisation de notre site ou des informations qu'il contient.</p>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">6</span>
+                Modification des conditions
+            </h2>
+            <p>Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés via une mise à jour sur le site.</p>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">7</span>
+                Prix et contrat
+            </h2>
+            <div class="highlight-box">
+                <p>Une offre débute lorsque votre conseiller vous a délivré le devis et la lettre d'engagement que vous avez signé. Aucun mail, message en amont de la signature du contrat n'est payant. Après signature, la dernière possibilité d'annulation peut se faire avec le droit de rétractation.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">8</span>
+                Droit de rétractation
+            </h2>
+            <div class="highlight-box">
+                <p>Le client possède d'un unique droit de rétraction après avoir payé le premier acompte, quelque soit l'offre. En revanche, il doit être signalé en amont à son conseiller. Excepté l'offre "Setup Réseaux sociaux" qui ne possède pas d'acompte mais d'un paiement final.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="section-number">9</span>
+                Contact
+            </h2>
+            <p>Pour toute question ou préoccupation concernant ces conditions, veuillez nous contacter à <a href="mailto:agence_freelance@yahoo.com">agence_freelance@yahoo.com</a>.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Agence_Freelance. Tous droits réservés.
+    </footer>
+
+    <div class="scroll-indicator">
+        <div class="dot" data-section="0"></div>
+        <div class="dot" data-section="1"></div>
+        <div class="dot" data-section="2"></div>
+        <div class="dot" data-section="3"></div>
+        <div class="dot" data-section="4"></div>
+        <div class="dot" data-section="5"></div>
+        <div class="dot" data-section="6"></div>
+        <div class="dot" data-section="7"></div>
+        <div class="dot" data-section="8"></div>
+    </div>
+
+    <script>
+        // Animation au scroll - Révéler les sections
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Indicateur de scroll
+        const dots = document.querySelectorAll('.dot');
+        const sections = document.querySelectorAll('.section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach((section, index) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= (sectionTop - 300)) {
+                    current = index;
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+
+        // Click sur les dots pour naviguer
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Effet parallaxe sur les orbs
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            
+            document.querySelectorAll('.orb').forEach((orb, index) => {
+                const speed = (index + 1) * 0.5;
+                orb.style.transform = `translate(${moveX * speed}px, ${moveY * speed}px)`;
+            });
+        });
+
+        // Animation smooth pour les liens internes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Effet de typing sur le titre
+        const title = document.querySelector('h1');
+        const text = title.textContent;
+        title.textContent = '';
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                title.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        setTimeout(typeWriter, 500);
+    </script>
+</body>
+</html>

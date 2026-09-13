@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agence Freelance — Réseaux Sociaux</title>
+  <link rel="icon" href="logo.png">
+  <style>
+    /* ---------- ROOT & TYPO ---------- */
+    :root{
+      --bg:#0f1724; /* bleu nuit */
+      --card-1:#1c273c;
+      --card-2:#0e1622;
+      --accent-1: #00c6a7;
+      --accent-2: #1de9b6;
+      --muted: rgba(255,255,255,0.65);
+      --cream: #f5f1e9;
+      --glass: rgba(255,255,255,0.03);
+      --radius: 18px;
+      --card-padding: 34px;
+      --max-width: 1200px;
+      --transition: 0.38s cubic-bezier(.2,.9,.3,1);
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /*--------- Détail doré pour mot important ---------*/
+    .highlight {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+  .highlight1 {
+      color :#1C2942;
+      font-weight: bold;
+  }
+
+
+    /* ---------- BARRE NAV ------------*/
+
+    .burger-menu-starter {
+  transition: transform 0.4s ease-in-out; /* fluide */
+}
+
+
+    .burger-menu-starter {
+    width: 100%;
+    background: rgba(222, 216, 207, 0.95); /* beige légèrement transparent */
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.burger-logo img {
+    width: 120px;
+    border-radius: 50%;
+    position: relative;
+    left: 140%;
+    transition: transform 0.3s ease;
+}
+.burger-logo img:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+.nav-items-starter {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-items-starter li {
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+    color: #104f55; /* vert d’eau foncé */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-items-starter li:hover {
+    color: #1aa59c; /* vert d’eau clair */
+}
+
+.nav-items-starter li a {
+    color: #104f55; 
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-items-starter li a:hover {
+    color: #1aa59c;
+}
+
+.nav-item-submenu:hover .submenu-starter {
+    display: block;
+}
+
+.submenu-starter {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    background-color: #f8f6f2;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 200px;
+    box-shadow: 0 0 15px rgba(26, 165, 156, 0.25);
+    z-index: 10;
+}
+
+.submenu-starter li {
+    margin: 5px 0;
+    color: #104f55;
+    transition: color 0.3s ease;
+}
+.submenu-starter li:hover {
+    color: #1aa59c;
+}
+
+.submenu-detail {
+    display: none;
+    margin-left: 15px;
+    margin-top: 3px;
+}
+
+.submenu-starter li:hover .submenu-detail {
+    display: block;
+}
+
+.cta-contact-starter{
+    background-color: #1aa59c;  /* vert eau clair */
+    color: white;
+    text-decoration: none;
+    position: relative;
+    text-decoration: none;
+    display: block;
+    right: 80px;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.cta-contact-starter:hover {
+    transform: scale(1.05);
+    background-color: #ffd700; /* ton doré accent */
+}
+
+/* Quand le menu burger est ouvert, on cache le bouton */
+body.menu-open .cta-contact-starter {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+
+
+
+    /* ---------- PAGE LAYOUT ---------- */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,198,167,0.03), transparent),
+                  radial-gradient(900px 450px at 90% 90%, rgba(29,233,182,0.02), transparent),
+                  var(--bg);
+      color:var(--cream);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Placeholder header spacer so you can paste your header above */
+    .header-spacer{
+      height:96px; /* adapte si ton header est plus grand */
+      width:100%;
+    }
+
+    main.container{
+      max-width:var(--max-width);
+      margin: 30px auto 80px;
+      padding: 0 24px;
+      position:relative;
+      z-index:2;
+    }
+
+    /* ---------- SECTION ---------- */
+    section.social-media-section{
+      position:relative;
+      overflow:visible;
+      padding: 60px 28px 100px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      box-shadow: 0 6px 40px rgba(2,6,23,0.6);
+      isolation:isolate;
+    }
+
+    .social-top{
+      display:flex;
+      align-items:flex-start;
+      gap:28px;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom:28px;
+    }
+    .section-intro{
+      max-width:760px;
+    }
+    h1.section-title{
+      margin:0 0 8px 0;
+      color: #fff;
+      font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+      letter-spacing: -0.02em;
+    }
+    p.section-subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:1.03rem;
+    }
+
+    /* CTA group top right (optionnel) */
+    .top-cta{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:6px;
+    }
+    .top-cta .small-btn{
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      border:none;
+      text-decoration: none;
+      font-size: 12px;
+      color:var(--bg);
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,198,167,0.14);
+      transition:transform var(--transition), box-shadow var(--transition);
+    }
+    .top-cta .small-btn:hover{ transform:translateY(-3px); box-shadow:0 14px 30px rgba(0,198,167,0.18); }
+
+    /* ---------- CARDS GRID ---------- */
+    .social-cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:28px;
+      margin-top:26px;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width:1000px){
+      .social-cards{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width:680px){
+      .social-cards{ grid-template-columns: 1fr; }
+      .header-spacer{ height:72px; }
+    }
+
+    /* ---------- OFFER CARD ---------- */
+    .offer-card{
+      position:relative;
+      background: linear-gradient(145deg, var(--card-1), var(--card-2));
+      border-radius: var(--radius);
+      padding: var(--card-padding);
+      min-height: 260px;
+      box-shadow: 0 8px 30px rgba(4,10,20,0.55);
+      overflow:hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+
+    /* animated border (subtle rotating gradient) */
+    .offer-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      z-index:0;
+      background: linear-gradient(90deg, rgba(0,198,167,0.06), rgba(29,233,182,0.06));
+      border-radius: calc(var(--radius) + 2px);
+      filter: blur(12px);
+      opacity:0;
+      transition:opacity var(--transition);
+      pointer-events:none;
+    }
+    .offer-card:hover::before{ opacity:1; transform: rotate(0.01deg); }
+
+    .offer-card .card-inner{
+      position:relative;
+      z-index:2;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .offer-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    .offer-badge{
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      color: var(--bg);
+      padding:6px 12px;
+      border-radius: 999px;
+      font-weight:700;
+      font-size:0.85rem;
+      box-shadow: 0 6px 18px rgba(0,198,167,0.10);
+      transform-origin:center;
+    }
+
+    .offer-title{
+      margin:0 0 8px 0;
+      color:#fff;
+      font-size:1.15rem;
+      letter-spacing:-0.01em;
+    }
+    .offer-sub{
+      margin:0;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .offer-body{
+      margin-top:14px;
+      color:var(--cream);
+      font-size:0.95rem;
+      line-height:1.5;
+      flex:1;
+    }
+
+    /* list inside card */
+    .offer-list{
+      margin:12px 0 22px 0;
+      padding:0 0 0 18px;
+      color:var(--muted);
+    }
+    .offer-list li{ margin-bottom:8px; }
+
+    /* CTA button in card (slide up) */
+    .card-cta{
+      display:inline-block;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      color: var(--bg);
+      padding:12px 20px;
+      border-radius:28px;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      box-shadow: 0 8px 30px rgba(0,198,167,0.12);
+      transition: transform var(--transition), box-shadow var(--transition);
+      align-self:center;
+      transform: translateY(16px);
+      opacity:0;
+      margin-top: 20px;
+    }
+    .offer-card:hover .card-cta{
+      transform: translateY(0);
+      opacity:1;
+    }
+    .card-cta:focus{ outline: 3px solid rgba(29,233,182,0.18); }
+
+
+    .card-cta a{
+      color: var(--bg);
+      text-decoration: none;
+    }
+
+
+    /* subtle hover lift */
+    .offer-card:hover{
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 18px 50px rgba(2,6,23,0.7);
+    }
+
+    /* highlight variant */
+    .offer-card.highlight{
+      background: linear-gradient(145deg, rgba(1,23,33,0.9), rgba(7,20,29,0.95));
+      border: 1px solid rgba(29,233,182,0.06);
+    }
+
+    /* icon / visual accent (circle) */
+    .card-accent{
+      width:64px;
+      height:64px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--accent-1);
+      font-weight:700;
+      font-size:1.05rem;
+      box-shadow: inset 0 -6px 18px rgba(0,0,0,0.45);
+      flex-shrink:0;
+    }
+
+    /* tiny footnote / price */
+    .offer-footer{
+      margin-top:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      font-size:0.92rem;
+    }
+
+    /* ----------- CSS confiance et identité bas de page ---------------*/
+
+    .about-agence {
+    margin: 100px auto;
+    padding: 60px 30px;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #f8f6f2, #e5eae6);
+    border-radius: 25px;
+    box-shadow: 0 0 30px rgba(26, 165, 156, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.about-agence:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 45px rgba(255, 215, 0, 0.3);
+}
+
+.about-agence::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(26,165,156,0.15), rgba(255,215,0,0.1));
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+.about-agence:hover::before {
+    opacity: 1;
+}
+
+.about-box {
+    z-index: 2;
+    color: #104f55;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 17px;
+}
+.about-box h2 {
+    color: #1aa59c;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.type-a {
+  background: linear-gradient(145deg, #f8f6f2, #e5eae6);
+  color: #104f55;
+}
+
+.type-b {
+  background: linear-gradient(145deg, #0f1724, #152238);
+  color: #f1f1f1;
+  box-shadow: 0 0 35px rgba(0, 198, 167, 0.15);
+}
+
+/* Animation des bulles dans les blocs */
+.about-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.about-bg span {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 198, 167, 0.35);
+  box-shadow: 0 0 10px rgba(0, 198, 168, 0.878);
+  border-radius: 50%;
+  animation: aboutFloat 10s linear infinite;
+}
+
+@keyframes aboutFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Survol avec léger effet de halo */
+.about-agence:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 45px rgba(255, 215, 0, 0.3);
+}
+
+/* Apparition fluide au scroll */
+.about-agence {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.about-agence.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    /* badge special - positioned inside highlight */
+    .offer-card .floating-badge{
+      position:absolute;
+      top:14px;
+      right:14px;
+      z-index:3;
+      transform-origin:center;
+      transition: transform var(--transition);
+    }
+    .offer-card.highlight:hover .floating-badge{ transform: scale(1.06); }
+
+    /* ---------- BACKGROUND ANIMATION (BULLES) ---------- */
+    .background-animation{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+      mix-blend-mode: screen;
+      transform: translate3d(0,0,0);
+    }
+    .background-animation span{
+      position:absolute;
+      width:8px;
+      height:8px;
+      background: rgba(0,198,167,0.35);
+      box-shadow: 0 0 12px rgba(0,198,167,0.9);
+      border-radius:50%;
+      bottom: -20px;
+      opacity:0;
+      animation: floatUp linear infinite;
+      will-change:transform, opacity;
+    }
+    @keyframes floatUp {
+      0%{ transform: translateY(0) scale(1); opacity:0; }
+      8%{ opacity:0.35; }
+      60%{ opacity:0.6; }
+      100%{ transform: translateY(-110vh) scale(1.25); opacity:0; }
+    }
+
+
+    /* ----------- FOOTER ----------*/
+
+    footer {
+    background-color: #0f1724; /* même fond que le reste du site */
+    color: #f8f9fa; /* blanc crème doux */
+    padding: 60px 20px 20px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    top: 0px;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+}
+
+.footer-section {
+    flex: 1 1 250px;
+    text-align: left;
+}
+
+.footer-section h3 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-section a {
+    color: #ffd700; /* doré élégant pour contraster */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-bottom a {
+    color: #ffd700;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+    /* small helper: visually hidden for accessibility */
+    .sr-only{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+
+
+    /*-------- RESPONSIVE --------*/
+
+    /* ---------- RESPONSIVE ADDITIONS ---------- */
+
+/* Header nav mobile */
+@media (max-width: 768px) {
+  .nav-items-starter {
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(255,255,255,0.95);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    display: none; /* caché par défaut */
+  }
+
+
+
+  .nav-items-starter.show {
+    display: flex;
+  }
+
+  .nav-items-starter li {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .burger-menu-starter {
+    flex-wrap: wrap;
+    padding: 10px 20px;
+  }
+
+
+  .top-cta {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+}
+
+/* Cards grid responsive */
+@media (max-width: 1000px) {
+  .social-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 680px) {
+  .social-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .header-spacer {
+    height: 72px;
+  }
+
+  .offer-card .card-inner {
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .top-cta .small-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* About-agence sections */
+@media (max-width: 900px) {
+  .about-agence {
+    padding: 40px 20px;
+  }
+
+  .about-box {
+    font-size: 16px;
+  }
+
+  .about-box h2 {
+    font-size: 24px;
+  }
+}
+
+/*BURGER MENU*/
+/* Burger toggle styling */
+.burger-toggle {
+  display: none; /* affiché seulement sur mobile */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.burger-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #104f55; /* couleur comme ton nav */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animation burger ouvert */
+.burger-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.burger-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.burger-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Affichage nav mobile */
+@media (max-width:768px) {
+  .burger-toggle { display: flex; }
+  
+  .nav-items-starter {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(255,255,255,0.95);
+    display: none;
+    padding: 10px 0;
+    gap: 12px;
+  }
+
+  .nav-items-starter.show {
+    display: flex;
+  }
+
+  .nav-items-starter li {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .cta-contact-starter {
+    width: auto;
+    position: relative;
+    left: -200px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <nav class="burger-menu-starter">
+    <!-- Bouton burger -->
+    <div class="burger-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+        <div class="burger-logo">
+            <img src="logo.png" alt="Logo Starter Pack">
+        </div>
+        <ul class="nav-items-starter">
+            <li><a href="index.html">Accueil</a></li>
+            <li class="nav-item-submenu">Nos services
+                <ul class="submenu-starter">
+                    <li>Site Web
+                        <ul class="submenu-detail">
+                            <li><a href="offre-principal.html">Principal</a></li>
+                            <li><a href="offre-secondaire.html">Secondaire</a></li>
+                            <li><a href="offre-pro.html">Professionnelle</a></li>
+                        </ul>
+                    </li>
+                    <li>Packaging
+                        <ul class="submenu-detail">
+                            <li><a href="starter-pack.html">Starter pack</a></li>
+                            <li><a href="package-business.html">Business pack</a></li>
+                            <li><a href="package-pro.html">Pro pack</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item-submenu">Nos compétences
+                <ul class="submenu-starter">
+                    <li><a href="abouts_us.html">À propos de nous</a></li>
+                    <li><a href="portfolio.html">Nos réalisations</a></li>
+                </ul>
+            </li>
+        </ul>
+       
+        <a class = "cta-contact-starter"href="contact.html">Nous contacter</a>
+        
+    </nav>
+  <!-- === header spacer (paste ton header au-dessus si besoin) === -->
+  <div class="header-spacer" aria-hidden="true"></div>
+
+  <main class="container" role="main">
+    <section id="social-media" class="social-media-section" aria-labelledby="sm-title">
+      <!-- background animation container -->
+      <div class="background-animation" aria-hidden="true"></div>
+
+      <div class="social-top">
+        <div class="section-intro">
+          <h1 id="sm-title" class="section-title">Nos Services — Réseaux Sociaux</h1>
+          <p class="section-subtitle">
+            Développez votre présence en ligne grâce à des stratégies modernes et percutantes — contenu, branding,
+            et automatisation adaptés à votre audience.
+          </p>
+        </div>
+
+        <div class="top-cta" aria-hidden="false">
+          <a class="small-btn" href="contact.html">Demander un devis</a>
+          <a class="small-btn" href="portfolio.html">Voir portfolio</a>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="social-cards" role="list">
+        <!-- OFFER 1 -->
+        <article class="offer-card" role="listitem" aria-labelledby="offer-1-title">
+          <div class="card-inner">
+            <div class="offer-top">
+              <div style="display:flex;gap:14px;align-items:flex-start">
+                <div class="card-accent" aria-hidden="true">01</div>
+                <div>
+                  <h2 id="offer-1-title" class="offer-title">Setup Réseaux Sociaux</h2>
+                  <p class="offer-sub">Création complète et paramétrage professionnel du/des comptes.</p>
+                </div>
+              </div>
+
+              <div class="offer-badge" aria-hidden="true">Nouveau</div>
+            </div>
+
+            <div class="offer-body" aria-label="Détails de l'offre 1">
+              <p>
+                Au delà de la création du compte, nous vous offrons un <strong>logo</strong> et une <strong>palette de couleur</strong> cohérente, un réseau social <strong>(ré)organisé</strong> prêt a accueillir une audience.
+              </p>
+
+              <ul class="offer-list" aria-hidden="false">
+                <li>Création du profil (bio + description optimisée)</li>
+                <li>Intégration d’un logo sur mesure (1 proposition + révisions)</li>
+                <li>Paramétrage complet : contact, boutique, stories à la une</li>
+                <li>Harmonisation couleurs et 3 templates de publication</li>
+              </ul>
+
+              <div class="offer-footer">
+                <span>Forfait de démarrage</span>
+                <span style="font-weight:800;color:var(--cream)">À partir de 44,99€</span>
+              </div>
+
+              <button class="card-cta" type="button"><a href="contact.html">Démarrer mon projet</a></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- OFFER 2 (HIGHLIGHT) -->
+        <article class="offer-card highlight" role="listitem" aria-labelledby="offer-2-title">
+          <div class="floating-badge" aria-hidden="true">
+            <span class="offer-badge">⭐ Très demandée</span>
+          </div>
+
+          <div class="card-inner">
+            <div class="offer-top">
+              <div style="display:flex;gap:14px;align-items:flex-start">
+                <div class="card-accent" aria-hidden="true">02</div>
+                <div>
+                  <h2 id="offer-2-title" class="offer-title">Gestion du compte - Standart — 4 Semaines</h2>
+                  <p class="offer-sub">Pack contenu complet — jusqu'à 4 publications/semaine + reporting.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="offer-body" aria-label="Détails de l'offre 2">
+              <p>
+                Grâce a un plan stratégique défini ensemble, nous vous créons du contenu et le publions de manière a développer votre audience. Ce service inclu un retour des performances détaillés et réguliers.
+              </p>
+
+              <ul class="offer-list">
+                <li>Plan de contenu stratégique (calendrier éditorial)</li>
+                <li>Création visuelle : photos, carrousels, Reels courts</li>
+                <li>Rédaction & hashtags optimisés pour reach</li>
+                <li>Analyse hebdomadaire et ajustements</li>
+              </ul>
+
+              <div class="offer-footer">
+                <span>Engagement 4 semaines</span>
+                <span style="font-weight:800;color:var(--cream)">Pack pro — 119,99€</span>
+              </div>
+
+              <button class="card-cta" type="button"><a href="contact.html">Démarrer mon projet</a></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- OFFER 3 -->
+        <article class="offer-card" role="listitem" aria-labelledby="offer-3-title">
+          <div class="card-inner">
+            <div class="offer-top">
+              <div style="display:flex;gap:14px;align-items:flex-start">
+                <div class="card-accent" aria-hidden="true">03</div>
+                <div>
+                  <h2 id="offer-3-title" class="offer-title">Gestion du compte - Premium — Publication Quotidienne - 4 semaines</h2>
+                  <p class="offer-sub">Visibilité maximale : post + story quotidiens, suivi serré.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="offer-body" aria-label="Détails de l'offre 3">
+              <p>
+                En vous offrant cette offre premium, vous bénéficierez d'une création de contenu <strong>quotidienne</strong>, un retour des performances <strong>détaillé</strong> et <strong>régulier</strong>, réponse aux commentaires, au message (si demandé)
+              </p>
+
+              <ul class="offer-list">
+                <li>Contenu quotidien (posts + stories)</li>
+                <li>Reporting détaillé & recommandations stratégiques</li>
+                <li>Community management : modération & réponses</li>
+                <li>Optimisation publicitaire (optionnelle)</li>
+              </ul>
+
+              <div class="offer-footer">
+                <span>Idéal pour croissance agressive</span>
+                <span style="font-weight:800;color:var(--cream)">169,90€</span>
+              </div>
+
+              <button class="card-cta" type="button"><a href="contact.html">Démarrer mon projet</a></button>
+            </div>
+          </div>
+        </article>
+      </div> <!-- /.social-cards -->
+    </section>
+  </main>
+
+  <!-- SECTION 1 -->
+<section class="about-agence type-a">
+  <div class="background-animation about-bg"></div>
+  <div class="about-box">
+    <h2>Identité, expertise & vision</h2>
+    <p class="about-text">
+      Nous sommes <span class="highlight1">Agence_Freelance</span>, une équipe passionnée par le 
+      <span class="highlight1">digital</span> et la <span class="highlight1">création de contenu</span>.
+      Notre mission : <span class="highlight1">aider les marques à se démarquer</span> sur les réseaux grâce à une stratégie
+      humaine et authentique. Chaque projet est une histoire à raconter, une opportunité de construire une 
+      <span class="highlight1">identité forte</span> et cohérente. Nous allions <span class="highlight1">créativité</span>,
+      <span class="highlight1">analyse</span> et <span class="highlight1">storytelling</span> pour créer une connexion réelle entre votre marque et votre audience.
+      Chez nous, rien n’est laissé au hasard : chaque couleur, chaque mot, chaque publication a un sens. 
+      Notre but : transformer votre présence en ligne en une <span class="highligh1t">influence durable</span>.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="about-agence type-b">
+  <div class="background-animation about-bg"></div>
+  <div class="about-box">
+    <h2>Relation client & méthode</h2>
+    <p class="about-text">
+      Collaborer avec <span class="highlight">Agence_Freelance</span>, c’est choisir la 
+      <span class="highlight">transparence</span>, l’écoute et la <span class="highlight">co-création</span>.
+      Nous commençons par comprendre vos besoins, vos valeurs et vos ambitions.
+      Chaque stratégie repose sur trois piliers : <span class="highlight">analyse</span>, 
+      <span class="highlight">création</span> et <span class="highlight">optimisation</span>.
+      Nous créons du contenu qui attire, engage et fidélise.
+      Notre équipe réunit des <span class="highlight">talents complémentaires</span>, capables d’allier vision artistique et performance mesurable.
+      Nous croyons que la réussite ne se mesure pas en likes, mais en <span class="highlight">impact réel</span>.
+      Chaque client est un partenaire à long terme, accompagné avec <span class="highlight">rigueur</span> et <span class="highlight">bienveillance</span>.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="about-agence type-a">
+  <div class="background-animation about-bg"></div>
+  <div class="about-box">
+    <h2>Valeurs & vision d’avenir</h2>
+    <p class="about-text">
+      Nous croyons en une communication <span class="highlight1">humaine</span>, 
+      <span class="highlight1">créative</span> et <span class="highlight1">porteuse de sens</span>.
+      Le digital n’est pas une course à la visibilité, mais un <span class="highlight1">outil d’expression</span>.
+      Nos valeurs : <span class="highlight1">authenticité</span>, <span class="highlight1">innovation</span>, 
+      <span class="highlight1">respect</span> et <span class="highlight1">collaboration</span>.
+      Nous plaçons toujours la <span class="highlight1">valeur humaine</span> avant la performance.
+      Notre vision : construire des <span class="highlight1">marques durables</span>, inspirantes et sincères.
+      <span class="highlight1">Agence_Freelance</span>, c’est plus qu’une agence : un 
+      <span class="highlight1">partenaire de croissance</span>, un moteur d’idées, une 
+      <span class="highlight1">expérience humaine du digital</span>.  
+      Nous avançons avec une seule ambition : <span class="highlight1">faire briller votre identité</span>, avec passion et élégance.
+    </p>
+  </div>
+</section>
+
+
+<footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>À propos</h3>
+                <p>Découvrez notre mission et notre engagement à fournir des services de qualité.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: agence_freelance@yahoo.com</p>
+                <p>Téléphone: +33 7 66 59 69 70</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <a href="#">Facebook</a> | 
+                <a href="https://www.instagram.com/agence_freelance/">Instagram</a> | 
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Exemple. <a href="conditions_utilisations.html">Tous droits réservés.</a></p>
+        </div>
+
+        <!-- Put this code anywhere in the body of your page where you want the badge to show up. -->
+
+        <div itemscope itemtype='http://schema.org/Person' class='fiverr-seller-widget' style='display: inline-block;'>
+            <a itemprop='url' href=https://www.fiverr.com/antoine_gabriel rel="nofollow" target="_blank" style='display: inline-block;'>
+            <div class='fiverr-seller-content' id='fiverr-seller-widget-content-8cc4f058-45c5-4968-bc6d-2c622e08a43a' itemprop='contentURL' style='display: none;'></div>
+            <div id='fiverr-widget-seller-data' style='display: none;'>
+                <div itemprop='name' >antoine_gabriel</div>
+                <div itemscope itemtype='http://schema.org/Organization'><span itemprop='name'>Fiverr</span></div>
+                <div itemprop='jobtitle'>Seller</div>
+                <div itemprop='description'>Bonjour, je suis étudiant dans dans le domaine de l'informatique. Au cours de mon apprentissage j'ai pu acquérir de nombreuses notions de développement mais je suis aussi en mesure de vous aider dans votre communication par le biais des réseaux sociaux ( exemple : Instagram, Facebook, TikTok, YouTube, Twitter...)</div>
+            </div>
+        </a>
+        </div>
+        
+
+        <script id='fiverr-seller-widget-script-8cc4f058-45c5-4968-bc6d-2c622e08a43a' src='https://widgets.fiverr.com/api/v1/seller/antoine_gabriel?widget_id=8cc4f058-45c5-4968-bc6d-2c622e08a43a' data-config='{"category_name":"Digital Marketing"}' async='true' defer='true'></script>
+
+    </footer>
+
+
+
+  <script>
+    /* ---------- BULLES (background-animation) ---------- */
+    (function(){
+      const bg = document.querySelector('.background-animation');
+
+      // create spans (bubbles)
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement('span');
+        const size = Math.random() * 14 + 6;         // px
+        const duration = Math.random() * 28 + 12;   // s
+        const left = Math.random() * 100;           // %
+        const delay = Math.random() * -20;          // negative delay to vary starting pos
+
+        span.style.width = `${size}px`;
+        span.style.height = `${size}px`;
+        span.style.left = `${left}%`;
+        span.style.bottom = `-10px`;
+        span.style.opacity = Math.random() * 0.6 + 0.1;
+        span.style.animationDuration = `${duration}s`;
+        span.style.animationDelay = `${delay}s`;
+        span.style.borderRadius = '50%';
+
+        // subtle size variation in box-shadow to diversify glow
+        span.style.boxShadow = `0 0 ${Math.max(6, size)}px rgba(0,198,167,${Math.random() * 0.9 + 0.2})`;
+
+        bg.appendChild(span);
+      }
+
+      // interaction with mouse to create parallax
+      document.addEventListener('mousemove', e => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 18; // multiplier for subtlety
+        const y = (e.clientY / window.innerHeight - 0.5) * 10;
+        bg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      });
+
+      // make sure animation keeps smooth on resize
+      window.addEventListener('resize', () => {
+        // no-op for now; kept in case of future enhancement
+      });
+    })();
+
+    // --- Animation des bulles ---
+    document.querySelectorAll('.about-bg').forEach(bg => {
+      for (let i = 0; i < 18; i++) {
+        const span = document.createElement('span');
+        const size = Math.random() * 12 + 4;
+        const duration = Math.random() * 20 + 10;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 15;
+
+        span.style.width = `${size}px`;
+        span.style.height = `${size}px`;
+        span.style.left = `${left}%`;
+        span.style.animationDuration = `${duration}s`;
+        span.style.animationDelay = `${delay}s`;
+        bg.appendChild(span);
+      }
+    });
+
+    // --- Apparition douce au scroll ---
+    const sections = document.querySelectorAll('.about-agence');
+    const revealOnScroll = () => {
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) sec.classList.add('visible');
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+
+    let lastScrollTop = 0;
+const navbar = document.querySelector('.burger-menu-starter');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+  // Scroll vers le bas → cacher la nav
+  if (scrollTop > lastScrollTop && scrollTop > 100) {
+    navbar.style.transform = 'translateY(-100%)';
+    navbar.style.transition = 'transform 0.4s ease-in-out';
+  } 
+  // Scroll vers le haut → afficher la nav
+  else {
+    navbar.style.transform = 'translateY(0)';
+    navbar.style.transition = 'transform 0.4s ease-in-out';
+  }
+
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // éviter valeur négative
+});
+
+
+const burger = document.querySelector('.burger-toggle');
+const nav = document.querySelector('.nav-items-starter');
+
+burger.addEventListener('click', () => {
+  nav.classList.toggle('show');
+  burger.classList.toggle('active');
+
+  // Ajoute ou retire la classe menu-open au body
+  document.body.classList.toggle('menu-open');
+});
+
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starter Pack - Agence Freelance</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+.body-starter-pack {
+    background-color: #0a0a0a;
+    color: #f7f2ec;
+    font-family: 'Oswald', sans-serif;
+    overflow-x: hidden;
+    background-image: none;
+}
+
+/* ===== BURGER MENU ===== */
+.barre-nav-starter {
+    width: 100%;
+    background-color: rgba(15, 15, 20, 0.95);
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.barre-nav-starter .burger-logo img {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.nav-items-starter {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-items-starter li {
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-items-starter li:hover {
+    color: #9fd3f1;
+}
+
+.nav-items-starter li a {
+    color: #f7f2ec;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-items-starter li a:hover {
+    color: #9fd3f1;
+}
+
+.nav-item-submenu:hover .submenu-starter {
+    display: block;
+}
+
+.submenu-starter {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    background-color: #111;
+    border-radius: 6px;
+    padding: 10px;
+    min-width: 200px;
+    box-shadow: 0 0 15px rgba(159, 211, 241, 0.3);
+    z-index: 10;
+}
+
+.submenu-starter li {
+    margin: 5px 0;
+    color: #f7f2ec;
+}
+
+.submenu-detail {
+    display: none;
+    margin-left: 15px;
+    margin-top: 12px;
+}
+
+.submenu-starter li:hover .submenu-detail {
+    display: block;
+}
+
+.cta-contact-starter button {
+    background-color: #f7f2ec;
+    color: #0a0a0a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.cta-contact-starter button:hover {
+    transform: scale(1.05);
+    background-color: #9fd3f1;
+}
+
+.cta-contact-starter a {
+    text-decoration: none;
+    color: #0a0a0a;
+    font-size: 14px;
+}
+
+/* ===== MOBILE BURGER MENU ===== */
+.mobile-burger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.mobile-burger-btn span {
+    width: 30px;
+    height: 3px;
+    background-color: #f7f2ec;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.mobile-burger-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-burger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-burger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+    transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.mobile-sidebar.open {
+    right: 0;
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(159, 211, 241, 0.2);
+}
+
+.mobile-logo-animated {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(159, 211, 241, 0.5);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(159, 211, 241, 0.5); }
+    50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(159, 211, 241, 0.8); }
+}
+
+.mobile-close-btn {
+    background: transparent;
+    border: none;
+    color: #f7f2ec;
+    font-size: 32px;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.mobile-close-btn:hover {
+    transform: rotate(90deg);
+    color: #9fd3f1;
+}
+
+.mobile-menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.mobile-menu-item {
+    margin-bottom: 10px;
+}
+
+.mobile-menu-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    color: #f7f2ec;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.mobile-menu-link:hover {
+    background: rgba(159, 211, 241, 0.1);
+    transform: translateX(10px);
+    color: #9fd3f1;
+}
+
+.mobile-arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.mobile-arrow.rotate {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-left: 20px;
+}
+
+.mobile-dropdown.active {
+    max-height: 500px;
+}
+
+.mobile-subdropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-left: 20px;
+}
+
+.mobile-subdropdown.active {
+    max-height: 300px;
+}
+
+.mobile-cta-btn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #f7f2ec 0%, #9fd3f1 100%);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(159, 211, 241, 0.3);
+    animation: btnPulse 2s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+    0%, 100% { box-shadow: 0 5px 15px rgba(159, 211, 241, 0.3); }
+    50% { box-shadow: 0 8px 25px rgba(159, 211, 241, 0.6); }
+}
+
+.mobile-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(159, 211, 241, 0.5);
+}
+
+.mobile-cta-btn a {
+    color: #0a0a0a;
+    text-decoration: none;
+}
+
+/* ===== HERO ===== */
+.hero-content-starter-pack {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 10%;
+    position: relative;
+}
+
+.hero-text-starter h1 {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.hero-text-starter h3 {
+    font-size: 24px;
+    color: #9fd3f1;
+    margin-bottom: 20px;
+}
+
+.hero-text-starter p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.cta-hero-starter {
+    background-color: #f7f2ec;
+    color: #0a0a0a;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 30px;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.cta-hero-starter:hover {
+    transform: scale(1.05);
+    background-color: #9fd3f1;
+}
+
+.hero-image-starter img {
+    width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(159, 211, 241, 0.4);
+    animation: float 4s ease-in-out infinite;
+}
+
+/* ===== Pack Details ===== */
+.starter-pack-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 60px 10%;
+    justify-content: center;
+}
+
+.pack-detail-list {
+    margin-top: 12px;
+    padding-left: 18px;
+    list-style-type: disc;
+    color: rgba(247, 242, 236, 0.85);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.pack-detail-list li {
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+}
+
+.pack-detail-list li:hover {
+    color: #9fd3f1;
+}
+
+.pack-box-starter {
+    background-color: #111;
+    padding: 25px;
+    border-radius: 15px;
+    width: 300px;
+    transition: transform 0.3s;
+}
+
+.pack-box-starter:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(159, 211, 241, 0.3);
+}
+
+.pack-box-starter h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.pack-box-starter p {
+    font-size: 16px;
+    color: #f7f2ec;
+}
+
+.starter-pack-pricing {
+    margin: 20px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.starter-pack-pricing-old span {
+    text-decoration: line-through;
+    color: rgba(255,255,255,0.5);
+    font-size: 18px;
+}
+
+.starter-pack-pricing-current span {
+    color: #f7f2ec;
+    font-weight: 700;
+    font-size: 28px;
+    background: linear-gradient(90deg, #f7f2ec, #9fd3f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(159,211,241,0.5);
+}
+
+.starter-pack-cta {
+    background-color: rgba(15,23,36,0.9);
+    padding: 40px 30px;
+    margin: 50px auto;
+    border-radius: 12px;
+    max-width: 900px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(159,211,241,0.3);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.starter-pack-cta h2 {
+    font-size: 32px;
+    color: #f7f2ec;
+    margin-bottom: 20px;
+}
+
+.starter-pack-cta p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(247,242,236,0.9);
+    margin-bottom: 15px;
+}
+
+.starter-pack-cta-btn {
+    background-color: #f7f2ec;
+    color: #0f1724;
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 700;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.starter-pack-cta-btn:hover {
+    background-color: #9fd3f1;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(159,211,241,0.6);
+}
+
+.starter-pack-cta-btn a {
+    color: #0f1724;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Animation simple */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Liens vers autres packs ===== */
+.starter-pack-links {
+    background-color: #0a0a0a;
+    text-align: center;
+    padding: 60px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.starter-pack-links h2 {
+    font-size: 28px;
+    color: #f7f2ec;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(159, 211, 241, 0.3);
+    letter-spacing: 1px;
+}
+
+.starter-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.starter-link-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 50px;
+    background-color: #0a0a0a;
+    color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 12px rgba(159, 211, 241, 0.2);
+}
+
+.starter-link-btn:hover {
+    background-color: #f7f2ec;
+    color: #0a0a0a;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(159, 211, 241, 0.6);
+}
+
+/* ===== FOOTER ===== */
+.footer-starter-pack {
+    background-color: #0f0f12;
+    color: #f7f2ec;
+    padding: 40px 10%;
+    margin-top: 50px;
+}
+
+.footer-sections-starter {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-sections-starter h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer-sections-starter p, 
+.footer-sections-starter a {
+    color: #f7f2ec;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-sections-starter a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom-starter {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #9fd3f1;
+}
+
+#mouse-tracker {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.7);
+    box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+    z-index: 9999;
+}
+
+/* ===== Animations ===== */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .nav-items-starter {
+        display: none;
+    }
+    
+    .cta-contact-starter {
+        display: none;
+    }
+    
+    .mobile-burger-btn {
+        display: flex;
+    }
+    
+    .hero-content-starter-pack {
+        flex-direction: column;
+        padding: 40px 5%;
+        text-align: center;
+    }
+    
+    .hero-text-starter h1 {
+        font-size: 40px;
+    }
+    
+    .hero-text-starter h3 {
+        font-size: 20px;
+    }
+    
+    .hero-image-starter img {
+        width: 100%;
+        max-width: 400px;
+        margin-top: 30px;
+    }
+    
+    .cta-hero-starter {
+        margin-top: 20px;
+    }
+    
+    .starter-pack-details {
+        padding: 40px 5%;
+    }
+    
+    .pack-box-starter {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    #mouse-tracker {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .barre-nav-starter {
+        padding: 10px 15px;
+    }
+    
+    .barre-nav-starter .burger-logo img {
+        width: 70px;
+    }
+    
+    .hero-text-starter h1 {
+        font-size: 32px;
+    }
+    
+    .hero-text-starter h3 {
+        font-size: 18px;
+    }
+    
+    .hero-text-starter p {
+        font-size: 16px;
+    }
+    
+    .cta-hero-starter {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    
+    .hero-image-starter img {
+        max-width: 300px;
+    }
+    
+    .pack-box-starter h2 {
+        font-size: 20px;
+    }
+    
+    .starter-pack-cta {
+        padding: 30px 20px;
+        margin: 30px 15px;
+    }
+    
+    .starter-pack-cta h2 {
+        font-size: 26px;
+    }
+    
+    .starter-pack-cta p {
+        font-size: 16px;
+    }
+    
+    .starter-pack-links h2 {
+        font-size: 24px;
+    }
+    
+    .starter-link-btn {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+    
+    .footer-starter-pack {
+        padding: 30px 5%;
+    }
+    
+    .footer-sections-starter {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-starter h1 {
+        font-size: 28px;
+    }
+    
+    .hero-text-starter h3 {
+        font-size: 16px;
+    }
+    
+    .mobile-sidebar {
+        width: 90%;
+    }
+    
+    .starter-pack-pricing-current span {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+<body class="body-starter-pack">
+<!-- Overlay pour mobile -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- Navigation Desktop/Mobile -->
+<nav class="barre-nav-starter">
+<div class="burger-logo">
+<img src="logo.png" alt="Logo Starter Pack">
+</div>
+
+<!-- Menu Desktop -->
+<ul class="nav-items-starter">
+<li><a href="index.html">Accueil</a></li>
+<li class="nav-item-submenu">Nos services
+<ul class="submenu-starter">
+<li>Site Web
+<ul class="submenu-detail">
+<li><a href="offre-principal.html">Principal</a></li>
+<li><a href="offre-secondaire.html">Secondaire</a></li>
+<li><a href="offre-pro.html">Professionnelle</a></li>
+</ul>
+</li>
+<li><a href="reseaux-sociaux.html">Réseaux sociaux</a></li>
+</ul>
+</li>
+<li class="nav-item-submenu">Nos compétences
+<ul class="submenu-starter">
+<li><a href="abouts_us.html">À propos de nous</a></li>
+<li><a href="portfolio.html">Nos réalisations</a></li>
+</ul>
+</li>
+<li><a href="details-offre.html">Expérience client</a></li>
+</ul>
+
+<div class="cta-contact-starter">
+<button><a href="contact.html">Nous contacter</a></button>
+</div>
+
+<!-- Burger Button Mobile -->
+<button class="mobile-burger-btn" id="mobileBurgerBtn">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</nav>
+
+<!-- Sidebar Mobile -->
+<div class="mobile-sidebar" id="mobileSidebar">
+<div class="mobile-sidebar-header">
+<img src="logo.png" alt="Logo" class="mobile-logo-animated">
+<button class="mobile-close-btn" id="mobileCloseBtn">&times;</button>
+</div>
+
+<ul class="mobile-menu-list">
+<li class="mobile-menu-item">
+<a href="index.html" class="mobile-menu-link">Accueil</a>
+</li>
+
+<li class="mobile-menu-item">
+<a href="#" class="mobile-menu-link" data-dropdown="services">
+Nos services
+<span class="mobile-arrow">▼</span>
+</a>
+<div class="mobile-dropdown" id="services-dropdown">
+<a href="#" class="mobile-menu-link" data-subdropdown="siteweb">
+Site Web
+<span class="mobile-arrow">▼</span>
+</a>
+<div class="mobile-subdropdown" id="siteweb-subdropdown">
+<a href="offre-principal.html" class="mobile-menu-link">Principal</a>
+<a href="offre-secondaire.html" class="mobile-menu-link">Secondaire</a>
+<a href="offre-pro.html" class="mobile-menu-link">Professionnelle</a>
+</div>
+<a href="reseaux-sociaux.html" class="mobile-menu-link">Réseaux sociaux</a>
+</div>
+</li>
+
+<li class="mobile-menu-item">
+<a href="details-offre.html" class="mobile-menu-link">Expérience client</a>
+</li>
+
+<li class="mobile-menu-item">
+<a href="#" class="mobile-menu-link" data-dropdown="competences">
+Nos compétences
+<span class="mobile-arrow">▼</span>
+</a>
+<div class="mobile-dropdown" id="competences-dropdown">
+<a href="portfolio.html" class="mobile-menu-link">Portfolio</a>
+<a href="abouts_us.html" class="mobile-menu-link">À propos</a>
+</div>
+</li>
+</ul>
+
+<button class="mobile-cta-btn">
+<a href="contact.html">Nous contacter</a>
+</button>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-content-starter-pack">
+<div class="hero-text-starter">
+<h1>Starter Pack</h1>
+<h3>Adapté aux start-up et personnes à leur compte</h3>
+<p>Économisez environ 20% du prix original grâce à notre pack complet !</p>
+<a class="cta-hero-starter" href="contact.html">Obtenez votre Starter Pack</a>
+</div>
+<div class="hero-image-starter">
+<img src="img illustration starter pack.jpg" alt="Starter Pack Illustration">
+</div>
+</section>
+
+<!-- Offres Starter Pack -->
+<section class="starter-pack-details">
+<div class="pack-box-starter">
+<h2>Offre Principale : Site vitrine One Page</h2>
+<p>Prix : 99,99 €</p>
+<ul class="pack-detail-list">
+<li>Référencement SEO optimisé</li>
+<li>Maintenance de base incluse</li>
+<li>Nom de domaine offert la première année</li>
+<li>1 seule page (CV, vitrine, présentation, etc.)</li>
+</ul>
+</div>
+
+<div class="pack-box-starter">
+<h2>Création de logo personnalisé</h2>
+<p>Prix : 19,99 €</p>
+<ul class="pack-detail-list">
+<li>Logo 100 % sur mesure selon vos préférences</li>
+<li>Révisions illimitées jusqu'à satisfaction complète</li>
+<li>Fichiers livrés en haute qualité (PNG, SVG, PDF)</li>
+</ul>
+</div>
+
+<div class="pack-box-starter">
+<h2>Création et mise en place de comptes réseaux sociaux</h2>
+<p>Prix : 24,99 €</p>
+<ul class="pack-detail-list">
+<li>Création des comptes sur les réseaux sociaux demandés</li>
+<li>Mise en place de stories à la une de base</li>
+<li>Ajout d'une biographie professionnelle et du logo</li>
+<li>3 contenus "type" offert</li>
+</ul>
+</div>
+
+<div class="starter-pack-pricing">
+<p class="starter-pack-pricing-old">Prix à l'unité : <span>144,97 €</span></p>
+<p class="starter-pack-pricing-current">Prix Starter Pack : <span>119,99 €</span></p>
+</div>
+</section>
+
+<div class="starter-pack-cta">
+<h2>Pourquoi choisir le Starter Pack ?</h2>
+<p>
+Le Starter Pack est conçu pour les start-ups et entrepreneurs individuels qui veulent démarrer rapidement et efficacement. 
+Tous les services sont inclus : création de votre site vitrine, logo personnalisé et mise en place de vos réseaux sociaux.
+Avec ce pack, vous économisez environ <strong>20%</strong> par rapport à l'achat des services séparés et vous n'avez plus rien à gérer.
+</p>
+<p>
+Profitez d'une solution clé-en-main, avec un design professionnel, des animations et un suivi pour lancer votre projet dès aujourd'hui.
+</p>
+<button class="starter-pack-cta-btn"><a href="contact.html">Je choisis cette offre !</a></button>
+</div>
+
+<!-- Liens vers autres offres -->
+<section class="starter-pack-links">
+<h2>Découvrez aussi nos autres offres</h2>
+<div class="starter-links-container">
+<a href="package-business.html" class="starter-link-btn">Découvrir le Business Pack</a>
+<a href="package-pro.html" class="starter-link-btn">Découvrir le Pro Pack</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer-starter-pack">
+<div class="footer-sections-starter">
+<div class="footer-about-starter">
+<h3>À propos</h3>
+<p>Notre mission : aider les entrepreneurs à réussir leur lancement digital.</p>
+</div>
+<div class="footer-contact-starter">
+<h3>Contact</h3>
+<p>Email : agence_freelance@yahoo.com</p>
+<p>Téléphone : +33 7 66 59 69 70</p>
+</div>
+<div class="footer-social-starter">
+<h3>Suivez-nous</h3>
+<a href="#">Facebook</a> | 
+<a href="https://www.instagram.com/agence_freelance/">Instagram</a> | 
+<a href="#">LinkedIn</a>
+</div>
+</div>
+<div class="footer-bottom-starter">
+<p>&copy; 2024 Exemple. <a href="conditions_utilisations.html">Tous droits réservés.</a></p>
+</div>
+</footer>
+
+<div id="mouse-tracker"></div>
+
+<script>
+// Mouse tracker pour desktop
+const tracker = document.getElementById('mouse-tracker');
+document.addEventListener('mousemove', (e) => {
+    tracker.style.left = e.clientX + 'px';
+    tracker.style.top = e.clientY + 'px';
+});
+
+// Mobile Menu Logic
+(function() {
+    const burgerBtn = document.getElementById('mobileBurgerBtn');
+    const sidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('mobileOverlay');
+    const closeBtn = document.getElementById('mobileCloseBtn');
+
+    function openSidebar(e) {
+        if(e) e.preventDefault();
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        burgerBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar(e) {
+        if(e) e.preventDefault();
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        burgerBtn.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if(burgerBtn) burgerBtn.addEventListener('click', openSidebar);
+    if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+    if(overlay) overlay.addEventListener('click', closeSidebar);
+
+    // Dropdowns niveau 1
+    const dropdownLinks = sidebar.querySelectorAll('[data-dropdown]');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdownId = this.getAttribute('data-dropdown') + '-dropdown';
+            const dropdown = document.getElementById(dropdownId);
+            const arrow = this.querySelector('.mobile-arrow');
+            
+            if(dropdown) {
+                dropdown.classList.toggle('active');
+                if(arrow) arrow.classList.toggle('rotate');
+            }
+        });
+    });
+
+    // Sub-dropdowns niveau 2
+    const subdropdownLinks = sidebar.querySelectorAll('[data-subdropdown]');
+    subdropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const subdropdownId = this.getAttribute('data-subdropdown') + '-subdropdown';
+            const subdropdown = document.getElementById(subdropdownId);
+            const arrow = this.querySelector('.mobile-arrow');
+            
+            if(subdropdown) {
+                subdropdown.classList.toggle('active');
+                if(arrow) arrow.classList.toggle('rotate');
+            }
+        });
+    });
+
+    // Fermer le menu quand on clique sur un lien (sauf dropdowns)
+    const directLinks = sidebar.querySelectorAll('a[href]:not([data-dropdown]):not([data-subdropdown])');
+    directLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(closeSidebar, 300);
+        });
+    });
+})();
+</script>
+</body>
+</html>

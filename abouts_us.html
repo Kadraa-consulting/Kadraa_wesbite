@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - Agence_Freelance</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #waveCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        #cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.15s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+
+        #cursor.active {
+            transform: translate(-50%, -50%) scale(2);
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        /* HEADER */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: top 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #00d4ff;
+            z-index: 1001;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* BURGER MENU */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 10px;
+        }
+
+        .burger span {
+            width: 28px;
+            height: 3px;
+            background: #00d4ff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* NAVIGATION DESKTOP */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+            display: block;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 90%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 10px;
+            border-radius: 12px;
+            min-width: 200px;
+            flex-direction: column;
+            gap: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 5px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav li:hover > ul {
+            display: flex;
+        }
+
+        nav ul ul ul {
+            left: 100%;
+            top: 0;
+            margin-left: 10px;
+            margin-top: 0;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        /* MOBILE MENU */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 400px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(30px);
+            z-index: 999;
+            padding: 100px 30px 30px;
+            overflow-y: auto;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            animation: logoRotate 4s linear infinite;
+        }
+
+        @keyframes logoRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mobile-logo span {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .mobile-nav {
+            list-style: none;
+        }
+
+        .mobile-nav > li {
+            margin-bottom: 10px;
+        }
+
+        .mobile-nav a, .mobile-nav .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mobile-nav a:hover, .mobile-nav .menu-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .mobile-nav .arrow {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav .arrow.active {
+            transform: rotate(90deg);
+        }
+
+        .mobile-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding-left: 20px;
+        }
+
+        .mobile-submenu.active {
+            max-height: 1000px;
+            margin-top: 10px;
+        }
+
+        .mobile-submenu li {
+            margin-bottom: 8px;
+        }
+
+        .mobile-submenu a, .mobile-submenu .menu-item {
+            font-size: 14px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .mobile-contact-btn {
+            margin-top: 30px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            padding: 200px 60px 120px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #00d4ff 50%, #7b2ff7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            letter-spacing: -3px;
+            animation: titleAppear 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes titleAppear {
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* INTRO BOX */
+        .intro-section {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto 120px;
+            padding: 0 60px;
+        }
+
+        .intro-box {
+            position: relative;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px) saturate(150%);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 1s ease forwards 0.5s;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(40px); }
+        }
+
+        .intro-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00d4ff, #7b2ff7, #ff006e, #00d4ff);
+            background-size: 400% 400%;
+            border-radius: 32px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            animation: gradientRotate 8s ease infinite;
+        }
+
+        .intro-box:hover::before {
+            opacity: 1;
+        }
+
+        .intro-box:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.3);
+        }
+
+        @keyframes gradientRotate {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .intro-box p {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #c0c0c0;
+            text-align: center;
+        }
+
+        /* SECTION TITLES */
+        .section-title {
+            text-align: center;
+            font-size: 56px;
+            font-weight: 800;
+            color: #f5f5f7;
+            margin: 100px 0 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: lineExpand 2s ease-in-out infinite;
+        }
+
+        @keyframes lineExpand {
+            0%, 100% { width: 120px; }
+            50% { width: 240px; }
+        }
+
+        /* TEAM CARDS */
+        .cards-container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 120px;
+            padding: 0 60px;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 47, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.4);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 28px;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid #00d4ff;
+            object-fit: cover;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .card:hover .card-title img {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+        }
+
+        .card-subtitle {
+            font-size: 16px;
+            font-weight: 600;
+            color: #7b2ff7;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #b0b0b0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* INTERACTIVE BOX */
+        .interactive-section {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto 120px;
+            padding: 0 60px;
+        }
+
+        .interactive-box {
+            position: relative;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .interactive-box::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent);
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+
+        .interactive-box:hover::after {
+            width: 500px;
+            height: 500px;
+        }
+
+        .interactive-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(123, 47, 247, 0.3);
+            border-color: rgba(123, 47, 247, 0.5);
+        }
+
+        .interactive-box h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7b2ff7;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .interactive-box p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #c0c0c0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 60px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #86868b;
+            font-size: 14px;
+        }
+
+        /* FLOATING PARTICLES */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100vh) translateX(100px); }
+        }
+
+        /* SCROLL ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* GLOW EFFECTS */
+        .glow-effect {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            transition: all 0.3s ease;
+        }
+
+        .glow-1 {
+            background: #00d4ff;
+            top: 20%;
+            left: 10%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .glow-2 {
+            background: #7b2ff7;
+            bottom: 20%;
+            right: 10%;
+            animation: pulse 4s ease-in-out infinite 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.3); opacity: 0.25; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            #header { padding: 15px 30px; }
+            .hero { padding: 150px 30px 80px; }
+            .hero h1 { font-size: 60px; letter-spacing: -2px; }
+            .section-title { font-size: 44px; }
+            .cards-container { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 0 30px; gap: 30px; }
+            .intro-section, .interactive-section { padding: 0 30px; }
+            .intro-box, .interactive-box { padding: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            #cursor { display: none; }
+            
+            #header { padding: 15px 20px; }
+            
+            .burger { display: flex; }
+            
+            nav { display: none; }
+            
+            .contact-btn.desktop { display: none; }
+            
+            .hero { padding: 130px 20px 60px; }
+            
+            .hero h1 { 
+                font-size: 40px; 
+                letter-spacing: -1px;
+                line-height: 1.1;
+            }
+            
+            .section-title { 
+                font-size: 32px; 
+                margin: 60px 0 40px;
+            }
+            
+            .cards-container { 
+                grid-template-columns: 1fr; 
+                padding: 0 20px; 
+                gap: 25px;
+                margin-bottom: 80px;
+            }
+            
+            .card {
+                padding: 30px;
+            }
+            
+            .card:hover {
+                transform: translateY(-5px) scale(1.01);
+            }
+            
+            .card-title {
+                font-size: 24px;
+                flex-direction: row-reverse;
+            }
+            
+            .card-title img {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .intro-section, .interactive-section { 
+                padding: 0 20px; 
+                margin-bottom: 80px;
+            }
+            
+            .intro-box, .interactive-box { 
+                padding: 30px 25px;
+            }
+            
+            .intro-box p {
+                font-size: 16px;
+                line-height: 1.7;
+            }
+            
+            .interactive-box h3 {
+                font-size: 24px;
+            }
+            
+            .interactive-box p {
+                font-size: 16px;
+            }
+            
+            footer {
+                padding: 40px 20px;
+                font-size: 13px;
+            }
+            
+            .glow-effect {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 16px;
+            }
+            
+            .logo img {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .card-title {
+                font-size: 20px;
+            }
+            
+            .card-title img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .intro-box, .interactive-box {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="waveCanvas"></canvas>
+    <div id="cursor"></div>
+    
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+
+    <header id="header">
+        <div class="logo">
+            <img src="logo.png" alt="logo agence_freelance">
+            <span>Agence_Freelance</span>
+        </div>
+        
+        <!-- DESKTOP NAV -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li>
+                    <a>Nos services</a>
+                    <ul>
+                        <li>
+                            <a>Nos sites web</a>
+                            <ul>
+                                <li><a href="offre-principal.html">Site principal</a></li>
+                                <li><a href="offre-secondaire.html">Site secondaire</a></li>
+                                <li><a href="offre-pro.html">Site professionnel</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Nos packagings</a>
+                            <ul>
+                                <li><a href="starter-pack.html">Starter pack</a></li>
+                                <li><a href="package-business.html">Business pack</a></li>
+                                <li><a href="package-pro.html">Pro pack</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="reseaux-sociaux.html">Réseaux sociaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="experience-client.html">Expérience client</a></li>
+            </ul>
+        </nav>
+        
+        <a class="contact-btn desktop" href="contact.html">Nous contacter</a>
+        
+        <!-- BURGER MENU -->
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div class="mobile-menu-overlay"></div>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu">
+        <div class="mobile-logo">
+            <img src="logo.png" alt="logo">
+            <span>Agence_Freelance</span>
+        </div>
+        
+        <ul class="mobile-nav">
+            <li><a href="index.html">Accueil</a></li>
+            
+            <li>
+                <div class="menu-item" data-submenu="services">
+                    <span>Nos services</span>
+                    <span class="arrow">➤</span>
+                </div>
+                <ul class="mobile-submenu" id="services">
+                    <li>
+                        <div class="menu-item" data-submenu="sites">
+                            <span>Sites web</span>
+                            <span class="arrow">➤</span>
+                        </div>
+                        <ul class="mobile-submenu" id="sites">
+                            <li><a href="offre-principal.html">Site principal</a></li>
+                            <li><a href="offre-secondaire.html">Site secondaire</a></li>
+                            <li><a href="offre-pro.html">Site professionnel</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item" data-submenu="packaging">
+                            <span>Nos packagings</span>
+                            <span class="arrow">➤</span>
+                        </div>
+                        <ul class="mobile-submenu" id="packaging">
+                            <li><a href="starter-pack.html">Starter pack</a></li>
+                            <li><a href="package-business.html">Business pack</a></li>
+                            <li><a href="package-pro.html">Pro pack</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="reseaux-sociaux.html">Réseaux sociaux</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="experience-client.html">Expérience client</a></li>
+        </ul>
+        
+        <div class="mobile-contact-btn">
+            <a class="contact-btn" href="contact.html">Nous contacter</a>
+        </div>
+    </div>
+
+    <section class="hero">
+        <h1>À propos de nous</h1>
+    </section>
+
+    <section class="intro-section">
+        <div class="intro-box">
+            <p>
+                Chez Agence_Freelance, chaque projet naît d'une rencontre, d'une vision et d'une ambition partagée.
+Nous ne créons pas simplement des sites web — nous construisons des expériences digitales sur mesure, pensées pour refléter l'essence de votre marque et captiver votre audience.
+Dès la première prise de contact, vous êtes accompagné par un conseiller dédié qui orchestre chaque étape de votre projet. Il coordonne les designers, développeurs et spécialistes du digital pour vous garantir une exécution fluide, transparente et sans stress.
+Chaque détail est étudié, chaque décision mesurée. Notre équipe met un point d'honneur à offrir un suivi premium, avec des échanges réguliers, des rapports clairs et une vision globale de l'avancement.
+Notre promesse : allier créativité, rigueur et accompagnement humain pour donner vie à un site qui dépasse vos attentes et incarne véritablement votre identité.
+            </p>
+        </div>
+    </section>
+
+    <h2 class="section-title reveal">Notre équipe</h2>
+    <section class="cards-container">
+        <div class="card reveal">
+            <div class="card-title">
+                Antoine L 
+                <img src="headshot1.jpg" alt="Antoine L">
+            </div>
+            <div class="card-subtitle">Consultant</div>
+            <div class="card-text">
+                C'est lui qui vous suivra tout au long du projet. Il coordonne design et développement pour garantir un suivi fluide et un site web conforme à votre vision.
+            </div>
+        </div>
+        <div class="card reveal">
+            <div class="card-title">
+                Marie D 
+                <img src="headshot2.jpg" alt="Marie D">
+            </div>
+            <div class="card-subtitle">Designer</div>
+            <div class="card-text">
+                Spécialisée dans la création, à la main, de conceptions uniques et professionnelles. Grâce à des outils avancés, elle imagine logos, maquettes et identités visuelles sur mesure.
+            </div>
+        </div>
+        <div class="card reveal">
+            <div class="card-title">
+                Lucas P 
+                <img src="headshot3.jpg" alt="Lucas P">
+            </div>
+            <div class="card-subtitle">Développeur</div>
+            <div class="card-text">
+                Développeur front-end et back-end, donne vie à chaque projet web grâce à une maîtrise experte du HTML, CSS et JavaScript, garantissant performance, fluidité et précision dans chaque ligne de code.
+            </div>
+        </div>
+    </section>
+
+    <h2 class="section-title reveal">Pourquoi nous choisir ?</h2>
+    <section class="interactive-section">
+        <div class="interactive-box reveal">
+            <h3>Qu'est-ce qu'un freelance ?</h3>
+            <p>
+                Un freelance est un professionnel indépendant, choisi avec soin pour ses compétences spécifiques. Chez agence_freelance, nous travaillons avec des freelances de confiance et expérimentés. Chaque mission est coordonnée par nos consultants, qui assurent le suivi et la cohérence du travail réalisé, avec des retours réguliers au client.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2024 Agence_Freelance. <a href="conditions_utilisations.html">Tous droits réservés.</a>
+    </footer>
+
+    <script>
+        // BURGER MENU TOGGLE
+        const burger = document.querySelector('.burger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+        const body = document.body;
+
+        function toggleMenu() {
+            burger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        burger.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+
+        // MOBILE SUBMENU TOGGLE
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const submenuId = this.getAttribute('data-submenu');
+                const submenu = document.getElementById(submenuId);
+                const arrow = this.querySelector('.arrow');
+                
+                // Toggle submenu
+                submenu.classList.toggle('active');
+                arrow.classList.toggle('active');
+            });
+        });
+
+        // NAVIGATION SCROLL HIDE/SHOW
+        let lastScrollTop = 0;
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', function() {
+            let st = window.pageYOffset || document.documentElement.scrollTop;
+            header.style.top = (st > lastScrollTop && st > 100) ? '-100px' : '0';
+            lastScrollTop = st <= 0 ? 0 : st;
+        });
+
+        // CARDS 3D ANIMATION (Desktop only)
+        if (window.innerWidth > 768) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (x - centerX) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.03)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+                });
+            });
+        }
+
+        // CURSEUR PERSONNALISÉ (Desktop only)
+        if (window.innerWidth > 768) {
+            const cursor = document.getElementById('cursor');
+            document.addEventListener('mousemove', e => {
+                cursor.style.top = e.clientY + 'px';
+                cursor.style.left = e.clientX + 'px';
+            });
+
+            const clickableElements = document.querySelectorAll('a, button, .card, .intro-box, .interactive-box, .burger, .menu-item');
+            clickableElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+            });
+        }
+
+        // VAGUES CANVAS
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        let W = canvas.width = window.innerWidth;
+        let H = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        });
+
+        const waves = [];
+        for(let i = 0; i < 6; i++) {
+            waves.push({
+                y: H / 2 + i * 60,
+                amplitude: 40 + i * 8,
+                wavelength: 0.015 + i * 0.008,
+                speed: 0.015 + i * 0.003,
+                phase: 0,
+                color: `rgba(0, 212, 255, ${0.15 - i * 0.02})`
+            });
+        }
+
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function drawWaves() {
+            ctx.clearRect(0, 0, W, H);
+            
+            waves.forEach(w => {
+                ctx.beginPath();
+                for(let x = 0; x < W; x++) {
+                    const distanceFromMouse = Math.abs(x - mouseX);
+                    const mouseInfluence = Math.max(0, 1 - distanceFromMouse / 300);
+                    const extraAmplitude = mouseInfluence * 30;
+                    
+                    const y = w.y + Math.sin(x * w.wavelength + w.phase) * (w.amplitude + extraAmplitude);
+                    
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.strokeStyle = w.color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                w.phase += w.speed;
+            });
+            
+            requestAnimationFrame(drawWaves);
+        }
+        drawWaves();
+
+        // SCROLL REVEAL ANIMATIONS
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 150);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        reveals.forEach(reveal => {
+            revealObserver.observe(reveal);
+        });
+
+        // PARTICULES FLOTTANTES
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            document.body.appendChild(particle);
+        }
+
+        // EFFET GLOW SUIT LA SOURIS (Desktop only)
+        if (window.innerWidth > 768) {
+            const glows = document.querySelectorAll('.glow-effect');
+            document.addEventListener('mousemove', (e) => {
+                glows[0].style.left = (e.clientX - 150) + 'px';
+                glows[0].style.top = (e.clientY - 150) + 'px';
+            });
+        }
+
+        // ANIMATION TITRE TYPING
+        const heroTitle = document.querySelector('.hero h1');
+        const titleText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        let charIndex = 0;
+
+        function typeTitle() {
+            if (charIndex < titleText.length) {
+                heroTitle.textContent += titleText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeTitle, 80);
+            }
+        }
+
+        setTimeout(typeTitle, 500);
+
+        // CONTACT BUTTON ANIMATION
+        const contactBtns = document.querySelectorAll('.contact-btn');
+        contactBtns.forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Close mobile menu when link is clicked
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

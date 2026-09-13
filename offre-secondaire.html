@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offre Secondaire - Agence_Freelance</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ANIMATED BACKGROUND */
+        .animated-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at top right, rgba(255, 69, 0, 0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(220, 20, 60, 0.12) 0%, transparent 50%);
+            animation: gradientPulse 20s ease infinite;
+        }
+
+        @keyframes gradientPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        /* HEADER */
+        header {
+            position: relative;
+            z-index: 10;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .accueil-btn {
+            color: #ff4500;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 24px;
+            background: rgba(255, 69, 0, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .accueil-btn:hover {
+            background: rgba(255, 69, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .barre-nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+            color: #f5f5f7;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: #ff4500;
+        }
+
+        .container-sub-menu {
+            display: none;
+            position: absolute;
+            top: 80%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+
+        .nav-item:hover .container-sub-menu {
+            display: block;
+            animation: fadeInDown 0.3s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .text-barre {
+            display: block;
+            color: #c0c0c0;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin: 5px 0;
+        }
+
+        .text-barre:hover {
+            color: #ff4500;
+            background: rgba(255, 69, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-item-1 {
+            background: linear-gradient(135deg, #ff4500, #dc143c);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+        }
+
+        .nav-item-1:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.5);
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            padding: 180px 60px 80px;
+            text-align: center;
+        }
+
+        .container {
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #ff4500 50%, #dc143c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -3px;
+            animation: titleReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes titleReveal {
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .mot-complement {
+            font-size: 20px;
+            color: #dc143c;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        #img_offre_2 {
+            display: block;
+            max-width: 900px;
+            width: 100%;
+            margin: 60px auto;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(255, 69, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            transition: all 0.6s ease;
+        }
+
+        #img_offre_2:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 40px 100px rgba(255, 69, 0, 0.5);
+        }
+
+        /* AUTRE OFFRE SECTION */
+        .autre-offre {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 80px 60px;
+            margin: 60px auto;
+            max-width: 800px;
+        }
+
+        .titre-autre-offre {
+            font-size: 42px;
+            font-weight: 800;
+            color: #f5f5f7;
+            margin-bottom: 40px;
+        }
+
+        .offre-content {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #ff4500;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s ease;
+        }
+
+        .offre-content:hover {
+            background: rgba(255, 69, 0, 0.1);
+            border-color: #ff4500;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 69, 0, 0.3);
+        }
+
+        /* QUI SOMMES NOUS BOX */
+        .box-qui-sommes-nous-offre-secondaire {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .box-qui-sommes-nous-offre-secondaire:hover {
+            border-color: rgba(255, 69, 0, 0.5);
+            box-shadow: 0 30px 80px rgba(255, 69, 0, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .title-precision {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ff4500;
+            margin-bottom: 25px;
+        }
+
+        .txt-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #c0c0c0;
+        }
+
+        .txt-description a {
+            color: #dc143c;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .txt-description a:hover {
+            color: #ff4500;
+            text-decoration: underline;
+        }
+
+        /* PRICING SECTION */
+        .pricing {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 0 60px;
+        }
+
+        .card.secondary-offer {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 60px;
+            border: 2px solid rgba(255, 69, 0, 0.3);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card.secondary-offer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 69, 0, 0.05) 50%, transparent 70%);
+            animation: shimmer 5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .card.secondary-offer:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #ff4500;
+            box-shadow: 0 30px 80px rgba(255, 69, 0, 0.4);
+        }
+
+        .card h2 {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff4500, #dc143c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features {
+            list-style: none;
+            margin: 30px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features li {
+            padding: 12px 0;
+            font-size: 16px;
+            color: #c0c0c0;
+            transition: all 0.3s ease;
+        }
+
+        .features li:hover {
+            color: #ffffff;
+            transform: translateX(10px);
+        }
+
+        .features strong {
+            color: #ff4500;
+        }
+
+        .price {
+            font-size: 20px;
+            color: #f5f5f7;
+            margin: 40px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price span {
+            font-size: 56px;
+            font-weight: 900;
+            display: block;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #ff4500, #dc143c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff4500, #dc143c);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(255, 69, 0, 0.3);
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .cta:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(220, 20, 60, 0.5);
+        }
+
+        /* PROCESSUS SECTION */
+        .title-processus-sec {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: #f5f5f7;
+            margin: 120px 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .barre-esthetique-sec {
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ff4500, transparent);
+            margin: 0 auto 60px;
+            animation: lineExpand 2s ease-in-out infinite;
+        }
+
+        @keyframes lineExpand {
+            0%, 100% { width: 150px; }
+            50% { width: 250px; }
+        }
+
+        .logo-offre-secondaire {
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 60px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(255, 69, 0, 0.4);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* PROGRESS CONTAINER - Même style que page principale */
+        .progress {
+            position: relative;
+            z-index: 1;
+            margin: 100px auto 200px;
+            max-width: 1200px;
+            padding: 0 60px;
+        }
+
+        .progress_inner {
+            position: relative;
+            margin: 0 auto;
+            min-height: 500px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .progress_inner__step {
+            width: 20%;
+            font-size: 14px;
+            padding: 0 10px;
+            transition: all 0.4s;
+            float: left;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress_inner__step label {
+            padding-top: 50px;
+            top: -20px;
+            display: block;
+            position: relative;
+            cursor: pointer;
+            color: #c0c0c0;
+            transition: all 0.3s ease;
+        }
+
+        .progress_inner__step:hover label {
+            color: #ff4500;
+        }
+
+        .progress_inner__step:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 3px;
+            margin: auto;
+            width: 40px;
+            height: 40px;
+            color: #ff4500;
+            background: rgba(255, 69, 0, 0.1);
+            line-height: 40px;
+            border: 3px solid #ff4500;
+            font-size: 16px;
+            border-radius: 50%;
+            transition: all 0.4s;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .progress_inner__step:hover:before {
+            background: #ff4500;
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .progress_inner__step:nth-of-type(1):before { content: '1'; }
+        .progress_inner__step:nth-of-type(2):before { content: '2'; }
+        .progress_inner__step:nth-of-type(3):before { content: '3'; }
+        .progress_inner__step:nth-of-type(4):before { content: '4'; }
+        .progress_inner__step:nth-of-type(5):before { content: '5'; }
+
+        .progress_inner__bar,
+        .progress_inner__bar--set {
+            height: 6px;
+            left: 10%;
+            border-radius: 6px;
+            position: relative;
+            z-index: -1;
+        }
+
+        .progress_inner__bar {
+            background: linear-gradient(90deg, #ff4500, #dc143c);
+            width: 0;
+            transition: width 800ms cubic-bezier(0.915, 0.015, 0.300, 1.005);
+        }
+
+        .progress_inner__bar--set {
+            width: 80%;
+            top: -6px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -2;
+        }
+
+        .progress_inner__tabs .tab {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100px;
+            text-align: left;
+            margin-top: 80px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .progress_inner__tabs .tab h1 {
+            margin: 0 0 20px;
+            font-size: 28px;
+            color: #ff4500;
+        }
+
+        .progress_inner__tabs .tab p {
+            font-weight: 400;
+            color: #c0c0c0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .progress_inner__status {
+            width: 40px;
+            height: 40px;
+            top: -5px;
+            transition: left 800ms cubic-bezier(0.915, 0.015, 0.300, 1.005);
+            transform: translateX(-50%);
+            position: absolute;
+            left: 10%;
+        }
+
+        .progress_inner__status div {
+            position: absolute;
+            opacity: 0;
+            transition: all 600ms cubic-bezier(0.915, 0.015, 0.300, 1.005);
+            transition-delay: 300ms;
+        }
+
+        .progress_inner__status .box_base {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: auto;
+            background: repeating-linear-gradient(45deg, #986c5d, #986c5d 2px, #775144 2px, #775144 4px);
+            width: 36px;
+            height: 40px;
+            z-index: 1;
+            border-radius: 1px;
+        }
+
+        .progress_inner__status .box_lid {
+            width: 40px;
+            height: 13.3px;
+            background: #775144;
+            z-index: 2;
+            border-radius: 1px;
+            top: 0;
+        }
+
+        .progress_inner__status .box_item {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            margin: auto;
+            width: 20px;
+            height: 20px;
+            background: #be69d2;
+            z-index: 0;
+            border-radius: 4px;
+        }
+
+        .progress_inner__status .box_ribbon {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: auto;
+            width: 10px;
+            height: 42px;
+            background: #ee0f29;
+            z-index: 4;
+            border-radius: 1px;
+        }
+
+        .progress_inner__status .box_bow {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -6px;
+            margin: auto;
+            z-index: 5;
+            transition-delay: 500ms;
+        }
+
+        .progress_inner__status .box_bow__left,
+        .progress_inner__status .box_bow__right {
+            width: 6px;
+            height: 10px;
+            background: #bb0c20;
+            position: absolute;
+            z-index: 3;
+            border-radius: 1px;
+        }
+
+        .progress_inner__status .box_bow__left {
+            left: 6px;
+            transform: rotate(45deg);
+        }
+
+        .progress_inner__status .box_bow__right {
+            left: -4px;
+            transform: rotate(-45deg);
+        }
+
+        .progress_inner__status .box_tag {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: rotate(-10deg) translateX(-40px) translateY(0px);
+            margin: auto;
+            width: 20px;
+            height: 10px;
+            background: #487ac7;
+            z-index: 4;
+            border-radius: 2px;
+            transition-delay: 500ms;
+        }
+
+        .progress_inner__status .box_string {
+            width: 17px;
+            height: 2px;
+            background: #343434;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            margin: auto;
+            z-index: 4;
+            transform: rotate(-39deg) translateX(-22px) translateY(-12px);
+        }
+
+        .progress_inner input[type="radio"] {
+            display: none;
+        }
+
+        #step-1:checked ~ .progress_inner__status { left: 10%; }
+        #step-1:checked ~ .progress_inner__status .box_base { opacity: 1; }
+        #step-1:checked ~ .progress_inner__bar { width: 0%; }
+        #step-1:checked ~ .progress_inner__tabs .tab:nth-of-type(1) { opacity: 1; top: 0; }
+
+        #step-2:checked ~ .progress_inner__status { left: 30%; }
+        #step-2:checked ~ .progress_inner__status .box_base { opacity: 1; }
+        #step-2:checked ~ .progress_inner__status .box_item { opacity: 1; top: -10px; }
+        #step-2:checked ~ .progress_inner__bar { width: 20%; }
+        #step-2:checked ~ .progress_inner__tabs .tab:nth-of-type(2) { opacity: 1; top: 0; }
+
+        #step-3:checked ~ .progress_inner__status { left: 50%; }
+        #step-3:checked ~ .progress_inner__status .box_base { opacity: 1; }
+        #step-3:checked ~ .progress_inner__status .box_item { opacity: 1; top: 10px; }
+        #step-3:checked ~ .progress_inner__status .box_lid { opacity: 1; top: -1px; }
+        #step-3:checked ~ .progress_inner__bar { width: 40%; }
+        #step-3:checked ~ .progress_inner__tabs .tab:nth-of-type(3) { opacity: 1; top: 0; }
+
+        #step-4:checked ~ .progress_inner__status { left: 70%; }
+        #step-4:checked ~ .progress_inner__status .box_base { opacity: 1; }
+        #step-4:checked ~ .progress_inner__status .box_item { opacity: 1; top: 10px; }
+        #step-4:checked ~ .progress_inner__status .box_lid { opacity: 1; top: -1px; }
+        #step-4:checked ~ .progress_inner__status .box_ribbon { opacity: 1; top: 50%; }
+        #step-4:checked ~ .progress_inner__status .box_bow { opacity: 1; }
+        #step-4:checked ~ .progress_inner__bar { width: 60%; }
+        #step-4:checked ~ .progress_inner__tabs .tab:nth-of-type(4) { opacity: 1; top: 0; }
+
+        #step-5:checked ~ .progress_inner__status { left: 90%; }
+        #step-5:checked ~ .progress_inner__status .box_base { opacity: 1; }
+        #step-5:checked ~ .progress_inner__status .box_item { opacity: 1; top: 10px; }
+        #step-5:checked ~ .progress_inner__status .box_lid { opacity: 1; top: -1px; }
+        #step-5:checked ~ .progress_inner__status .box_ribbon { opacity: 1; top: 50%; }
+        #step-5:checked ~ .progress_inner__status .box_bow { opacity: 1; }
+        #step-5:checked ~ .progress_inner__status .box_tag,
+        #step-5:checked ~ .progress_inner__status .box_string { opacity: 1; }
+        #step-5:checked ~ .progress_inner__bar { width: 80%; }
+        #step-5:checked ~ .progress_inner__tabs .tab:nth-of-type(5) { opacity: 1; top: 0; }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 60px 40px;
+            margin-top: 100px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-section h3 {
+            color: #ff4500;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #b0b0b0;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ff4500;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #86868b;
+            font-size: 14px;
+        }
+
+        /* FLOATING PARTICLES */
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: #ff4500;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: particleFloat 15s infinite ease-in-out;
+            opacity: 0.4;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100vh) translateX(80px); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sticky { padding: 15px 20px; }
+            .barre-nav { display: none; }
+            .hero-section { padding: 150px 20px 60px; }
+            .container { font-size: 40px; }
+            .pricing { padding: 0 20px; }
+            .card.secondary-offer { padding: 40px 30px; }
+            .progress { padding: 0 20px; }
+            .progress_inner__step {
+                width: 20%;
+                font-size: 10px;
+            }
+            .progress_inner__step:before {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 12px;
+            }
+            .progress_inner__tabs .tab {
+                padding: 25px;
+            }
+            .box-qui-sommes-nous-offre-secondaire {
+                padding: 40px 30px;
+            }
+        }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="body-offre-secondaire">
+    <div class="animated-gradient"></div>
+
+    <header>
+        <div class="sticky" id="header">
+            <div class="accueil-container">  
+                <a href="index.html" class="accueil-btn">Accueil</a>
+            </div>
+            <img src="logo.png" alt="logo" class="logo">
+            <ul class="barre-nav">
+
+              <li class = "nav-item">
+                  <a class="text-barre" href="details-offre.html">Expérience client</a>
+              </li>
+
+                <li class="nav-item">
+                    Nos compétences
+                    <div class="container-sub-menu">
+                        <a class="text-barre" href="abouts_us.html">- À propos de nous</a>
+                        <a class="text-barre" href="portfolio.html">- Nos réalisations</a>
+                    </div>
+                </li>
+                <div class="bulle-container">
+                    <a class="nav-item-1" href="contact.html">Nous contacter</a>
+                </div>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">NOTRE OFFRE SECONDAIRE</div>
+        <p class="mot-complement">Par agence_freelance</p>
+    </section>
+
+    <img id="img_offre_2" class="reveal" src="emile-perron-xrVDYZRGdw4-unsplash.jpg" alt="offre secondaire">
+
+    <div class="autre-offre reveal">
+        <h2 class="titre-autre-offre">Nos autres offres :</h2>
+        <a class="offre-content" href="offre-principal.html">Offre Principale</a>
+        <a class="offre-content" href="offre-pro.html">Offre Professionnelle</a>
+    </div>
+
+    <div class="box-qui-sommes-nous-offre-secondaire reveal">
+        <h1 class="title-precision">Mais qui sommes-nous ?</h1>
+        <p class="txt-description">
+            Nous sommes une micro-entreprise passionnée par le développement web. Nous avons pour but d'être à l'écoute de nos clients afin de leur proposer le site internet dont ils rêvent. 
+            <br><br>Tout commence par une relation de confiance entre le client et le développeur.
+            <br>Pour en savoir plus sur nous cliquez <a href="abouts_us.html">ici</a>.
+        </p>
+    </div>
+
+    <section class="pricing">
+        <div class="card secondary-offer reveal">
+            <h2>Offre Secondaire</h2>
+            <p class="subtitle">Idéal pour les micro-entreprises</p>
+            <ul class="features">
+                <li>🔴 Jusqu'à <strong>5 pages personnalisées</strong> incluses</li>
+                <li>🔴 Pages supplémentaires sur demande</li>
+                <li>🔴 Design <strong>responsive</strong> (PC, tablette, mobile)</li>
+                <li>🔴 Formulaire de contact intégré</li>
+                <li>🔴 Newsletter incluse</li>
+                <li>🔴 Galerie illimitée (photos, projets)</li>
+                <li>🔴 Liens externes illimités</li>
+                <li>🔴 Footer complet inclus</li>
+                <li>🔴 Nom de domaine inclus</li>
+                <li>🔴 SEO de base</li>
+                <li>🔴 Chargement rapide et optimisation</li>
+                <li>🔴 Mise en place rapide</li>
+            </ul>
+            <div class="price">À partir de <span>390,99 €</span></div>
+            <a class="cta" href="contact.html">Demander un devis</a>
+        </div>
+    </section>
+
+    <h2 class="title-processus-sec reveal">Qu'est-ce qu'il se passe après ma demande ?</h2>
+    <div class="barre-esthetique-sec"></div>
+    <img class="logo-offre-secondaire" src="logo.png" alt="logo">
+
+    <div class="progress reveal">
+        <div class="progress_inner">
+            <div class="progress_inner__step"><label for="step-1">Prise de contact</label></div>
+            <div class="progress_inner__step"><label for="step-2">Conception maquette</label></div>
+            <div class="progress_inner__step"><label for="step-3">Validation design</label></div>
+            <div class="progress_inner__step"><label for="step-4">Développement</label></div>
+            <div class="progress_inner__step"><label for="step-5">Livraison finale</label></div>
+
+            <input type="radio" name="step" id="step-1" checked>
+            <input type="radio" name="step" id="step-2">
+            <input type="radio" name="step" id="step-3">
+            <input type="radio" name="step" id="step-4">
+            <input type="radio" name="step" id="step-5">
+
+            <div class="progress_inner__bar"></div>
+            <div class="progress_inner__bar--set"></div>
+
+            <div class="progress_inner__tabs">
+                <div class="tab tab-0">
+                    <h1>Première prise de contact</h1>
+                    <p>1- Vous nous contactez via formulaire, email ou téléphone.<br>
+                    2- Nous analysons votre besoin et nous vous renvoyons un devis structuré<br>
+                    3- Validation du devis ou demande de révision par vous-même<br>
+                    4- Premier appel pour définir en détail votre projet</p>
+                </div>
+                <div class="tab tab-1">
+                    <h1>Conception maquette</h1>
+                    <p>1- Suite à l'appel convenu, votre consultant vous prépare une maquette visuelle du site.<br>
+                    2- Puis nous vous retournons les maquettes pour les ajuster à vos goûts, autant de fois qu'il le faut.</p>
+                </div>
+                <div class="tab tab-2">
+                    <h1>Validation et acompte</h1>
+                    <p>1- Le client effectue un premier acompte de 40% du montant total.<br>
+                    2- En même temps, envoi des maquettes finalisées<br>
+                    3- Validation du design final avec le client pour que le site corresponde exactement à ses attentes.</p>
+                </div>
+                <div class="tab tab-3">
+                    <h1>Développement du site</h1>
+                    <p>1- Les développeurs web prennent en charge le projet.<br>
+                    2- Intégration des contenus, fonctionnalités et styles validés.<br>
+                    3- Suivi régulier avec le consultant pour garantir que le site respecte le design validé.</p>
+                </div>
+                <div class="tab tab-4">
+                    <h1>Livraison & maintenance</h1>
+                    <p>1- Livraison du site finalisé au client et la somme restante doit être payée.<br>
+                    2- Ajustements finaux si nécessaire (modifications mineures ou corrections).<br>
+                    3- Si inclus dans le package, mise en place d'un support et maintenance continue : mises à jour, sécurité, sauvegardes.<br>
+                    4- Suivi post-livraison de 1 semaine + formation rapide (2h environ) sur demande du client.</p>
+                </div>
+            </div>
+
+            <div class="progress_inner__status">
+                <div class="box_base"></div>
+                <div class="box_lid"></div>
+                <div class="box_ribbon"></div>
+                <div class="box_bow">
+                    <div class="box_bow__left"></div>
+                    <div class="box_bow__right"></div>
+                </div>
+                <div class="box_item"></div>
+                <div class="box_tag"></div>
+                <div class="box_string"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>À propos</h3>
+                <p>Découvrez notre mission et notre engagement à fournir des services de qualité.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: agence_freelance@yahoo.com</p>
+                <p>Téléphone: +33 7 66 59 69 70</p>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <a href="#">Facebook</a> | 
+                <a href="https://www.instagram.com/agence_freelance/">Instagram</a> | 
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Agence Freelance — Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // PARTICULES FLOTTANTES
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (12 + Math.random() * 8) + 's';
+            document.body.appendChild(particle);
+        }
+
+        // SCROLL REVEAL ANIMATIONS
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 100);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        reveals.forEach(reveal => {
+            revealObserver.observe(reveal);
+        });
+
+        // HEADER HIDE ON SCROLL DOWN
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // ANIMATION 3D SUR LA CARD
+        const card = document.querySelector('.card.secondary-offer');
+        const ctaBtn = document.querySelector('.cta');
+        let isHoveringCTA = false;
+        
+        // Désactiver l'animation 3D quand on survole le bouton CTA
+        ctaBtn.addEventListener('mouseenter', () => {
+            isHoveringCTA = true;
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(-20px) scale(1.03)';
+        });
+        
+        ctaBtn.addEventListener('mouseleave', () => {
+            isHoveringCTA = false;
+        });
+        
+        card.addEventListener('mousemove', (e) => {
+            // Si on survole le bouton CTA, on ne fait rien
+            if (isHoveringCTA) return;
+            
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 15;
+            const rotateY = (x - centerX) / 15;
+            
+            card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateY(-20px) scale(1.03)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+        });
+        
+        
+        // AUTO PROGRESS ANIMATION
+        let currentStep = 1;
+        const totalSteps = 5;
+        
+        function autoProgress() {
+            document.getElementById(`step-${currentStep}`).checked = true;
+            currentStep++;
+            if (currentStep > totalSteps) {
+                currentStep = 1;
+            }
+        }
+
+        setInterval(autoProgress, 5000);
+
+        // LOGO ANIMATION ON CLICK
+        const logos = document.querySelectorAll('.logo, .logo-offre-secondaire');
+        logos.forEach(logo => {
+            logo.addEventListener('click', () => {
+                logo.style.animation = 'none';
+                setTimeout(() => {
+                    logo.style.animation = 'logoPulse 3s ease-in-out infinite';
+                }, 10);
+            });
+        });
+
+        // PARALLAX EFFECT SUR L'IMAGE
+        const img = document.getElementById('img_offre_2');
+        if (img) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.3;
+                img.style.transform = `translateY(${rate}px)`;
+            });
+        }
+
+        // FEATURES LIST ANIMATION
+        const features = document.querySelectorAll('.features li');
+        features.forEach((feature, index) => {
+            feature.style.opacity = '0';
+            feature.style.transform = 'translateX(-30px)';
+            
+            setTimeout(() => {
+                feature.style.transition = 'all 0.5s ease';
+                feature.style.opacity = '1';
+                feature.style.transform = 'translateX(0)';
+            }, index * 100);
+        });
+
+        // CTA BUTTON RIPPLE EFFECT
+        const ctaButton = document.querySelector('.cta');
+        ctaButton.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.pointerEvents = 'none';
+            
+            this.appendChild(ripple);
+            
+            ripple.animate([
+                { transform: 'scale(0)', opacity: 1 },
+                { transform: 'scale(2)', opacity: 0 }
+            ], {
+                duration: 600,
+                easing: 'ease-out'
+            });
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // TYPING EFFECT SUR LE TITRE PRINCIPAL
+        const mainTitle = document.querySelector('.container');
+        const titleText = mainTitle.textContent;
+        mainTitle.textContent = '';
+        let charIndex = 0;
+
+        function typeTitle() {
+            if (charIndex < titleText.length) {
+                mainTitle.textContent += titleText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeTitle, 100);
+            }
+        }
+
+        setTimeout(typeTitle, 500);
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

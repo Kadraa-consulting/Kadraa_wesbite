@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Processus d'achat — Agence Freelance</title>
+<link rel="icon" href="logo.png">
+
+<!-- Police moderne (optionnelle, remplaçable) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-dark:#07070a;
+    --panel:#0f1115;
+    --muted:#9aa3ae;
+    --accent:#ff3b30; /* rouge dynamique / accent */
+    --accent-2:#8ad3ff; /* bleu d'accent secondaire */
+    --glass: rgba(255,255,255,0.04);
+    --glass-2: rgba(255,255,255,0.02);
+    --card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    --radius: 14px;
+    --maxw:1100px;
+    --transition: 0.3s ease;
+  }
+
+  /* ========== RESET ========== */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,var(--bg-dark), #05060a 120%);
+    color:#e9eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* =========BARRE NAV =========== */
+
+  .header-index{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+    pointer-events:auto;
+    display:block;
+    width:100%;
+    transition:background var(--transition), transform var(--transition), box-shadow var(--transition);
+    will-change: transform, background;
+  }
+
+  .nav-wrapper{
+    max-width:1220px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 28px;
+    gap:18px;
+    transform:translateZ(0);
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.15) 100%);
+    border-bottom: 1px solid transparent;
+    border-radius:0;
+  }
+
+  /* when scrolled / sticky state */
+  .header-index.scrolled .nav-wrapper{
+    background: linear-gradient(180deg, rgba(5,4,4,0.85), rgba(10,9,9,0.82));
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.02) inset;
+    border-bottom:1px solid rgba(255,255,255,0.02);
+    backdrop-filter: blur(5px);
+  }
+
+  /* Hide nav when scrolling down */
+  .nav-hidden{
+    transform: translateY(-110%) !important;
+    opacity:0;
+  }
+
+  /* logo */
+  .nav-logo{
+    height:54px;
+    width:auto;
+    object-fit:contain;
+    transition: transform var(--transition);
+    z-index:1001;
+    border-radius: 44px;
+  }
+
+  .nav-logo:hover{
+    animation: logoFloat 1s ease-in-out infinite;
+  }
+
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* decorative left lines */
+  .decor-left{display:flex; gap:8px; align-items:center}
+  .decor-line{width:3px; height:34px; border-radius:2px; background:linear-gradient(180deg,var(--accent-2), rgba(255,255,255,0.03)); opacity:0.9}
+  .decor-line-2{height:28px; opacity:0.65}
+  .decor-line-3{height:20px; opacity:0.5}
+
+  /* nav menu DESKTOP */
+  .nav-menu{
+    list-style:none;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin:0;
+    padding:0;
+  }
+  .nav-menu-item{
+    position:relative;
+    font-weight:600;
+    letter-spacing:0.4px;
+    cursor:pointer;
+    padding:8px 12px;
+    color:#e9eef6;
+    transition:color 240ms;
+  }
+  .nav-menu-item:hover{color:var(--accent-2)}
+
+  /* arrow caret */
+  .nav-menu-arrow{
+    display:inline-block;
+    margin-left:8px;
+    font-size:12px;
+    transform:translateY(-2px);
+    color:var(--muted);
+  }
+
+  /* submenu */
+  .submenu-container{
+    position:absolute;
+    left:0;
+    top:37px;
+    min-width:260px;
+    background: linear-gradient(180deg, rgba(12,12,12,0.95), rgba(7,7,7,0.98));
+    border-radius:10px;
+    padding:14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 2px 0 rgba(255,255,255,0.02) inset;
+    opacity:0;
+    transform: translateY(8px) scale(.98);
+    pointer-events:none;
+    transition: opacity 260ms ease, transform 260ms ease;
+    z-index:90;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .nav-menu-item:hover .submenu-container{
+    opacity:1;
+    transform: translateY(2px) scale(1);
+    pointer-events:auto;
+  }
+
+  /* submenu items */
+  .submenu-item{display:flex; align-items:flex-start; gap:10px; padding:8px 6px; flex-direction: column;}
+  .submenu-title{font-weight:700; font-size:15px; color:#e9eef6}
+  .submenu-link{display:block; color:var(--muted); text-decoration:none; padding:6px 0; font-size:14px}
+  .submenu-link:hover{color:#e9eef6; text-decoration:underline}
+
+  .nested-submenu{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 10px;
+  }
+
+  .submenu-caret {
+    display: none;
+  }
+
+  /* contact button */
+  .contact-button-container{margin-left:12px}
+  .contact-button-link{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:10px;
+    background:linear-gradient(90deg, rgba(138,211,255,0.12), rgba(255,59,48,0.06));
+    color:var(--accent-2);
+    border:1px solid rgba(138,211,255,0.12);
+    text-decoration:none;
+    font-weight:700;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .contact-button-link:hover{
+    transform:translateY(-3px);
+    box-shadow: 0 8px 30px rgba(138,211,255,0.12), 0 2px 6px rgba(0,0,0,0.6);
+  }
+
+  /* BURGER MENU */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 10px;
+  }
+
+  .burger span {
+    width: 28px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .burger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .burger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+  }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background: rgba(7, 7, 10, 0.98);
+    backdrop-filter: blur(30px);
+    z-index: 999;
+    padding: 100px 30px 30px;
+    overflow-y: auto;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-menu.active {
+    right: 0;
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    animation: logoRotate 4s linear infinite;
+  }
+
+  @keyframes logoRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .mobile-logo span {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-2);
+  }
+
+  .mobile-nav {
+    list-style: none;
+  }
+
+  .mobile-nav > li {
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav a, .mobile-nav .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: #e9eef6;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .mobile-nav a:hover, .mobile-nav .menu-item:hover {
+    background: rgba(138, 211, 255, 0.1);
+    color: var(--accent-2);
+    transform: translateX(5px);
+  }
+
+  .mobile-nav .arrow {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-nav .arrow.active {
+    transform: rotate(90deg);
+  }
+
+  .mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-left: 20px;
+  }
+
+  .mobile-submenu.active {
+    max-height: 1000px;
+    margin-top: 10px;
+  }
+
+  .mobile-submenu li {
+    margin-bottom: 8px;
+  }
+
+  .mobile-submenu a, .mobile-submenu .menu-item {
+    font-size: 14px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .mobile-contact-btn {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ========== NAV / FOOTER PLACEHOLDERS ========== */
+  .nav-placeholder{
+    height:84px;
+    width:100%;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.15));
+    pointer-events:none;
+  }
+  .footer-placeholder{ height:120px; }
+
+  /* ========== LAYOUT ========== */
+  .page {
+    max-width: calc(var(--maxw) + 40px);
+    margin: 20px auto 80px;
+    padding: 30px;
+  }
+
+  .hero {
+    display:flex;
+    align-items:center;
+    gap:28px;
+    justify-content:space-between;
+    margin-bottom:32px;
+  }
+
+  .hero-left{
+    flex:1;
+    min-width:280px;
+  }
+  .eyebrow{
+    display:inline-block;
+    color:var(--muted);
+    font-weight:600;
+    letter-spacing:0.08em;
+    font-size:12px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+  }
+  h1.main-title{
+    font-family:"Playfair Display", serif;
+    font-size:34px;
+    margin:14px 0 6px;
+    color:#fff;
+    letter-spacing: -0.01em;
+  }
+  p.lead{
+    color:var(--muted);
+    margin:0 0 18px;
+    max-width:720px;
+  }
+
+  .hero-visual{
+    width:360px;
+    max-width:40%;
+    min-width:220px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+    padding:18px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(138,211,255,0.02);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .hero-visual .mock{
+    width:100%;
+    height:220px;
+    border-radius:12px;
+    background: linear-gradient(135deg, rgba(138,211,255,0.08), rgba(255,59,48,0.06));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted);
+    font-weight:600;
+    letter-spacing:0.02em;
+    transform: translateY(0);
+    transition: transform 0.6s cubic-bezier(.2,.9,.2,1);
+  }
+
+  .mock img{
+    border-radius: 12px;
+    transition: all ease-in-out 0.3s;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mock:hover img{
+    transform: scale(1.1);
+    box-shadow: 0px 10px 18px #e9eef6;
+  }
+  .hero-visual:hover .mock{ transform: translateY(-8px); }
+
+  /* ========== TWO-COLUMN + TIMELINE ========== */
+  .content {
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap:28px;
+    align-items:start;
+    max-width:var(--maxw);
+    margin-top:6px;
+  }
+
+  /* vertical timeline / progress */
+  .timeline {
+    position:sticky;
+    top:100px;
+    align-self:start;
+    padding:20px 12px;
+    border-radius:12px;
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.03);
+    min-height:240px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .timeline .dot {
+    width:14px;height:14px;border-radius:50%;
+    background:linear-gradient(90deg,var(--accent-2),var(--accent));
+    box-shadow:0 6px 18px rgba(0,0,0,0.6);
+    transition:transform .28s, box-shadow .28s;
+    transform:scale(.92);
+  }
+  .timeline .item{
+    display:flex;gap:12px;align-items:center;
+    color:var(--muted); font-size:14px;
+    cursor: pointer;
+  }
+  .timeline .item.active .dot{ transform:scale(1.25); box-shadow:0 12px 28px rgba(255,59,48,0.14);}
+  .timeline .item.active .label{ color:#fff; font-weight:700; }
+
+  /* ========== SECTIONS ========== */
+  .sections {
+    padding:10px 18px;
+  }
+
+  section.stage {
+    margin-bottom:36px;
+    padding:26px;
+    border-radius:12px;
+    background: var(--card);
+    border:1px solid rgba(255,255,255,0.02);
+    box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+    opacity:0;
+    transform: translateY(28px) scale(.995);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.2,.9,.2,1), box-shadow .3s;
+  }
+
+  section.stage.in-view{
+    opacity:1;
+    transform: translateY(0) scale(1);
+  }
+
+  section.stage h2 {
+    margin:0 0 8px;
+    font-size:20px;
+    color:#fff;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  section.stage p.sub {
+    margin:0 0 12px;
+    color:var(--accent-2);
+    font-weight:600;
+  }
+
+  section.stage .detail {
+    color:var(--muted);
+    margin-top:8px;
+    font-size:15px;
+    line-height:1.6;
+  }
+
+  /* fancy card header small badge */
+  .badge {
+    display:inline-block;
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color:var(--accent);
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    border:1px solid rgba(255,255,255,0.03);
+    margin-right:8px;
+  }
+
+  /* CTA sticky on right bottom */
+  .action-cta {
+    position:fixed;
+    right:24px;
+    bottom:30px;
+    z-index:60;
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .action-cta .btn {
+    background: linear-gradient(90deg,var(--accent-2),var(--accent));
+    color:#071017;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:700;
+    border:none;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    transition: transform .18s ease, box-shadow .18s;
+  }
+  .action-cta .btn:hover{ transform: translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,0.75) }
+  .action-cta .btn a{
+    color: #071017;
+    text-decoration: none;
+  }
+
+  /* tiny helper - anchor nav inside page */
+  .mini-nav {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:12px;
+  }
+  .mini-nav a {
+    padding:6px 10px;
+    border-radius:8px;
+    background:transparent;
+    color:var(--muted);
+    font-weight:600;
+    border:1px solid rgba(255,255,255,0.02);
+    transition: all .18s;
+  }
+  .mini-nav a:hover{ color:#fff; transform: translateY(-2px)}
+
+  /* subtle floating background shapes */
+  .bg-shape{
+    position:fixed;
+    right:-10%;
+    top:10%;
+    width:420px;height:420px;
+    opacity:0.06;
+    filter:blur(40px);
+    background: radial-gradient(circle at 30% 20%, #8ad3ff, transparent 25%),
+                radial-gradient(circle at 70% 70%, #ff6b5b, transparent 25%);
+    z-index:0;
+    pointer-events:none;
+  }
+
+  /* accessible focus */
+  a:focus, button:focus { outline: 3px solid rgba(138,211,255,0.18); outline-offset:3px; }
+
+
+  /* ===== Suivi Premium : cartes & modal ===== */
+  #suivi-premium { 
+    margin-top:28px; 
+    position: relative;
+  }
+
+  .premium-grid {
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:18px;
+    margin-top:16px;
+  }
+
+  /* card */
+  .premium-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    padding:18px;
+    border-radius:12px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    will-change: transform, opacity;
+  }
+  .premium-card:hover, .premium-card:focus {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    outline: none;
+  }
+  .premium-card .card-head { display:flex; align-items:center; gap:12px; }
+  .premium-card .icon {
+    width:48px; height:48px; display:flex; align-items:center; justify-content:center;
+    font-size:22px; border-radius:10px;
+    background: linear-gradient(90deg, rgba(138,211,255,0.06), rgba(255,59,48,0.04));
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .premium-card h3 { margin:0; font-size:16px; color:#fff; }
+  .card-excerpt { color: rgba(255,255,255,0.6); margin:0 0 8px 0; font-size:14px; }
+
+  .card-action {
+    margin-top:auto;
+    align-self:flex-start;
+    padding:8px 12px;
+    background:transparent;
+    border:1px solid rgba(138,211,255,0.12);
+    color:var(--accent-2);
+    border-radius:10px;
+    cursor:pointer;
+    transition: all .18s;
+  }
+  .card-action:hover { background: linear-gradient(90deg,var(--accent-2),var(--accent)); color:#071017; transform: translateY(-4px); }
+
+  /* modal */
+  .premium-modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(4,6,10,0.6);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .28s ease;
+  }
+  .premium-modal[aria-hidden="false"] { opacity: 1; pointer-events: auto; }
+
+  .modal-panel {
+    width: min(920px, 94%);
+    max-height: 86vh;
+    background: linear-gradient(180deg, #0f1216, #0b0c0e);
+    border-radius:14px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,0.04);
+    box-shadow:0 30px 100px rgba(0,0,0,0.75);
+    overflow:auto;
+    transform: translateY(20px);
+    transition: transform .28s cubic-bezier(.2,.9,.2,1);
+    position: relative;
+  }
+  .premium-modal[aria-hidden="false"] .modal-panel { transform: translateY(0); }
+
+  .modal-close {
+    position:absolute; right:22px; top:18px;
+    background:transparent; border:none; color:var(--accent-2); font-size:28px; cursor:pointer;
+  }
+  .modal-header { display:flex; gap:14px; align-items:center; margin-bottom:6px; }
+  .modal-icon { font-size:26px; width:48px; height:48px; display:grid; place-items:center; border-radius:10px; background:linear-gradient(90deg, rgba(138,211,255,0.06), rgba(255,59,48,0.04)); }
+  .modal-header h3 { margin:0; color:#fff; font-size:18px; }
+  .modal-sub { color: var(--muted); margin:0; font-size:13px; }
+
+  .modal-body { margin-top:12px; color: rgba(255,255,255,0.85); line-height:1.6; }
+  .modal-actions { margin-top:18px; display:flex; gap:12px; align-items:center; }
+  .btn-link { padding:8px 14px; border-radius:10px; background:linear-gradient(90deg,var(--accent-2),var(--accent)); color:#071017; font-weight:700; text-decoration:none; }
+  .btn-outline { padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff; cursor:pointer; }
+
+  /* reveal on scroll - initial state */
+  .premium-card { opacity:0; transform: translateY(18px) scale(.996); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1) }
+
+  /* When JS marks visible */
+  .premium-card.visible { opacity:1; transform:translateY(0) scale(1) }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width:1100px){ 
+    .premium-grid{ grid-template-columns: repeat(3,1fr);} 
+  }
+  
+  @media (max-width:1000px){
+    .hero { flex-direction:column; gap:18px; align-items:flex-start }
+    .hero-visual{ width:100%; max-width:420px}
+    .content{ grid-template-columns: 1fr; padding-top:6px}
+    .timeline{ 
+      position:relative; 
+      top:0; 
+      flex-direction:row; 
+      gap:12px; 
+      padding:12px; 
+      overflow:auto;
+    }
+    .timeline .item{ white-space:nowrap}
+    .timeline{ border-radius:12px; }
+    .premium-grid{ grid-template-columns: repeat(2,1fr);} 
+    .premium-card .icon{width:44px;height:44px}
+  }
+
+  @media (max-width:768px){
+    body{ font-size:15px }
+    
+    .nav-menu, .contact-button-container, .decor-left { display: none; }
+    
+    .burger { display: flex; }
+    
+    .nav-wrapper {
+      padding: 15px 20px;
+    }
+    
+    .page{ padding:18px 16px; margin:8px auto 80px }
+    
+    .hero-left h1{ font-size:26px }
+    
+    .hero-visual{ 
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .action-cta{ right:12px; bottom:16px; }
+    
+    .action-cta .btn {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    
+    .mini-nav {
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .mini-nav a {
+      text-align: center;
+    }
+    
+    section.stage {
+      padding: 20px;
+    }
+    
+    section.stage h2 {
+      font-size: 18px;
+      flex-wrap: wrap;
+    }
+    
+    .premium-grid{ grid-template-columns: 1fr;}
+    .premium-card{ padding:14px }
+    .modal-panel{ padding:12px }
+  }
+
+  @media (max-width:480px){ 
+    .nav-logo {
+      height: 45px;
+    }
+    
+    .hero-left h1 {
+      font-size: 22px;
+    }
+    
+    .eyebrow {
+      font-size: 11px;
+      padding: 6px 10px;
+    }
+    
+    .lead {
+      font-size: 14px;
+    }
+    
+    section.stage {
+      padding: 16px;
+    }
+    
+    .badge {
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+  <header class="header-index">
+    <div class="nav-wrapper">
+      <!-- Barres décoratives à gauche -->
+      <div class="decor-left">
+        <div class="decor-line decor-line-1"></div>
+        <div class="decor-line decor-line-2"></div>
+        <div class="decor-line decor-line-3"></div>
+      </div>
+
+      <!-- Menu principal DESKTOP -->
+      <ul class="nav-menu">
+        <li class="nav-menu-item">
+          <a href="index.html">Accueil</a>
+        </li>
+        <li class="nav-menu-item">Nos services 
+          <span class="nav-menu-arrow">↑</span>
+          <div class="submenu-container">
+            <div class="submenu-item">
+              <span class="submenu-title">Site web</span>
+              <div class="nested-submenu">
+                <a class="submenu-link" href="offre-principal.html">Principal</a>
+                <a class="submenu-link" href="offre-secondaire.html">Secondaire</a>
+                <a class="submenu-link" href="offre-pro.html">Professionnel</a>
+              </div>
+            </div>
+            <div class="submenu-item">
+              <span class="submenu-title">Packaging</span>
+              <div class="nested-submenu">
+                <a class="submenu-link" href="starter-pack.html">Starter Pack</a>
+                <a class="submenu-link" href="package-business.html">Business Pack</a>
+                <a class="submenu-link" href="#">Pro Pack</a>
+              </div>
+            </div>
+            <div class="submenu-item">
+              <a class="submenu-title" href="reseaux-sociaux.html">Réseaux sociaux</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-menu-item">Nos compétences 
+          <span class="nav-menu-arrow">↑</span>
+          <div class="submenu-container">
+            <a class="submenu-link" href="abouts_us.html">À propos de nous</a>
+            <a class="submenu-link" href="portfolio.html">Portfolio</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Bouton contact -->
+      <div class="contact-button-container">
+        <a class="contact-button-link" href="contact.html">Nous contacter</a>
+      </div>
+
+      <!-- Logo -->
+      <img src="logo.png" alt="logo" class="nav-logo">
+
+      <!-- BURGER MENU -->
+      <div class="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay"></div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <div class="mobile-logo">
+      <img src="logo.png" alt="logo">
+      <span>Agence_Freelance</span>
+    </div>
+    
+    <ul class="mobile-nav">
+      <li><a href="index.html">Accueil</a></li>
+      
+      <li>
+        <div class="menu-item" data-submenu="services">
+          <span>Nos services</span>
+          <span class="arrow">➤</span>
+        </div>
+        <ul class="mobile-submenu" id="services">
+          <li>
+            <div class="menu-item" data-submenu="sites">
+              <span>Sites web</span>
+              <span class="arrow">➤</span>
+            </div>
+            <ul class="mobile-submenu" id="sites">
+              <li><a href="offre-principal.html">Site principal</a></li>
+              <li><a href="offre-secondaire.html">Site secondaire</a></li>
+              <li><a href="offre-pro.html">Site professionnel</a></li>
+            </ul>
+          </li>
+          <li>
+            <div class="menu-item" data-submenu="packaging">
+              <span>Nos packagings</span>
+              <span class="arrow">➤</span>
+            </div>
+            <ul class="mobile-submenu" id="packaging">
+              <li><a href="starter-pack.html">Starter pack</a></li>
+              <li><a href="package-business.html">Business pack</a></li>
+              <li><a href="#">Pro pack</a></li>
+            </ul>
+          </li>
+          <li><a href="reseaux-sociaux.html">Réseaux sociaux</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <div class="menu-item" data-submenu="competences">
+          <span>Nos compétences</span>
+          <span class="arrow">➤</span>
+        </div>
+        <ul class="mobile-submenu" id="competences">
+          <li><a href="abouts_us.html">À propos de nous</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+        </ul>
+      </li>
+    </ul>
+    
+    <div class="mobile-contact-btn">
+      <a class="contact-button-link" href="contact.html">Nous contacter</a>
+    </div>
+  </div>
+
+  <div class="bg-shape" aria-hidden="true"></div>
+
+  <main class="page" id="main">
+    <header class="hero" role="banner" aria-labelledby="page-title">
+      <div class="hero-left">
+        <span class="eyebrow">Processus</span>
+        <h1 id="page-title" class="main-title">Comment se déroule l'achat d'un service</h1>
+        <p class="lead">Voici le déroulé complet, étape par étape. Chaque phase est expliquée et laisse de la place pour vos détails et informations contractuelles.</p>
+
+        <nav class="mini-nav" aria-label="Sommaire rapide">
+          <a href="#s1">Première prise de contact</a>
+          <a href="#s2">Conception maquette</a>
+          <a href="#s3">Validation et acompte</a>
+          <a href="#s4">Développement du site</a>
+          <a href="#s5">Livraison & maintenance</a>
+        </nav>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="mock"><img src="pexels-experience-client.jpg" alt="img-exeperience-client"></div>
+      </div>
+    </header>
+
+    <div class="content" role="region" aria-label="Processus détaillé">
+      <!-- TIMELINE -->
+      <aside class="timeline" aria-hidden="false">
+        <div class="item" data-target="s1"><div class="dot"></div><div class="label">Contact</div></div>
+        <div class="item" data-target="s2"><div class="dot"></div><div class="label">Maquette</div></div>
+        <div class="item" data-target="s3"><div class="dot"></div><div class="label">Acompte</div></div>
+        <div class="item" data-target="s4"><div class="dot"></div><div class="label">Dév</div></div>
+        <div class="item" data-target="s5"><div class="dot"></div><div class="label">Livr.</div></div>
+      </aside>
+
+      <!-- SECTIONS -->
+      <section class="sections">
+
+        <!-- 1 -->
+        <section id="s1" class="stage" tabindex="0" aria-labelledby="s1-title">
+          <h2 id="s1-title"><span class="badge">01</span> <span>Première prise de contact</span></h2>
+          <p class="sub">Contact → Devis → Validation → Premier appel projet.</p>
+          <div class="detail">
+            <p><strong>Étapes détaillées :</strong></p>
+            <ul>
+              <li>Réception de la demande via formulaire / email / téléphone.</li>
+              <li>Évaluation rapide du besoin & premiers documents demandés.</li>
+              <li>Planification d'un appel de découverte (30–60 min).</li>
+              <li>Transmission d'un devis estimatif & FAQ.</li>
+            </ul>
+
+            <p style="margin-top:12px"><em>Zone texte — remplacez par votre contenu :</em></p>
+            <p class="lorem">
+Chez nous, tout commence par une première rencontre humaine et stratégique. Dès votre demande, nous analysons vos besoins, planifions un appel personnalisé et vous transmettons un devis clair. Ce premier échange marque le début d'un accompagnement précis, transparent et 100% sur mesure.
+</p>
+
+          </div>
+        </section>
+
+        <!-- 2 -->
+        <section id="s2" class="stage" tabindex="0" aria-labelledby="s2-title">
+          <h2 id="s2-title"><span class="badge">02</span> <span>Conception maquette</span></h2>
+          <p class="sub">Création des wireframes et ajustements jusqu'à validation.</p>
+          <div class="detail">
+            <p><strong>Ce que nous livrons :</strong></p>
+            <ul>
+              <li>Wireframes basse fidélité pour valider l'arborescence.</li>
+              <li>Prototype visuel (maquette UI) pour chaque page clé.</li>
+              <li>Itérations jusqu'à satisfaction (x révisions incluses).</li>
+            </ul>
+
+            <p style="margin-top:12px"><em>Zone texte — remplacez par votre contenu :</em></p>
+            <p class="lorem">
+Une fois vos objectifs définis, notre designer crée une maquette fidèle à votre vision. Chaque élément est pensé pour sublimer votre image et optimiser l'expérience utilisateur. Vous suivez l'avancement en temps réel via votre portail client, avec révisions illimitées jusqu'à validation complète.
+</p>
+
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section id="s3" class="stage" tabindex="0" aria-labelledby="s3-title">
+          <h2 id="s3-title"><span class="badge">03</span> <span>Validation et acompte</span></h2>
+          <p class="sub">Acompte 40%, validation finale des maquettes.</p>
+          <div class="detail">
+            <p><strong>Procédure financière :</strong></p>
+            <ul>
+              <li>Envoi d'un contrat/bon de commande récapitulant scope et livrables.</li>
+              <li>Facturation d'un acompte de 40% à la validation du devis.</li>
+              <li>Démarrage effectif du développement après réception du paiement.</li>
+            </ul>
+
+            <p style="margin-top:12px"><em>Zone texte — remplacez par votre contenu :</em></p>
+            <p class="lorem">
+Après validation du design, un document d'accord officiel ("Agreement") vous est envoyé, suivi de votre facture d'acompte. Vous recevez ensuite votre "Welcome Doc" détaillant les prochaines étapes, ainsi qu'un accès privilégié à votre espace client pour suivre le projet à tout moment.
+</p>
+
+          </div>
+        </section>
+
+        <!-- 4 -->
+        <section id="s4" class="stage" tabindex="0" aria-labelledby="s4-title">
+          <h2 id="s4-title"><span class="badge">04</span> <span>Développement du site</span></h2>
+          <p class="sub">Intégration des contenus et suivi régulier du projet.</p>
+          <div class="detail">
+            <p><strong>Phase technique :</strong></p>
+            <ul>
+              <li>Développement front & back selon maquette validée.</li>
+              <li>Intégration du contenu fourni et optimisation performances.</li>
+              <li>Tests, QA, et recette client (phase UAT).</li>
+            </ul>
+
+            <p style="margin-top:12px"><em>Zone texte — remplacez par votre contenu :</em></p>
+            <p class="lorem">
+Le développement démarre : nos experts front-end et back-end traduisent la maquette en un site fluide, rapide et parfaitement optimisé. Des rapports hebdomadaires ("Weekly Reports") assurent une transparence totale à chaque étape, jusqu'à la validation finale du rendu.
+</p>
+
+          </div>
+        </section>
+
+        <!-- 5 -->
+        <section id="s5" class="stage" tabindex="0" aria-labelledby="s5-title">
+          <h2 id="s5-title"><span class="badge">05</span> <span>Livraison & maintenance</span></h2>
+          <p class="sub">Livraison, ajustements finaux, formation rapide.</p>
+          <div class="detail">
+            <p><strong>Après-livraison :</strong></p>
+            <ul>
+              <li>Publication en production et vérifications post-déploiement.</li>
+              <li>Période de garantie & corrections mineures incluses.</li>
+              <li>Option maintenance : mises à jour, sauvegardes et support.</li>
+            </ul>
+
+            <p style="margin-top:12px"><em>Zone texte — remplacez par votre contenu :</em></p>
+           <p class="lorem">
+À la livraison, nous procédons ensemble aux derniers ajustements. Vous recevez ensuite un "Content Usage Guide" complet pour gérer vos contenus en autonomie. Enfin, nous vous remercions avec une attention personnalisée ("Thank You Step") et proposons un suivi continu via notre service de maintenance premium.
+</p>
+
+          </div>
+        </section>
+
+      </section>
+
+      <!-- Début : Section Suivi Premium -->
+      <section id="suivi-premium" class="stage" aria-labelledby="suivi-premium-title" style="overflow:visible;">
+        <h2 id="suivi-premium-title"><span class="badge">SP</span> <span>Suivi Premium du projet</span></h2>
+        <p class="sub">Documents et points de suivi fournis par votre conseiller pour un accompagnement haut de gamme.</p>
+
+        <div class="premium-grid" role="list" aria-label="Documents de suivi premium">
+          <article class="premium-card" role="listitem" data-doc="accord" tabindex="0" aria-describedby="accord-desc">
+            <div class="card-head">
+              <div class="icon">📝</div>
+              <h3>Accord</h3>
+            </div>
+            <p id="accord-desc" class="card-excerpt">Contrat, devis — cliquez pour plus de détails.</p>
+            <button class="card-action" data-open="accord">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="welcome" tabindex="0" aria-describedby="welcome-desc">
+            <div class="card-head"><div class="icon">👋</div><h3>Document d'accueil</h3></div>
+            <p id="welcome-desc" class="card-excerpt">Guide d'accueil & premières étapes pour démarrer.</p>
+            <button class="card-action" data-open="welcome">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="facture" tabindex="0" aria-describedby="facture-desc">
+            <div class="card-head"><div class="icon">🧾</div><h3>Facture</h3></div>
+            <p id="facture-desc" class="card-excerpt">Facturation récapitulative et historiques de paiement.</p>
+            <button class="card-action" data-open="facture">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="portail" tabindex="0" aria-describedby="portail-desc">
+            <div class="card-head"><div class="icon">🔐</div><h3>Portail client</h3></div>
+            <p id="portail-desc" class="card-excerpt">Grâce a un suivi premium, profitez d'une plateforme dédié a votre projet ou vous suivrez son avancé.</p>
+            <button class="card-action" data-open="portail">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="appel" tabindex="0" aria-describedby="appel-desc">
+            <div class="card-head"><div class="icon">📞</div><h3>Appel</h3></div>
+            <p id="appel-desc" class="card-excerpt">Planification et compte-rendu des appels projet.</p>
+            <button class="card-action" data-open="appel">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="guide" tabindex="0" aria-describedby="guide-desc">
+            <div class="card-head"><div class="icon">📚</div><h3>Guide d'utilisation du contenu</h3></div>
+            <p id="guide-desc" class="card-excerpt">Règles & bonnes pratiques pour l'utilisation des médias.</p>
+            <button class="card-action" data-open="guide">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="rapport" tabindex="0" aria-describedby="rapport-desc">
+            <div class="card-head"><div class="icon">📈</div><h3>Rapport hebdomadaire</h3></div>
+            <p id="rapport-desc" class="card-excerpt">Compte-rendu hebdomadaire, tâches et KPIs.</p>
+            <button class="card-action" data-open="rapport">Voir</button>
+          </article>
+
+          <article class="premium-card" role="listitem" data-doc="merci" tabindex="0" aria-describedby="merci-desc">
+            <div class="card-head"><div class="icon">🎉</div><h3>Remerciement</h3></div>
+            <p id="merci-desc" class="card-excerpt">Message de remerciement & clôture de projet.</p>
+            <button class="card-action" data-open="merci">Voir</button>
+          </article>
+        </div>
+
+        <!-- Modal dynamique -->
+        <div id="premium-modal" class="premium-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
+          <div class="modal-panel" role="document">
+            <button class="modal-close" aria-label="Fermer (Esc)">&times;</button>
+            <header class="modal-header">
+              <div class="modal-icon">📝</div>
+              <div>
+                <h3 id="modal-title">Titre document</h3>
+                <p class="modal-sub">Sous-titre / résumé</p>
+              </div>
+            </header>
+            <div class="modal-body" id="modal-body">
+              <p class="modal-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Remplacez ce texte par le contenu réel du document.</p>
+
+              <div class="modal-actions">
+                <a id="modal-download" class="btn-link" href="#" download>Télécharger le document</a>
+                <button id="modal-close-btn" class="btn-outline">Fermer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Fin : Section Suivi Premium -->
+
+    </div>
+
+  </main>
+
+  <div class="footer-placeholder" aria-hidden="true"></div>
+
+  <!-- Floating CTA -->
+  <div class="action-cta" aria-hidden="false">
+    <button class="btn"><a href="contact.html">Demander un devis</a></button>
+  </div>
+
+<script>
+// ===== BURGER MENU TOGGLE =====
+const burger = document.querySelector('.burger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+const body = document.body;
+
+function toggleMenu() {
+  burger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+  mobileOverlay.classList.toggle('active');
+  body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+}
+
+burger.addEventListener('click', toggleMenu);
+mobileOverlay.addEventListener('click', toggleMenu);
+
+// ===== MOBILE SUBMENU TOGGLE =====
+const menuItems = document.querySelectorAll('.menu-item');
+
+menuItems.forEach(item => {
+  item.addEventListener('click', function() {
+    const submenuId = this.getAttribute('data-submenu');
+    const submenu = document.getElementById(submenuId);
+    const arrow = this.querySelector('.arrow');
+    
+    submenu.classList.toggle('active');
+    arrow.classList.toggle('active');
+  });
+});
+
+// Close mobile menu when link is clicked
+const mobileLinks = document.querySelectorAll('.mobile-menu a');
+mobileLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    if (mobileMenu.classList.contains('active')) {
+      toggleMenu();
+    }
+  });
+});
+
+// ===== NAVIGATION SCROLL HIDE/SHOW =====
+let lastScrollTop = 0;
+const header = document.querySelector('.header-index');
+window.addEventListener('scroll', function() {
+  let st = window.pageYOffset || document.documentElement.scrollTop;
+  
+  // Add scrolled class for glassmorphism effect
+  if (st > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+  
+  // Hide/show header
+  if (st > lastScrollTop && st > 100) {
+    header.classList.add('nav-hidden');
+  } else {
+    header.classList.remove('nav-hidden');
+  }
+  
+  lastScrollTop = st <= 0 ? 0 : st;
+});
+
+/* ===========================
+   Smooth scroll for internal links
+   =========================== */
+document.querySelectorAll('.mini-nav a, .timeline .item').forEach(el => {
+  el.addEventListener('click', function(e){
+    const target = this.getAttribute('href') || this.dataset.target;
+    const id = this.dataset.target || (target && target.replace('#',''));
+    if(!id) return;
+    e.preventDefault();
+    const node = document.getElementById(id);
+    if(node) node.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+});
+
+/* ===========================
+   Intersection Observer : reveal sections and update timeline
+   =========================== */
+const sections = document.querySelectorAll('section.stage');
+const options = { root: null, rootMargin: '0px', threshold: 0.28 };
+
+const timelineItems = document.querySelectorAll('.timeline .item');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      const id = entry.target.id;
+      timelineItems.forEach(it => it.classList.toggle('active', it.dataset.target === id));
+    }
+  });
+}, options);
+
+sections.forEach(s => io.observe(s));
+
+/* small floating entrance for hero mockup */
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(()=> {
+    const mock = document.querySelector('.hero-visual .mock');
+    if(mock) mock.style.transform = 'translateY(-6px)';
+  }, 400);
+});
+
+/* Accessibility: keyboard jump to sections via number keys 1..5 */
+document.addEventListener('keydown', (e) => {
+  if(['1','2','3','4','5'].includes(e.key)){
+    const id = 's'+e.key;
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+});
+
+/* Optional: small parallax on scroll for bg-shape */
+window.addEventListener('scroll', () => {
+  const bg = document.querySelector('.bg-shape');
+  if(!bg) return;
+  const y = window.scrollY * 0.08;
+  bg.style.transform = `translateY(${y}px)`;
+});
+
+/* ===== Suivi Premium : comportement dynamique ===== */
+(function () {
+  const docs = {
+    "accord": {
+      title: "Accord",
+      sub: "Contrat & conditions",
+      body: `<p><strong>Résumé :</strong> Accord contractuel définissant le périmètre, délais et responsabilités.</p>
+             <p class="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Remplacez par le contenu réel du contrat.</p>`,
+      icon: "📝",
+      download: "#"
+    },
+    "welcome": {
+      title: "Document d'accueil",
+      sub: "Bienvenue & premières étapes",
+      body: `<p><strong>Contenu :</strong> Informations d'accueil, contacts, prochaines étapes.</p>
+             <p class="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Exemple de texte d'accueil.</p>`,
+      icon: "👋",
+      download: "#"
+    },
+    "facture": {
+      title: "Facture",
+      sub: "Historique et paiements",
+      body: `<p><strong>Contenu :</strong> Factures détaillées et échéances.</p><p class="lorem">Lorem ipsum dolor sit amet...</p>`,
+      icon: "🧾",
+      download: "#"
+    },
+    "portail": {
+      title: "Portail client",
+      sub: "Espace sécurisé",
+      body: `<p><strong>Accès :</strong> Connexion au dashboard, livrables et échanges.</p><p class="lorem">Lorem ipsum dolor sit amet...</p>`,
+      icon: "🔐",
+      download: "#"
+    },
+    "appel": {
+      title: "Appel",
+      sub: "Planification & compte-rendu",
+      body: `<p><strong>Organisation :</strong> Lien de visio, agenda et CR.</p><p class="lorem">Lorem ipsum dolor sit amet...</p>`,
+      icon: "📞",
+      download: "#"
+    },
+    "guide": {
+      title: "Guide d'utilisation du contenu",
+      sub: "Licences & bonnes pratiques",
+      body: `<p><strong>Usage :</strong> Règles, crédits et droits d'utilisation.</p><p class="lorem">Lorem ipsum dolor sit amet...</p>`,
+      icon: "📚",
+      download: "#"
+    },
+    "rapport": {
+      title: "Rapport hebdomadaire",
+      sub: "Suivi des tâches & KPIs",
+      body: `<p><strong>Fréquence :</strong> Rapport synthétique chaque semaine.</p><p class="lorem">Lorem ipsum dolor sit amet...</p>`,
+      icon: "📈",
+      download: "#"
+    },
+    "merci": {
+      title: "Remerciement",
+      sub: "Clôture de projet",
+      body: `<p><strong>Message :</strong> Remerciement et bilan final.</p><p class="lorem">Lorem ipsum dolor sit amet...</p>`,
+      icon: "🎉",
+      download: "#"
+    }
+  };
+
+  const cards = document.querySelectorAll('.premium-card');
+  const modal = document.getElementById('premium-modal');
+  const panel = modal && modal.querySelector('.modal-panel');
+  const modalTitle = modal && modal.querySelector('#modal-title');
+  const modalBody = modal && modal.querySelector('#modal-body');
+  const modalIcon = modal && modal.querySelector('.modal-icon');
+  const modalSub = modal && modal.querySelector('.modal-sub');
+  const modalDownload = modal && modal.querySelector('#modal-download');
+  const modalClose = modal && modal.querySelector('.modal-close');
+  const modalCloseBtn = modal && modal.querySelector('#modal-close-btn');
+
+  function openModal(key) {
+    const data = docs[key];
+    if(!data) return;
+    modal.setAttribute('aria-hidden','false');
+    modalTitle.textContent = data.title;
+    modalSub.textContent = data.sub;
+    modalIcon.textContent = data.icon;
+    modalBody.querySelector('.modal-text') && modalBody.querySelector('.modal-text').remove();
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'modal-text';
+    wrapper.innerHTML = data.body;
+    modalBody.insertBefore(wrapper, modalBody.querySelector('.modal-actions'));
+    modalDownload.href = data.download || '#';
+    
+    modalClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.setAttribute('aria-hidden','true');
+    const txt = modalBody.querySelector('.modal-text');
+    if(txt) txt.remove();
+    document.body.style.overflow = '';
+  }
+
+  cards.forEach(card => {
+    const openKey = card.dataset.doc;
+    const btn = card.querySelector('.card-action');
+
+    btn && btn.addEventListener('click', ()=> openModal(openKey) );
+    card.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(openKey); }
+    });
+  });
+
+  modalClose && modalClose.addEventListener('click', closeModal);
+  modalCloseBtn && modalCloseBtn.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e)=> {
+    if(e.key === 'Escape' && modal && modal.getAttribute('aria-hidden') === 'false') closeModal();
+  });
+
+  modal && modal.addEventListener('click', (e)=>{
+    if(e.target === modal) closeModal();
+  });
+
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(ent => {
+      if(ent.isIntersecting){
+        ent.target.classList.add('visible');
+        revealObserver.unobserve(ent.target);
+      }
+    });
+  }, {threshold:0.18});
+
+  cards.forEach(c => revealObserver.observe(c));
+
+  document.addEventListener('keydown', (e)=>{
+    if(modal.getAttribute('aria-hidden') === 'false' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+      const keys = Object.keys(docs);
+      const cur = keys.indexOf(Object.keys(docs).find(k => docs[k].title === modalTitle.textContent));
+      if(cur >= 0){
+        const next = e.key === 'ArrowRight' ? (cur+1)%keys.length : (cur-1+keys.length)%keys.length;
+        openModal(keys[next]);
+      }
+    }
+  });
+
+})();
+
+</script>
+
+</body>
+</html>

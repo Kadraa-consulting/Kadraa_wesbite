@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Part Belle - French Family Food</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blanc: #FFFFFF;
+            --rouge: #D63A3A;
+            --noir: #222222;
+            --beige: #F8F4EC;
+            --jaune: #EFBF64;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--noir);
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: var(--blanc);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: var(--rouge);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--noir);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--rouge);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: var(--blanc);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .hero .slogan {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--rouge);
+            color: var(--blanc);
+        }
+
+        .btn-primary:hover {
+            background: #b82e2e;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(214, 58, 58, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--blanc);
+            color: var(--rouge);
+        }
+
+        .btn-secondary:hover {
+            background: var(--beige);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: var(--beige);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--noir);
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--rouge);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--rouge), var(--jaune));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--blanc);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-card {
+            background: var(--blanc);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .menu-card-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--jaune), var(--rouge));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .menu-card-content {
+            padding: 1.5rem;
+        }
+
+        .menu-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--rouge);
+        }
+
+        .menu-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .truck-action {
+            background: linear-gradient(135deg, var(--rouge) 0%, #ff6b6b 100%);
+            padding: 6rem 5%;
+            text-align: center;
+            color: var(--blanc);
+        }
+
+        .truck-action h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .truck-action p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .truck-carousel {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .truck-icon {
+            font-size: 4rem;
+            background: rgba(255,255,255,0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--beige), var(--jaune));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--rouge);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .horaires {
+            background: var(--blanc);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .horaires h3 {
+            font-size: 2rem;
+            color: var(--rouge);
+            margin-bottom: 1.5rem;
+        }
+
+        .horaire-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
+        }
+
+        .horaire-item:last-child {
+            border-bottom: none;
+        }
+
+        .horaire-day {
+            font-weight: 600;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--blanc);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: var(--jaune);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card p {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--rouge);
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--blanc);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--noir);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--rouge);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .footer {
+            background: var(--noir);
+            color: var(--blanc);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--blanc);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--rouge);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .social-icons a {
+            color: var(--blanc);
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--rouge);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .slogan {
+                font-size: 1.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1rem;
+            }
+
+            .about-content,
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">La Part Belle</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="accueil">
+        <div class="hero-slides">
+            <div class="hero-slide active" style="background: linear-gradient(135deg, #D63A3A 0%, #EFBF64 100%);"></div>
+            <div class="hero-slide" style="background: linear-gradient(135deg, #EFBF64 0%, #D63A3A 100%);"></div>
+            <div class="hero-slide" style="background: linear-gradient(135deg, #222222 0%, #D63A3A 100%);"></div>
+        </div>
+        <div class="hero-content">
+            <h1>La Part Belle</h1>
+            <p class="slogan">French Family Food</p>
+            <p class="tagline">Le goût du fait maison, sur les routes d'Île-de-France.</p>
+            <div class="cta-buttons">
+                <a href="#menu" class="btn btn-primary">Voir le menu</a>
+                <a href="#localisation" class="btn btn-secondary">Nous trouver</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="apropos">
+        <div class="about-content fade-in">
+            <div class="about-text">
+                <h2>Une histoire de famille et de saveurs</h2>
+                <p>La Part Belle, c'est avant tout une aventure familiale née à Linas. Passionnés de cuisine, nous avons voulu partager le goût du vrai : des produits frais, des recettes simples et généreuses, et un accueil toujours chaleureux.</p>
+                <p>Chaque plat est préparé avec amour, dans le respect des traditions françaises et avec une touche de modernité qui fait notre signature.</p>
+                <a href="#contact" class="btn btn-primary">Découvrir notre histoire</a>
+            </div>
+            <div class="about-image">🚚</div>
+        </div>
+    </section>
+
+    <section class="section section-alt" id="menu">
+        <h2 class="section-title fade-in">Nos incontournables</h2>
+        <p class="section-subtitle fade-in">Des recettes maison qui font l'unanimité</p>
+        <div class="menu-grid">
+            <div class="menu-card fade-in">
+                <div class="menu-card-image">🍔</div>
+                <div class="menu-card-content">
+                    <h3>Burger Maison</h3>
+                    <p>Pain brioché, steak frais, sauce secrète et garnitures généreuses</p>
+                </div>
+            </div>
+            <div class="menu-card fade-in">
+                <div class="menu-card-image">🥪</div>
+                <div class="menu-card-content">
+                    <h3>Croque-Monsieur Gourmand</h3>
+                    <p>Classique revisité à la française avec fromage fondant</p>
+                </div>
+            </div>
+            <div class="menu-card fade-in">
+                <div class="menu-card-image">🥖</div>
+                <div class="menu-card-content">
+                    <h3>Sandwich Campagnard</h3>
+                    <p>Poulet rôti, crudités fraîches, pain croustillant</p>
+                </div>
+            </div>
+            <div class="menu-card fade-in">
+                <div class="menu-card-image">👶</div>
+                <div class="menu-card-content">
+                    <h3>Menu Enfant</h3>
+                    <p>Mini burger ou croque + frites + jus de fruits</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#contact" class="btn btn-primary">Voir le menu complet</a>
+        </div>
+    </section>
+
+    <section class="truck-action">
+        <h2>Le Food Truck en action</h2>
+        <p>Retrouvez-nous sur les routes de l'Île-de-France ! Suivez nos emplacements hebdomadaires et venez savourer nos spécialités sur le pouce.</p>
+        <div class="truck-carousel">
+            <div class="truck-icon">🍽️</div>
+            <div class="truck-icon" style="animation-delay: 0.2s;">👨‍🍳</div>
+            <div class="truck-icon" style="animation-delay: 0.4s;">🎉</div>
+        </div>
+        <div class="cta-buttons">
+            <a href="#localisation" class="btn btn-secondary">Nos emplacements</a>
+            <a href="#" class="btn btn-secondary">Suivez-nous sur Instagram</a>
+        </div>
+    </section>
+
+    <section class="section" id="localisation">
+        <h2 class="section-title fade-in">Où nous trouver ?</h2>
+        <div class="location-grid">
+            <div class="map-container fade-in">📍</div>
+            <div class="horaires fade-in">
+                <h3>Horaires d'ouverture</h3>
+                <div class="horaire-item">
+                    <span class="horaire-day">Lundi – Vendredi</span>
+                    <span>11h30 – 14h30 / 18h – 22h</span>
+                </div>
+                <div class="horaire-item">
+                    <span class="horaire-day">Samedi</span>
+                    <span>11h30 – 23h</span>
+                </div>
+                <div class="horaire-item">
+                    <span class="horaire-day">Dimanche</span>
+                    <span>Fermé</span>
+                </div>
+                <p style="margin-top: 2rem; color: #666; font-style: italic;">Événements, marchés ou festivals — La Part Belle se déplace partout !</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <h2 class="section-title fade-in">Ce qu'ils disent de nous</h2>
+        <div class="testimonials">
+            <div class="testimonial-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p>"Le meilleur burger de la région !"</p>
+                <div class="testimonial-author">— Marie L.</div>
+            </div>
+            <div class="testimonial-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p>"Accueil chaleureux et plats faits maison."</p>
+                <div class="testimonial-author">— Thomas D.</div>
+            </div>
+            <div class="testimonial-card fade-in">
+                <div class="stars">★★★★★</div>
+                <p>"Un vrai goût de cuisine française authentique."</p>
+                <div class="testimonial-author">— Sophie M.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <h2 class="section-title fade-in">Une envie, un événement ? Contactez-nous !</h2>
+        <form class="contact-form fade-in">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="type">Type de demande</label>
+                <select id="type" name="type">
+                    <option>Commande</option>
+                    <option>Événement</option>
+                    <option>Informations</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer ma demande</button>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">La Part Belle</div>
+        <div class="footer-links">
+            <a href="#accueil">Accueil</a>
+            <a href="#menu">Menu</a>
+            <a href="#apropos">À propos</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="social-icons">
+            <a href="#">📷</a>
+            <a href="#">👍</a>
+        </div>
+        <p>© 2025 La Part Belle — French Family Food</p>
+    </footer>
+
+    <script>
+        // Hero carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 4000);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Fade in on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Merci pour votre message ! Nous vous répondrons rapidement.');
+            e.target.reset();
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.padding = '0.5rem 5%';
+            } else {
+                header.style.padding = '1rem 5%';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <video id="myVideo" muted playsinline style="width:100%; height:100vh; object-fit:cover; position:fixed; top:0; left:0; z-index:10;">
+  <source src="cadeau-animation.mp4" type="video/mp4">
+</video>
+
+<script>
+const video = document.getElementById("myVideo");
+
+video.pause();
+
+video.addEventListener("loadedmetadata", () => {
+  const duration = video.duration;
+  const virtualScrollLength = window.innerHeight * 5; // longueur virtuelle pour contrôler la vitesse de scroll
+  
+  // Crée une section "container" pour le scroll virtuel
+  const scrollContainer = document.createElement('div');
+  scrollContainer.style.height = virtualScrollLength + "px";
+  document.body.insertBefore(scrollContainer, document.body.firstChild);
+
+  let animationEnded = false;
+
+  function updateVideo() {
+    if (animationEnded) return;
+
+    const scrollTop = window.scrollY;
+    const scrollFraction = scrollTop / (virtualScrollLength - window.innerHeight);
+    const targetTime = duration * scrollFraction;
+
+    video.currentTime = targetTime;
+
+    // Quand la vidéo atteint la fin, on "libère" le scroll naturel
+    if (scrollFraction >= 1) {
+      animationEnded = true;
+      video.style.position = "relative";
+      video.style.height = "auto";
+      video.style.zIndex = "0";
+      window.scrollTo(0, 0); // remet en haut du contenu
+      scrollContainer.remove(); // supprime la zone virtuelle
+    } else {
+      requestAnimationFrame(updateVideo);
+    }
+  }
+
+  requestAnimationFrame(updateVideo);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Agence_Freelance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION BAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .navbar-logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .navbar-logo:hover img {
+            transform: rotate(360deg);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .nav-link.active {
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        .arrow {
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        /* DROPDOWN MENU */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .nav-item:hover > .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            color: #c0c0c0;
+            text-decoration: none;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        /* NESTED DROPDOWN */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu > .dropdown-menu {
+            left: 100%;
+            top: 0;
+            margin-left: 10px;
+            margin-top: 0;
+        }
+
+        .dropdown-submenu:hover > .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* CTA BUTTON */
+        .nav-cta {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(123, 47, 247, 0.5);
+        }
+
+        /* BURGER MENU */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .burger span {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(10px);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-10px);
+        }
+
+        /* MOBILE MENU */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(30px);
+            padding: 100px 30px 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            z-index: 999;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-item {
+            margin-bottom: 10px;
+        }
+
+        .mobile-nav-link {
+            color: #f5f5f7;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+        }
+
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding-left: 20px;
+        }
+
+        .mobile-dropdown.active {
+            max-height: 600px;
+        }
+
+        .mobile-dropdown-item {
+            color: #c0c0c0;
+            text-decoration: none;
+            padding: 12px 15px;
+            display: block;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .mobile-dropdown-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .mobile-submenu {
+            padding-left: 15px;
+            margin-top: 5px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-submenu.active {
+            max-height: 300px;
+        }
+
+        .mobile-nav-cta {
+            margin-top: 30px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+            text-decoration: none;
+            display: block;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* OVERLAY */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* PARTICLES CANVAS */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 5em;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00d4ff, #7b2ff7, #ff006e);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .section-title {
+            font-size: 3em;
+            color: #00d4ff;
+            text-align: center;
+            margin: 80px 0 60px;
+            position: relative;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: lineExpand 2s ease-in-out infinite;
+        }
+
+        @keyframes lineExpand {
+            0%, 100% { width: 100px; }
+            50% { width: 200px; }
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #151515;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.3);
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* AVIS CLIENT OVERLAY */
+        .avis-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+            padding: 30px;
+        }
+
+        .portfolio-item:hover .avis-overlay {
+            opacity: 1;
+        }
+
+        .avis-content {
+            text-align: center;
+            transform: translateY(30px);
+            transition: transform 0.5s ease 0.1s;
+        }
+
+        .portfolio-item:hover .avis-content {
+            transform: translateY(0);
+        }
+
+        .avis-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
+            margin-bottom: 20px;
+            border: 2px solid rgba(0, 212, 255, 0.5);
+        }
+
+        .avis-client-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-top: 15px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .avis-stars {
+            font-size: 1.8em;
+            margin-top: 10px;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.95) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .content {
+            padding: 30px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+        }
+
+        .content h3 {
+            font-size: 1.8em;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .content p {
+            color: #c0c0c0;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .glowing-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg, #00d4ff, #7b2ff7, #ff006e, #00d4ff);
+            background-size: 300% 300%;
+            animation: borderGlow 4s ease infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .portfolio-item:hover .glowing-border {
+            opacity: 1;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .stats {
+            display: flex;
+            justify-space-around;
+            margin: 100px 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-radius: 15px;
+            margin: 0 15px;
+            border: 1px solid #222;
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+            border-top: 1px solid #222;
+            margin-top: 100px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .navbar {
+                padding: 20px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3em; }
+            .section-title { font-size: 2em; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .stats { flex-direction: column; }
+            .stat-item { margin: 15px 0; }
+            .navbar { padding: 15px 20px; }
+            .container { padding: 100px 20px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-menu { width: 280px; }
+            .navbar-logo img { width: 40px; height: 40px; }
+            .navbar-brand { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="navbar-logo">
+            <img src="logo.png" alt="Logo">
+            <span class="navbar-brand">Agence_Freelance</span>
+        </a>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">🏠 Accueil</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    💼 Nos services <span class="arrow">▼</span>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-submenu">
+                        <a href="#" class="dropdown-item">
+                            🌐 Sites web <span class="arrow">→</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="offre-principal.html" class="dropdown-item">📄 Offre Principale</a>
+                            <a href="offre-secondaire.html" class="dropdown-item">📋 Offre Secondaire</a>
+                            <a href="offre-pro.html" class="dropdown-item">⭐ Offre Pro</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-submenu">
+                        <a href="#" class="dropdown-item">
+                            📦 Packagings <span class="arrow">→</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="starter-pack.html" class="dropdown-item">🚀 Starter</a>
+                            <a href="package-business.html" class="dropdown-item">💼 Business</a>
+                            <a href="package-pro.html" class="dropdown-item">👑 Pro</a>
+                        </div>
+                    </div>
+
+                    <a href="reseaux-sociaux.html" class="dropdown-item">📱 Réseaux sociaux</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a href="abouts_us.html" class="nav-link">👥 À propos de nous</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="details-offre.html" class="nav-link">Expérience client</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="contact.html" class="nav-cta">✉️ Nous contacter</a>
+            </li>
+        </ul>
+
+        <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-nav-item">
+            <a href="index.html" class="mobile-nav-link">🏠 Accueil</a>
+        </div>
+
+        <div class="mobile-nav-item">
+            <a href="#" class="mobile-nav-link" data-dropdown="services">
+                💼 Nos services <span class="arrow">▼</span>
+            </a>
+            <div class="mobile-dropdown" id="services-dropdown">
+                <a href="#" class="mobile-dropdown-item" data-submenu="siteweb">
+                    🌐 Sites web <span class="arrow">▼</span>
+                </a>
+                <div class="mobile-submenu" id="siteweb-submenu">
+                    <a href="offre-principal.html" class="mobile-dropdown-item">📄 Offre Principale</a>
+                    <a href="offre-secondaire.html" class="mobile-dropdown-item">📋 Offre Secondaire</a>
+                    <a href="offre-pro.html" class="mobile-dropdown-item">⭐ Offre Pro</a>
+                </div>
+
+                <a href="#" class="mobile-dropdown-item" data-submenu="packaging">
+                    📦 Packagings <span class="arrow">▼</span>
+                </a>
+                <div class="mobile-submenu" id="packaging-submenu">
+                    <a href="starter-pack.html" class="mobile-dropdown-item">🚀 Starter</a>
+                    <a href="package-business.html" class="mobile-dropdown-item">💼 Business</a>
+                    <a href="package-pro.html" class="mobile-dropdown-item">👑 Pro</a>
+                </div>
+
+                <a href="reseaux-sociaux.html" class="mobile-dropdown-item">📱 Réseaux sociaux</a>
+            </div>
+        </div>
+
+        <div class="mobile-nav-item">
+            <a href="abouts_us.html" class="mobile-nav-link">👥 À propos de nous</a>
+        </div>
+
+        <div class="mobile-nav-item">
+            <a href="details-offre.html" class="mobile-nav-link">👨🏽‍💻 Expérience client</a>
+        </div>
+
+        <a href="contact.html" class="mobile-nav-cta">✉️ Nous contacter</a>
+    </div>
+    
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <header>
+            <h1>Nos Réalisations</h1>
+            <p class="subtitle">Découvrez nos projets et les avis de nos clients</p>
+        </header>
+
+        <h2 class="section-title">Mes Projets</h2>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="glowing-border"></div>
+                <div class="image-wrapper">
+                    <img src="img2-luflaix.jpg" alt="Projet Luflaix">
+                    <div class="avis-overlay">
+                        <div class="avis-content">
+                            <img src="avis-luflaix.png" alt="Avis Luflaix" class="avis-image">
+                            <div class="avis-client-name">Luflaix</div>
+                            <div class="avis-stars">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <h3 style="color: white; font-size: 2em; margin: 0;">Projet Luflaix</h3>
+                        <p style="color: #ccc; margin-top: 10px;">Survolez pour voir l'avis client</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Projet Créatif #1</h3>
+                    <p>Ajoutez votre description ici. Ce projet démontre l'utilisation de technologies modernes avec une attention particulière portée à l'expérience utilisateur et au design visuel.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="glowing-border"></div>
+                <div class="image-wrapper">
+                    <img src="img porfolio 1.png" alt="Projet Alexian">
+                    <div class="avis-overlay">
+                        <div class="avis-content">
+                            <img src="avis-alexian.png" alt="Avis Alexian" class="avis-image">
+                            <div class="avis-client-name">Alexian</div>
+                            <div class="avis-stars">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <h3 style="color: white; font-size: 2em; margin: 0;">Projet Alexian</h3>
+                        <p style="color: #ccc; margin-top: 10px;">Survolez pour voir l'avis client</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Projet Innovant #2</h3>
+                    <p>Décrivez votre deuxième projet ici. Mettez en avant les compétences techniques utilisées et l'impact créé par votre travail sur ce projet spécifique.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="glowing-border"></div>
+                <div class="image-wrapper">
+                    <img src="img2-souna.png" alt="Projet Souna">
+                    <div class="avis-overlay">
+                        <div class="avis-content">
+                            <img src="avis souna.jpg" alt="Avis Souna" class="avis-image">
+                            <div class="avis-client-name">Souna</div>
+                            <div class="avis-stars">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <h3 style="color: white; font-size: 2em; margin: 0;">Projet Souna</h3>
+                        <p style="color: #ccc; margin-top: 10px;">Survolez pour voir l'avis client</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <h3>Projet Exceptionnel #3</h3>
+                    <p>Présentez votre troisième réalisation. Expliquez les défis relevés et les solutions créatives apportées pour répondre aux besoins du projet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Projets Réalisés</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Satisfaction Client</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Années d'Expérience</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 - Portfolio Créatif • Tous droits réservés</p>
+        </footer>
+    </div>
+
+    <script>
+        // NAVIGATION FUNCTIONALITY
+        const burger = document.getElementById('burger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const navbar = document.getElementById('navbar');
+
+        // Burger menu toggle
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile menu when clicking overlay
+        menuOverlay.addEventListener('click', () => {
+            burger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Mobile dropdown toggles
+        document.querySelectorAll('[data-dropdown]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const dropdownId = link.getAttribute('data-dropdown');
+                const dropdown = document.getElementById(dropdownId + '-dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // Mobile submenu toggles
+        document.querySelectorAll('[data-submenu]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const submenuId = link.getAttribute('data-submenu');
+                const submenu = document.getElementById(submenuId + '-submenu');
+                submenu.classList.toggle('active');
+            });
+        });
+
+        // Navbar scroll effect
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // Active link highlight
+        const currentPage = window.location.pathname.split('/').pop();
+        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+
+        // PARTICLES ANIMATION
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 80;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = `rgba(${Math.random() > 0.5 ? '0, 212, 255' : '123, 47, 247'}, ${Math.random() * 0.5 + 0.2})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // PORTFOLIO ITEMS REVEAL
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // STATS COUNTER ANIMATION
+        function animateCounter(element) {
+            const target = parseInt(element.textContent);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    element.textContent = target + (element.textContent.includes('+') ? '+' : '%');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '%');
+                }
+            }, 16);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const number = entry.target.querySelector('.stat-number');
+                    animateCounter(number);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            statsObserver.observe(item);
+        });
+
+        // PARALLAX EFFECT
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            document.querySelectorAll('.portfolio-item').forEach((item, index) => {
+                const speed = (index + 1) * 2;
+                const x = mouseX * speed;
+                const y = mouseY * speed;
+                item.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // RESET TRANSFORMATION ON HOVER
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
