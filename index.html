@@ -247,6 +247,8 @@ body{
 .feature-cta.outline{ background: transparent; color: var(--matte-gold-1); border: 1px solid rgba(201,176,55,0.5); }
 .feature-cta.outline:hover{ background: rgba(201,176,55,0.08); }
 
+.offer-more{display:block;text-align:center;margin-bottom:.9rem;color:var(--matte-gold-1);font-weight:600;font-size:.9rem;text-decoration:none;transition:opacity .3s,transform .3s}
+.offer-more:hover{opacity:.8;transform:translateX(4px)}
 .good-to-know{
   max-width: 1200px; margin: 2.8rem auto 0; text-align:left;
   background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07);
@@ -374,7 +376,15 @@ footer { background-color: #0a0a0a; color: #f8f9fa; padding: 60px 20px 20px 20px
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-menu-item"><a href="#offre">Nos offres</a></li>
+            <li class="nav-menu-item">Nos offres
+                <span class="nav-menu-arrow">↑</span>
+                <div class="submenu-container">
+                    <a class="submenu-link" href="offre-principal.html">Site vitrine One Page</a>
+                    <a class="submenu-link" href="offre-secondaire.html">Site vitrine Multi-pages</a>
+                    <a class="submenu-link" href="offre-pro.html">Site e-commerce</a>
+                    <a class="submenu-link" href="#offre">Comparer les offres</a>
+                </div>
+            </li>
 
             <li class="nav-menu-item">Nos compétences
                 <span class="nav-menu-arrow">↑</span>
@@ -408,7 +418,17 @@ footer { background-color: #0a0a0a; color: #f8f9fa; padding: 60px 20px 20px 20px
 <div class="Sidebar" id="Mysidebar">
     <a id="Close-Btn" href="#">×</a>
     <ul>
-        <li><a href="#offre">Nos offres</a></li>
+        <li>
+            <div class="sidebar-link" data-dropdown="offres">
+                Nos offres <span class="mobile-arrow">▼</span>
+            </div>
+            <div class="sidebar-dropdown" id="offres-dropdown">
+                <a href="offre-principal.html">Site vitrine One Page</a>
+                <a href="offre-secondaire.html">Site vitrine Multi-pages</a>
+                <a href="offre-pro.html">Site e-commerce</a>
+                <a href="#offre">Comparer les offres</a>
+            </div>
+        </li>
 
         <li>
             <div class="sidebar-link" data-dropdown="competences">
@@ -463,6 +483,7 @@ footer { background-color: #0a0a0a; color: #f8f9fa; padding: 60px 20px 20px 20px
                 <li>Courte formation pour consulter les statistiques de votre site (vues, engagement…)</li>
                 <li>Adresse(s) mail professionnelle(s) en option : 1er mois offert</li>
             </ul>
+            <a href="offre-principal.html" class="offer-more">Voir le détail de l'offre →</a>
             <a href="contact.html" class="feature-cta outline">Choisir cette offre</a>
         </article>
 
@@ -481,6 +502,7 @@ footer { background-color: #0a0a0a; color: #f8f9fa; padding: 60px 20px 20px 20px
                 <li>Possibilité de connecter un agenda ou calendrier avec prise de rendez-vous directement sur le site</li>
                 <li>Nom de domaine 1 an, hébergement, formation et responsive inclus</li>
             </ul>
+            <a href="offre-secondaire.html" class="offer-more">Voir le détail de l'offre →</a>
             <a href="contact.html" class="feature-cta">Choisir cette offre</a>
         </article>
 
@@ -500,6 +522,7 @@ footer { background-color: #0a0a0a; color: #f8f9fa; padding: 60px 20px 20px 20px
                 <li>Espace d'administration simple pour gérer produits, stocks et commandes, avec prise en main guidée</li>
                 <li>Pages légales types (mentions légales, CGV, confidentialité) à valider par vos soins</li>
             </ul>
+            <a href="offre-pro.html" class="offer-more">Voir le détail de l'offre →</a>
             <a href="contact.html" class="feature-cta outline">Choisir cette offre</a>
         </article>
 
