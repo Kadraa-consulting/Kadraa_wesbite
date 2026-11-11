@@ -1,406 +1,428 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Kadraa Consulting</title>
-    <meta name="description" content="Découvrez les projets réalisés par Kadraa Consulting et les avis de nos clients.">
-    <link rel="icon" href="logo.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio | Kadraa Consulting</title>
+<meta name="description" content="Les projets réalisés par Kadraa Consulting et les avis authentiques des clients accompagnés.">
+<link rel="icon" type="image/x-icon" href="/logo.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* KADRAA CONSULTING — styles communs « À propos » + « Portfolio » (même système que les pages d'offres) */
+:root{--bg:#060507;--gold:#C9B037;--gold2:#8A795D;--text:#f3f3f3;--muted:#a8adb5;--line:rgba(255,255,255,.08);--ease:cubic-bezier(.22,.9,.32,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Montserrat","Raleway",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(1200px 700px at 80% -10%,rgba(201,176,55,.07),transparent 60%),linear-gradient(180deg,#060507,#070708);color:var(--text);line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img,svg{max-width:100%}button{font-family:inherit}
+::selection{background:rgba(201,176,55,.35)}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+main{position:relative;z-index:2}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+.curtain{position:fixed;inset:0;z-index:10000;background:#050406;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transform:translateY(100%);transition:transform .8s var(--ease);pointer-events:none}
+.curtain-on .curtain{transform:translateY(0)}.curtain.leave{transform:translateY(-100%)}.curtain.cover{transform:translateY(0)}
+.curtain-brand{font-weight:700;letter-spacing:.55em;font-size:1.05rem;color:var(--gold);padding-left:.55em}
+.curtain-line{width:min(220px,50vw);height:2px;background:rgba(255,255,255,.08);overflow:hidden;border-radius:2px}
+.curtain-line::after{content:"";display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));transform:translateX(-100%);animation:cl 1s var(--ease) forwards}
+@keyframes cl{to{transform:none}}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.cursor-glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(201,176,55,.12),transparent 62%);pointer-events:none;z-index:1;opacity:0;transition:opacity .5s}
+.cursor-glow.on{opacity:1}
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:120;pointer-events:none}
+.scroll-progress span{display:block;height:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 0 14px rgba(201,176,55,.7)}
 
-    <style>
-:root{
-  --bg-900: #060507;
-  --matte-gold-1: #C9B037;
-  --matte-gold-2: #8A795D;
-  --text-1: #f3f3f3;
-  --muted: #bdbdbd;
-  --transition: 450ms cubic-bezier(.22,.9,.32,1);
-}
-*{box-sizing:border-box; margin:0; padding:0;}
-body{
-  font-family: "Montserrat", "Raleway", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  color:var(--text-1);
-  background: linear-gradient(180deg, var(--bg-900) 0%, #070708 100%);
-  overflow-x:hidden;
-  line-height:1.45;
-}
+/* Navigation (identique aux pages d'offres) */
+.header-index{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .45s var(--ease),transform .45s var(--ease)}
+.nav-wrapper{max-width:1220px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:20px 28px;gap:18px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.15))}
+.header-index.scrolled .nav-wrapper{background:linear-gradient(180deg,rgba(5,4,4,.9),rgba(10,9,9,.86));box-shadow:0 6px 30px rgba(0,0,0,.6);backdrop-filter:blur(8px)}
+.nav-hidden{transform:translateY(-110%)}
+.nav-logo{height:54px;width:auto;object-fit:contain;border-radius:44px}
+.decor-left{display:flex;gap:8px;align-items:center}
+.decor-line{width:3px;height:34px;border-radius:2px;background:linear-gradient(180deg,var(--gold2),rgba(255,255,255,.03));opacity:.9}
+.decor-line:nth-child(2){height:28px;opacity:.65}.decor-line:nth-child(3){height:20px;opacity:.5}
+.nav-menu{list-style:none;display:flex;gap:8px;align-items:center}
+.nav-menu-item{position:relative;font-weight:600;letter-spacing:.4px;padding:8px 12px;cursor:default}
+.nav-menu-item>a{transition:color .25s}.nav-menu-item>a:hover{color:var(--gold)}
+.nav-menu-arrow{display:inline-block;margin-left:8px;font-size:12px;color:var(--muted)}
+.submenu-container{position:absolute;left:0;top:38px;min-width:270px;background:linear-gradient(180deg,rgba(12,12,12,.97),rgba(7,7,7,.99));border-radius:12px;padding:12px;box-shadow:0 14px 44px rgba(0,0,0,.75);opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;transition:opacity .26s,transform .26s;border:1px solid rgba(255,255,255,.03)}
+.nav-menu-item:hover .submenu-container{opacity:1;transform:none;pointer-events:auto}
+.submenu-link{display:flex;justify-content:space-between;gap:1rem;color:var(--muted);padding:9px 10px;font-size:14px;border-radius:8px;transition:all .25s}
+.submenu-link em{font-style:normal;color:var(--gold);font-weight:700}
+.submenu-link:hover,.submenu-link.active{color:#fff;background:rgba(201,176,55,.09)}
+.contact-button-link{display:inline-block;padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,rgba(200,176,55,.12),rgba(138,121,93,.06));color:var(--gold);border:1px solid rgba(200,176,55,.15);font-weight:700;transition:transform .35s var(--ease),box-shadow .35s}
+.contact-button-link:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(137,121,93,.18)}
+#openBtn{display:none;cursor:pointer;z-index:1001}
+.burger-menu{width:32px;height:28px;display:flex;flex-direction:column;justify-content:space-between}
+.burger-menu span{display:block;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px;transition:all .3s}
+.burger-menu.active span:nth-child(1){transform:translateY(12px) rotate(45deg)}.burger-menu.active span:nth-child(2){opacity:0}.burger-menu.active span:nth-child(3){transform:translateY(-13px) rotate(-45deg)}
+.Sidebar{position:fixed;right:-100%;top:0;bottom:0;width:320px;max-width:100%;background:linear-gradient(180deg,#070707,#0b0b0b);padding:80px 30px 30px;z-index:999;transition:right .4s var(--ease);box-shadow:-10px 0 40px rgba(0,0,0,.8);overflow-y:auto}
+.Sidebar.open{right:0}
+#Close-Btn{position:absolute;top:20px;right:25px;font-size:2.5rem;color:var(--gold);font-weight:300;line-height:1}
+.Sidebar ul{list-style:none}.Sidebar>ul>li{margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:10px}
+.Sidebar>ul>li>a,.sidebar-link{display:flex;justify-content:space-between;align-items:center;padding:12px 10px;font-size:1.1rem;font-weight:600;border-radius:8px;cursor:pointer;transition:all .3s}
+.Sidebar>ul>li>a:hover,.sidebar-link:hover{color:var(--gold);background:rgba(201,176,55,.1);transform:translateX(5px)}
+.sidebar-dropdown{max-height:0;overflow:hidden;transition:max-height .4s ease;padding-left:15px}.sidebar-dropdown.active{max-height:420px;margin-top:10px}
+.sidebar-dropdown a{display:block;font-size:.95rem;color:rgba(255,255,255,.72);padding:10px 12px;border-radius:6px;transition:all .3s}
+.sidebar-dropdown a:hover{color:var(--gold);background:rgba(201,176,55,.08)}
+.mobile-arrow{font-size:.75rem;color:var(--gold);transition:transform .3s}.mobile-arrow.rotate{transform:rotate(180deg)}
+.overlay-mobile{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(5px);z-index:998;opacity:0;pointer-events:none;transition:opacity .3s}.overlay-mobile.active{opacity:1;pointer-events:auto}
 
-.header-index{ position:fixed; top:0; left:0; right:0; z-index:80; transition:background var(--transition), transform var(--transition), box-shadow var(--transition); }
-.nav-wrapper{
-  max-width:1220px; margin:0 auto; display:flex; align-items:center; justify-content:space-between;
-  padding:20px 28px; gap:18px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.15) 100%);
-}
-.header-index.scrolled .nav-wrapper{
-  background: linear-gradient(180deg, rgba(5,4,4,0.9), rgba(10,9,9,0.88));
-  box-shadow: 0 6px 30px rgba(0,0,0,0.6);
-  backdrop-filter: blur(5px);
-}
-.nav-logo{ height:54px; width:auto; object-fit:contain; z-index:85; border-radius: 44px; }
-.decor-left{display:flex; gap:8px; align-items:center}
-.decor-line{width:3px; height:34px; border-radius:2px; background:linear-gradient(180deg,var(--matte-gold-2), rgba(255,255,255,0.03)); opacity:0.9}
-.decor-line-2{height:28px; opacity:0.65}
-.decor-line-3{height:20px; opacity:0.5}
+/* Boutons */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.7rem;padding:1rem 1.9rem;border-radius:99px;font-weight:700;font-size:.95rem;border:0;cursor:pointer;transition:box-shadow .35s,transform .25s var(--ease),background .3s}
+.btn-primary{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#0a0a0a}.btn-primary:hover{box-shadow:0 14px 44px rgba(201,176,55,.36)}
+.btn-ghost{border:1px solid rgba(201,176,55,.45);color:var(--gold);background:transparent}.btn-ghost:hover{background:rgba(201,176,55,.08)}
+.btn .arrow{transition:transform .3s}.btn:hover .arrow{transform:translateX(5px)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);transform:scale(0);animation:rp .6s linear;pointer-events:none}@keyframes rp{to{transform:scale(4);opacity:0}}
 
-.nav-menu{ list-style:none; display:flex; gap:8px; align-items:center; margin:0; padding:0; }
-.nav-menu-item { position: relative; font-weight: 600; letter-spacing: 0.4px; padding: 8px 12px; color: var(--text-1); }
-.nav-menu-item a{ color:inherit; text-decoration:none; transition: color 240ms; }
-.nav-menu-item a:hover, .nav-menu-item a.active{ color: var(--matte-gold-1); }
+/* Révélations & texte animé */
+.js [data-reveal]{opacity:0;transform:translateY(28px);filter:blur(6px);transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0s)}
+.js [data-reveal].in{opacity:1;transform:none;filter:none}
+.js [data-reveal].in.done{transition:transform .3s var(--ease),border-color .3s,box-shadow .3s,background .3s;transition-delay:0s}
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.split .ch{display:inline-block;transform:translateY(112%);transition:transform .95s var(--ease);transition-delay:calc(var(--i)*22ms + var(--base,0ms))}
+.split.in .ch{transform:none}
+.grad,.grad .ch{background:linear-gradient(180deg,#f2e48f,var(--gold) 55%,var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-.submenu-container{
-  position:absolute; left:0; top:37px; min-width:220px;
-  background: linear-gradient(180deg, rgba(12,12,12,0.95), rgba(7,7,7,0.98));
-  border-radius:10px; padding:14px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.7); opacity:0; transform: translateY(8px) scale(.98); pointer-events:none;
-  transition: opacity 260ms ease, transform 260ms ease; z-index:90; border:1px solid rgba(255,255,255,0.02);
-}
-.nav-menu-item:hover .submenu-container{ opacity:1; transform: translateY(2px) scale(1); pointer-events:auto; }
-.submenu-link{display:block; color:var(--muted); text-decoration:none; padding:6px 0; font-size:14px}
-.submenu-link:hover, .submenu-link.active{color:var(--matte-gold-1);}
+/* Mise en page */
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;max-width:1240px;margin:0 auto;padding:150px 5% 80px}
+.hero.compact{min-height:0;padding-bottom:40px}
+.eyebrow{align-self:flex-start;display:inline-flex;align-items:center;gap:.7rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,176,55,.28);background:rgba(201,176,55,.06);padding:.55rem 1.1rem;border-radius:99px}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.35;transform:scale(.7)}}
+.hero h1{font-size:clamp(2.4rem,6vw,4.9rem);line-height:1.04;font-weight:700;letter-spacing:-.025em;margin:1.4rem 0 1.4rem;max-width:960px}
+.lead{color:#c3c7ce;font-size:1.1rem;line-height:1.75;max-width:640px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.2rem}
+.sec{max-width:1240px;margin:0 auto;padding:7.5rem 5% 0}
+.sec-head{max-width:760px;margin-bottom:3.2rem}
+.kicker{display:inline-block;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.sec-head h2{font-size:clamp(1.8rem,3.5vw,2.9rem);line-height:1.15;letter-spacing:-.015em;margin:.9rem 0 1rem}
+.sec-head p{color:var(--muted);font-size:1.02rem;line-height:1.7}
 
-.contact-button-container{margin-left:12px}
-.contact-button-link{
-  display:inline-block; padding:10px 16px; border-radius:10px;
-  background:linear-gradient(90deg, rgba(200,176,55,0.12), rgba(138,121,93,0.06));
-  color:var(--matte-gold-1); border:1px solid rgba(200,176,55,0.12); text-decoration:none; font-weight:700;
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.contact-button-link:hover{ transform:translateY(-3px); box-shadow: 0 8px 30px rgba(137,121,93,0.12); }
+.specs{max-width:1240px;margin:0 auto;padding:0 5%}
+.specs-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));backdrop-filter:blur(8px);overflow:hidden}
+.spec{padding:1.9rem 1.6rem;border-right:1px solid var(--line)}.spec:last-child{border-right:0}
+.spec b{display:block;font-size:2rem;font-weight:700;color:var(--gold);margin-bottom:.35rem;font-variant-numeric:tabular-nums}
+.spec span{font-size:.85rem;color:var(--muted)}
 
-#openBtn{display:none; cursor:pointer; z-index:1001;}
-.burger-menu{ width:32px; height:28px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; }
-.burger-menu span{ display:block; height:3px; background:linear-gradient(90deg,var(--matte-gold-1),var(--matte-gold-2)); border-radius:3px; transition:all 0.3s ease; }
-.burger-menu.active span:nth-child(1){ transform: translateY(12px) rotate(45deg); }
-.burger-menu.active span:nth-child(2){ opacity:0; }
-.burger-menu.active span:nth-child(3){ transform: translateY(-13px) rotate(-45deg); }
+/* Signature de la page : la ligne directe */
+.lines{display:grid;gap:1.4rem}
+.lane{position:relative;padding:2.2rem 2rem 2rem;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.02)}
+.lane.us{border-color:rgba(201,176,55,.38);background:radial-gradient(600px circle at 100% 0,rgba(201,176,55,.1),transparent 60%),rgba(255,255,255,.025)}
+.lane h3{font-size:.95rem;font-weight:600;color:var(--muted);margin-bottom:1.8rem}.lane.us h3{color:var(--gold)}
+.chain{position:relative;display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.chain::before{content:"";position:absolute;left:5%;right:5%;top:50%;height:2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 7px,transparent 7px 14px);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.4s var(--ease) .3s}
+.lane.in .chain::before{transform:none}
+.lane.us .chain::before{height:3px;background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 0 18px rgba(201,176,55,.7)}
+.node{position:relative;z-index:1;padding:.7rem 1.1rem;border-radius:99px;font-size:.82rem;font-weight:600;background:#0b0b0d;border:1px solid rgba(255,255,255,.14);color:#cfd2d8;white-space:nowrap}
+.lane.us .node{border-color:var(--gold);color:#fff;box-shadow:0 0 26px rgba(201,176,55,.28)}
+.lane.us .chain::after{content:"";position:absolute;top:50%;left:5%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#f2e48f;box-shadow:0 0 20px 5px rgba(201,176,55,.8);animation:travel 3.2s var(--ease) infinite 1.7s;opacity:0}
+@keyframes travel{0%{left:5%;opacity:1}85%{opacity:1}100%{left:95%;opacity:0}}
+.lane-note{margin-top:1.6rem;color:var(--muted);font-size:.93rem;line-height:1.65;max-width:640px}.lane.us .lane-note{color:#cfd2d8}
 
-.Sidebar{
-  position:fixed; right:-100%; top:0; bottom:0; width:320px;
-  background:linear-gradient(180deg,#070707,#0b0b0b); padding:80px 30px 30px; z-index:999;
-  transition:right 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow:-10px 0 40px rgba(0,0,0,0.8); overflow-y:auto;
-}
-.Sidebar.open{right:0;}
-.Sidebar #Close-Btn{ position:absolute; top:20px; right:25px; font-size:2.5rem; color:#C9B037; text-decoration:none; font-weight:300; cursor:pointer; }
-.Sidebar ul{list-style:none; padding:0; margin:0;}
-.Sidebar ul li{margin:0 0 10px 0; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px;}
-.Sidebar ul li > a, .Sidebar ul li > .sidebar-link{
-  color:#f3f3f3; text-decoration:none; font-size:1.1rem; font-weight:600; display:flex;
-  justify-content:space-between; align-items:center; padding:12px 10px; transition:all 0.3s; cursor:pointer; border-radius:8px;
-}
-.Sidebar ul li > a:hover{ color:#C9B037; background:rgba(201, 176, 55, 0.1); transform:translateX(5px); }
-.sidebar-dropdown{ max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding-left:15px; }
-.sidebar-dropdown.active{max-height:600px; margin-top:10px;}
-.sidebar-dropdown a{ display:block; font-size:0.95rem; color:rgba(255,255,255,0.7); padding:10px 12px; text-decoration:none; border-radius:6px; }
-.sidebar-dropdown a:hover{ color:#C9B037; background:rgba(201, 176, 55, 0.08); }
-.mobile-arrow{ font-size:0.75rem; transition:transform 0.3s; color:#C9B037; }
-.mobile-arrow.rotate{transform:rotate(180deg);}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:1.2rem}
+.tile{position:relative;padding:1.9rem;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));overflow:hidden}
+.tile::before{content:"";position:absolute;inset:0;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(201,176,55,.17),transparent 45%);opacity:0;transition:opacity .35s;pointer-events:none}
+.tile:hover::before{opacity:1}.tile:hover{border-color:rgba(201,176,55,.38)}.tile>*{position:relative}
+.js .tile.in:hover{transform:translateY(-5px)}
+.ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(201,176,55,.1);border:1px solid rgba(201,176,55,.28);color:var(--gold);margin-bottom:1.15rem}
+.ico svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tile h3{font-size:1.06rem;margin-bottom:.5rem}.tile p{color:var(--muted);font-size:.91rem;line-height:1.65}
 
-.overlay-mobile{ position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:998; display:none; opacity:0; transition:opacity 0.3s; }
-.overlay-mobile.active{display:block; opacity:1;}
+.timeline{position:relative;max-width:900px;margin:0 auto;padding-left:76px}
+.tl-line,.tl-fill{position:absolute;left:23px;top:8px;width:2px;border-radius:2px}.tl-line{bottom:8px;background:rgba(255,255,255,.08)}
+.tl-fill{height:0;background:linear-gradient(180deg,var(--gold),var(--gold2));box-shadow:0 0 16px rgba(201,176,55,.65)}
+.tl-fill::after{content:"";position:absolute;left:-4px;bottom:-5px;width:10px;height:10px;border-radius:50%;background:#f2e48f;box-shadow:0 0 18px 4px rgba(201,176,55,.8)}
+.step{position:relative;margin-bottom:1.8rem;padding:1.7rem 1.9rem;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025);opacity:.42;transition:all .6s var(--ease)}
+.step.active{opacity:1;border-color:rgba(201,176,55,.38);background:rgba(201,176,55,.05);transform:translateX(6px)}
+.step .num{position:absolute;left:-76px;top:1.25rem;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);background:#0a0a0c;font-weight:700;color:var(--muted);transition:all .5s var(--ease)}
+.step.active .num{border-color:var(--gold);background:var(--gold);color:#0a0a0c;box-shadow:0 0 26px rgba(201,176,55,.55)}
+.step h3{font-size:1.15rem;margin-bottom:.5rem}.step p{color:var(--muted);font-size:.94rem;line-height:1.7}
 
-.page-hero{
-  padding: 180px 5% 60px; text-align:center;
-  background: radial-gradient(circle at top left, #111 0%, #000 80%);
-}
-.page-hero h1{
-  font-size: 3rem; font-weight:700;
-  background: linear-gradient(90deg, #c9b037, #8a795d);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: 1rem;
-}
-.page-hero p{ color:#bdbdbd; max-width:640px; margin:0 auto; font-size:1.05rem; }
+/* Portfolio */
+.rating{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;margin-top:2.2rem}
+.rating b{font-size:3rem;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.stars{color:#f0d060;letter-spacing:3px;font-size:1.1rem}.stars .off{color:rgba(255,255,255,.18)}
+.rating span.t{color:var(--muted);font-size:.9rem}
+.project{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;margin-bottom:7rem}
+.project:nth-child(even) .p-visual{order:2}
+.p-visual{perspective:1200px}
+.p-frame{position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(201,176,55,.26);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 70px rgba(201,176,55,.09);background:#0b0b0d;will-change:transform}
+.p-frame img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.p-info h3{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.015em;margin:.8rem 0 1rem}
+.p-info>p{color:var(--muted);line-height:1.75;max-width:520px}
+.p-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.4rem 0 1.8rem}
+.p-tags span{padding:.5rem 1rem;border:1px solid var(--line);border-radius:99px;font-size:.82rem;color:#d8dade;background:rgba(255,255,255,.03)}
+.review{border:1px solid rgba(201,176,55,.28);border-radius:18px;background:rgba(255,255,255,.025);overflow:hidden;max-width:520px}
+.review-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.9rem 1.2rem;border-bottom:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.review img{display:block;width:100%;height:auto;cursor:zoom-in;background:#fff}
+.lightbox{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:4vw;background:rgba(3,3,4,.92);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .35s}
+.lightbox.on{opacity:1;pointer-events:auto}.lightbox img{max-width:min(1100px,100%);max-height:86vh;border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.7);border:1px solid rgba(201,176,55,.4)}
 
-.section-title{
-  text-align:center; font-size: 2.3rem; font-weight:700;
-  background: linear-gradient(90deg, #c9b037, #8a795d);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin: 1rem 0 3.5rem;
-}
+.cta-panel{position:relative;overflow:hidden;text-align:center;padding:4.5rem 2rem;border-radius:28px;border:1px solid rgba(201,176,55,.3);background:radial-gradient(640px circle at 50% 0,rgba(201,176,55,.16),transparent 62%),linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012))}
+.cta-panel::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.07),transparent);transform:skewX(-18deg);animation:sweep 6s ease-in-out infinite}
+@keyframes sweep{0%,55%{left:-60%}100%{left:130%}}
+.cta-panel h2{font-size:clamp(1.8rem,3.6vw,2.8rem);margin:.9rem 0 .8rem;line-height:1.15}
+.cta-panel p{color:var(--muted);max-width:560px;margin:0 auto 2rem}
+.cta-panel .hero-actions{justify-content:center;position:relative;z-index:2;margin-top:0}
 
-.portfolio-section{ padding: 1rem 5% 5rem; max-width:1300px; margin: 0 auto; }
-.portfolio-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2.5rem; }
+footer{position:relative;z-index:2;margin-top:8rem;background:#0a0a0a;color:#f8f9fa;padding:60px 20px 20px;text-align:center;border-top:1px solid rgba(201,176,55,.12)}
+.footer-container{display:flex;flex-wrap:wrap;justify-content:space-around;gap:40px;max-width:1200px;margin:0 auto}
+.footer-section{flex:1 1 250px;text-align:left}.footer-section h3{color:#fff;margin-bottom:15px;font-size:18px;text-transform:uppercase;letter-spacing:1px}
+.footer-section p{color:rgba(255,255,255,.7);font-size:14px;line-height:1.6}.footer-section a{color:var(--gold);font-weight:500}.footer-section a:hover{color:#fff}
+.footer-bottom{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:rgba(255,255,255,.6)}.footer-bottom a{color:var(--gold)}
 
-.portfolio-item{
-  position:relative; border-radius: 22px; overflow:hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
-  border: 1px solid rgba(201,176,55,0.15);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-  opacity:0; transform: translateY(40px);
-  transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
-}
-.portfolio-item:hover{
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(201,176,55,0.18);
-  border-color: rgba(201,176,55,0.35);
-}
+@media(max-width:1024px){.nav-menu,.contact-button-container,.decor-left{display:none}#openBtn{display:block}.nav-wrapper{padding:15px 20px}.nav-logo{height:42px}
+ .hero{min-height:0;padding-top:130px}.specs-grid{grid-template-columns:repeat(2,1fr)}.spec:nth-child(2){border-right:0}.spec:nth-child(-n+2){border-bottom:1px solid var(--line)}
+ .project{grid-template-columns:1fr;gap:2rem;margin-bottom:5rem}.project:nth-child(even) .p-visual{order:0}.p-visual{max-width:560px}}
+@media(max-width:700px){.sec{padding-top:5.5rem}.timeline{padding-left:62px}.step .num{left:-62px;width:42px;height:42px}.tl-line,.tl-fill{left:20px}.step{padding:1.4rem 1.3rem}
+ .lane{padding:1.6rem 1.1rem}.node{padding:.55rem .7rem;font-size:.68rem}}
+@media(max-width:480px){.specs-grid{grid-template-columns:1fr}.spec{border-right:0!important;border-bottom:1px solid var(--line)}.spec:last-child{border-bottom:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.js [data-reveal]{opacity:1;transform:none;filter:none}.split .ch{transform:none}.lane .chain::before{transform:none}}
 
-.image-wrapper{ position:relative; width:100%; height:280px; overflow:hidden; background:#111; }
-.image-wrapper img{ width:100%; height:100%; object-fit:cover; transition: transform 0.7s cubic-bezier(.22,.9,.32,1); }
-.portfolio-item:hover .image-wrapper img{ transform: scale(1.08); }
 
-.avis-overlay{
-  position:absolute; inset:0;
-  background: rgba(6,5,7,0.94);
-  display:flex; align-items:center; justify-content:center;
-  opacity:0; transition: opacity 0.4s ease; padding: 1.6rem;
-}
-.portfolio-item:hover .avis-overlay{ opacity:1; }
-.avis-content{ text-align:center; transform: translateY(15px); transition: transform 0.4s ease 0.05s; }
-.portfolio-item:hover .avis-content{ transform: translateY(0); }
-.avis-image{
-  width:100%; max-width:260px; height:auto; border-radius:14px;
-  box-shadow: 0 15px 40px rgba(201,176,55,0.25); margin-bottom: 1rem;
-  border: 1px solid rgba(201,176,55,0.4);
-}
-.avis-client-name{ font-size:1.2rem; font-weight:700; color: var(--matte-gold-1); }
-.avis-stars{ font-size:1.3rem; margin-top:0.4rem; color:#f0d060; letter-spacing:2px; }
-
-.content{ padding: 1.8rem; }
-.content h3{ font-size:1.3rem; color:var(--matte-gold-1); margin-bottom:0.7rem; }
-.content p{ color:#c0c0c0; line-height:1.7; font-size:0.97rem; }
-
-.cta-section{ text-align:center; padding: 1rem 5% 7rem; }
-.cta-section h3{ font-size:1.8rem; margin-bottom:1.2rem; color:#f3f3f3; }
-.cta-btn{
-  display:inline-block; padding: 0.9rem 2.2rem; background: linear-gradient(90deg, #c9b037, #8a795d);
-  color:#000; border-radius:50px; font-weight:700; text-decoration:none; transition: transform 0.3s ease;
-}
-.cta-btn:hover{ transform: scale(1.05); }
-
-footer { background-color: #0a0a0a; color: #f8f9fa; padding: 60px 20px 20px 20px; text-align: center; border-top: 1px solid rgba(201,176,55,0.1); }
-.footer-container { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 40px; max-width: 1200px; margin: 0 auto; }
-.footer-section { flex: 1 1 250px; text-align: left; }
-.footer-section h3 { color: #ffffff; margin-bottom: 15px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
-.footer-section p { color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.6; }
-.footer-section a { color: var(--matte-gold-1); text-decoration: none; font-weight: 500; }
-.footer-section a:hover { color: #ffffff; }
-.footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: rgba(255, 255, 255, 0.6); }
-.footer-bottom a { color: var(--matte-gold-1); text-decoration: none; }
-
-@media (max-width: 1024px) {
-  .nav-menu, .contact-button-container, .decor-left { display: none; }
-  #openBtn { display: block; }
-  .nav-wrapper { padding: 15px 20px; }
-  .nav-logo { height: 42px; }
-}
-@media (max-width: 768px) {
-  .page-hero{ padding: 130px 5% 50px; }
-  .page-hero h1{ font-size: 2.2rem; }
-  .section-title{ font-size: 1.8rem; }
-  .portfolio-grid{ grid-template-columns: 1fr; }
-  .footer-container { flex-direction: column; text-align: center; }
-  .footer-section { text-align: center; }
-}
-    </style>
+/* ---- Sites web livrés ---- */
+.site{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:center;margin-bottom:7rem}
+.site:nth-of-type(even) .s-visual{order:2}
+.s-visual{perspective:1300px}
+.bframe{position:relative;display:block;border-radius:18px;overflow:hidden;border:1px solid rgba(201,176,55,.28);background:#0a0a0c;box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 80px rgba(201,176,55,.1);will-change:transform}
+.bbar{display:flex;align-items:center;gap:.8rem;padding:.75rem 1rem;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
+.bdots i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#2c2c31;margin-right:6px}.bdots i:first-child{background:var(--gold)}
+.burl{flex:1;text-align:center;font-size:.74rem;color:var(--muted);background:rgba(255,255,255,.05);border-radius:99px;padding:.34rem .8rem}
+.shot{position:relative;aspect-ratio:16/10;overflow:hidden;padding:7% 8%;display:flex;flex-direction:column;justify-content:center;gap:.9rem}
+.shot-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.shot .m-nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:.9rem 1.2rem;font-size:.62rem;opacity:.75}
+.shot .m-nav span:last-child{display:flex;gap:.9rem}
+.shot h4{font-size:clamp(1.05rem,2.3vw,1.7rem);line-height:1.15;letter-spacing:-.01em;max-width:80%}
+.shot p{font-size:.72rem;opacity:.7;max-width:62%;line-height:1.55}
+.shot .m-btn{align-self:flex-start;font-size:.68rem;font-weight:700;padding:.55rem 1.1rem;border-radius:99px}
+.shot.mn{background:#f6f6ec;color:#23211c}.shot.mn .m-btn{background:#23211c;color:#f6f6ec}.shot.mn h4{font-weight:600}
+.shot.tn{background:radial-gradient(500px circle at 85% 10%,rgba(190,220,80,.16),transparent 60%),#0c1210;color:#f3f6ee}.shot.tn .m-btn{background:#c4dc50;color:#0c1210}.shot.tn h4{font-weight:700;text-transform:uppercase;letter-spacing:.01em}
+.visit{position:absolute;right:1rem;bottom:1rem;z-index:3;padding:.55rem 1rem;border-radius:99px;font-size:.74rem;font-weight:700;background:rgba(10,10,12,.85);border:1px solid rgba(201,176,55,.5);color:var(--gold);backdrop-filter:blur(8px);transition:all .3s}
+.bframe:hover .visit{background:var(--gold);color:#0a0a0a}
+.s-note{margin-top:1.1rem;text-align:center;font-size:.72rem;color:#7d8189}
+.s-info h3{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.015em;margin:.8rem 0 .7rem}
+.s-meta{color:var(--muted);font-size:.92rem;margin-bottom:1.4rem}
+.s-meta a{color:var(--gold);border-bottom:1px solid rgba(201,176,55,.4)}
+blockquote.quote{position:relative;padding:1.6rem 1.7rem 1.5rem;border:1px solid rgba(201,176,55,.3);border-radius:18px;background:radial-gradient(420px circle at 0 0,rgba(201,176,55,.1),transparent 60%),rgba(255,255,255,.02);font-size:1rem;line-height:1.75;color:#e6e8ec;margin-bottom:1.4rem}
+blockquote.quote cite{display:block;margin-top:1rem;font-style:normal;font-size:.82rem;color:var(--gold);font-weight:600}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:.9rem 1.6rem;margin-bottom:1.4rem}
+.metric span{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:.4rem}.metric span b{color:#fff}
+.metric i{display:block;height:5px;border-radius:5px;background:rgba(255,255,255,.09);overflow:hidden}
+.metric i::after{content:"";display:block;height:100%;width:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 0 12px rgba(201,176,55,.6);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.3s var(--ease) .4s;transform:scaleX(0)}
+.in .metric i::after{transform:scaleX(var(--v,1))}
+.badges{display:flex;flex-wrap:wrap;gap:.6rem}
+.badges span{padding:.5rem 1rem;border:1px solid var(--line);border-radius:99px;font-size:.8rem;color:#d8dade;background:rgba(255,255,255,.03)}
+.badges span.reco{border-color:rgba(201,176,55,.5);color:var(--gold);font-weight:700}
+@media(max-width:1024px){.site{grid-template-columns:1fr;gap:2rem;margin-bottom:5rem}.site:nth-of-type(even) .s-visual{order:0}}
+@media(max-width:560px){.metrics{grid-template-columns:1fr}.shot p{max-width:90%}.shot h4{max-width:95%}}
+@media(prefers-reduced-motion:reduce){.metric i::after{transform:scaleX(var(--v,1))}}
+</style>
+<script>document.documentElement.classList.add('js','curtain-on');setTimeout(function(){document.documentElement.classList.remove('curtain-on')},3600);</script>
 </head>
 <body>
-
+<div class="curtain" aria-hidden="true"><span class="curtain-brand">KADRAA</span><div class="curtain-line"></div></div>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
 <header class="header-index">
-    <div class="nav-wrapper">
-        <div class="decor-left">
-            <div class="decor-line decor-line-1"></div>
-            <div class="decor-line decor-line-2"></div>
-            <div class="decor-line decor-line-3"></div>
-        </div>
-
-        <ul class="nav-menu">
-            <li class="nav-menu-item"><a href="index.html#offre">Notre offre</a></li>
-            <li class="nav-menu-item"><a href="index.html#suivi">Suivi &amp; Croissance</a></li>
-
-            <li class="nav-menu-item">Nos compétences
-                <span class="nav-menu-arrow">↑</span>
-                <div class="submenu-container">
-                    <a class="submenu-link" href="abouts_us.html">À propos de nous</a>
-                    <a class="submenu-link active" href="portfolio.html">Portfolio</a>
-                </div>
-            </li>
-
-            <li class="nav-menu-item"><a href="details-offre.html">Expérience client</a></li>
-        </ul>
-
-        <div class="contact-button-container">
-            <a class="contact-button-link" href="contact.html">Nous contacter</a>
-        </div>
-
-        <img src="logo.png" alt="logo Kadraa Consulting" class="nav-logo">
-
-        <a href="#" id="openBtn">
-            <div class="burger-menu"><span></span><span></span><span></span></div>
-        </a>
-    </div>
-</header>
-
+<div class="nav-wrapper">
+<div class="decor-left"><div class="decor-line"></div><div class="decor-line"></div><div class="decor-line"></div></div>
+<ul class="nav-menu">
+<li class="nav-menu-item">Nos offres <span class="nav-menu-arrow">↑</span>
+<div class="submenu-container"><a class="submenu-link" href="offre-principal.html"><span>Site vitrine One Page</span><em>99,99€</em></a><a class="submenu-link" href="offre-secondaire.html"><span>Site vitrine Multi-pages</span><em>199,99€</em></a><a class="submenu-link" href="offre-pro.html"><span>Site e-commerce</span><em>599,99€</em></a><a class="submenu-link" href="index.html#offre"><span>Comparer les offres</span></a></div></li>
+<li class="nav-menu-item">Nos compétences <span class="nav-menu-arrow">↑</span>
+<div class="submenu-container"><a class="submenu-link" href="abouts_us.html"><span>À propos de nous</span></a><a class="submenu-link active" href="portfolio.html"><span>Portfolio</span></a></div></li>
+<li class="nav-menu-item"><a href="details-offre.html">Expérience client</a></li>
+</ul>
+<div class="contact-button-container"><a class="contact-button-link" href="contact.html">Nous contacter</a></div>
+<a href="index.html"><img src="logo.png" alt="Kadraa Consulting" class="nav-logo"></a>
+<a href="#" id="openBtn" aria-label="Ouvrir le menu"><div class="burger-menu"><span></span><span></span><span></span></div></a>
+</div></header>
 <div class="overlay-mobile"></div>
-
 <div class="Sidebar" id="Mysidebar">
-    <a id="Close-Btn" href="#">×</a>
-    <ul>
-        <li><a href="index.html#offre">Notre offre</a></li>
-        <li><a href="index.html#suivi">Suivi &amp; Croissance</a></li>
-        <li>
-            <div class="sidebar-link" data-dropdown="competences">
-                Nos compétences <span class="mobile-arrow">▼</span>
-            </div>
-            <div class="sidebar-dropdown" id="competences-dropdown">
-                <a href="abouts_us.html">À propos de nous</a>
-                <a href="portfolio.html">Portfolio</a>
-            </div>
-        </li>
-        <li><a href="details-offre.html">Expérience client</a></li>
-        <li><a href="contact.html">Nous contacter</a></li>
-    </ul>
-</div>
+<a id="Close-Btn" href="#" aria-label="Fermer le menu">×</a>
+<ul>
+<li><div class="sidebar-link" data-dropdown="offres">Nos offres <span class="mobile-arrow">▼</span></div>
+<div class="sidebar-dropdown" id="offres-dropdown"><a href="offre-principal.html">Site vitrine One Page</a><a href="offre-secondaire.html">Site vitrine Multi-pages</a><a href="offre-pro.html">Site e-commerce</a><a href="index.html#offre">Comparer les offres</a></div></li>
+<li><div class="sidebar-link" data-dropdown="competences">Nos compétences <span class="mobile-arrow">▼</span></div>
+<div class="sidebar-dropdown" id="competences-dropdown"><a href="abouts_us.html">À propos de nous</a><a href="portfolio.html">Portfolio</a></div></li>
+<li><a href="details-offre.html">Expérience client</a></li>
+<li><a href="contact.html">Nous contacter</a></li>
+</ul></div>
+<main>
 
-<section class="page-hero">
-    <h1>Nos Réalisations</h1>
-    <p>Découvrez quelques projets réalisés et les avis authentiques des clients accompagnés.</p>
+<section class="hero compact" id="top">
+<span class="eyebrow" data-reveal><i></i>Portfolio</span>
+<h1 class="split" style="--base:300ms">Des projets réels, <span class="grad">des clients qui en parlent.</span></h1>
+<p class="lead" data-reveal style="--d:.4s">Chaque réalisation est un site sur mesure mené avec le client jusqu'à sa satisfaction. Les notes et les avis ci-dessous sont ceux laissés par les clients eux-mêmes.</p>
+<div class="rating" data-reveal style="--d:.55s"><b data-count="4.8" data-decimals="1">4,8</b><div><div class="stars" style="background:linear-gradient(90deg,#f0d060 96%,rgba(255,255,255,.18) 96%);-webkit-background-clip:text;background-clip:text;color:transparent">★★★★★</div><span class="t">Moyenne de 5 avis clients</span></div></div>
 </section>
 
-<section class="portfolio-section">
-    <div class="portfolio-grid">
-        <div class="portfolio-item">
-            <div class="image-wrapper">
-                <img src="img2-luflaix.jpg" alt="Projet Luflaix">
-                <div class="avis-overlay">
-                    <div class="avis-content">
-                        <img src="avis-luflaix.png" alt="Avis client Luflaix" class="avis-image">
-                        <div class="avis-client-name">Luflaix</div>
-                        <div class="avis-stars">★★★★★</div>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <h3>Projet Luflaix</h3>
-                <p>Conception d'un site pensé pour refléter l'identité de la marque et faciliter la prise de contact des visiteurs.</p>
-            </div>
-        </div>
-
-        <div class="portfolio-item">
-            <div class="image-wrapper">
-                <img src="img porfolio 1.png" alt="Projet Alexian">
-                <div class="avis-overlay">
-                    <div class="avis-content">
-                        <img src="avis-alexian.png" alt="Avis client Alexian" class="avis-image">
-                        <div class="avis-client-name">Alexian</div>
-                        <div class="avis-stars">★★★★★</div>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <h3>Projet Alexian</h3>
-                <p>Un site structuré autour d'un parcours clair, pensé pour guider le visiteur vers la prise de contact.</p>
-            </div>
-        </div>
-
-        <div class="portfolio-item">
-            <div class="image-wrapper">
-                <img src="img2-souna.png" alt="Projet Souna">
-                <div class="avis-overlay">
-                    <div class="avis-content">
-                        <img src="avis souna.jpg" alt="Avis client Souna" class="avis-image">
-                        <div class="avis-client-name">Souna</div>
-                        <div class="avis-stars">★★★★★</div>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <h3>Projet Souna</h3>
-                <p>Mise en ligne d'un site sur-mesure avec un accompagnement personnalisé du premier échange à la livraison.</p>
-            </div>
-        </div>
-    </div>
+<section class="sec" id="sites" style="padding-top:5rem">
+<div class="sec-head" data-reveal><span class="kicker">Sites web livrés</span><h2>Deux sites en ligne, deux clients qui recommandent à 10/10.</h2><p>Ces clients ont répondu à un questionnaire après la livraison de leur site. Leurs notes et leurs commentaires sont reproduits tels qu'ils nous les ont donnés.</p></div>
+<article class="site">
+<div class="s-visual" data-reveal><a class="bframe" data-tilt href="https://www.mnstudio.fr/" target="_blank" rel="noopener" aria-label="Visiter le site MN Studio">
+<div class="bbar"><div class="bdots"><i></i><i></i><i></i></div><div class="burl">mnstudio.fr</div></div>
+<div class="shot mn"><div class="m-nav"><b>MN Studio</b><span><span>Univers</span><span>Prestations</span><span>Branding</span></span></div><h4>Identités visuelles &amp; créations événementielles</h4><p>Logos, faire-part, réseaux sociaux : chaque projet reçoit une création pensée pour lui seul.</p><span class="m-btn">Demander un devis</span><img class="shot-img" src="site-mn.jpg" alt="Capture du site MN Studio" onerror="this.remove()"></div>
+<span class="visit">Visiter le site ↗</span></a>
+<p class="s-note">Aperçu illustré · cliquez pour ouvrir le vrai site</p></div>
+<div class="s-info" data-reveal style="--d:.12s"><span class="kicker">Site vitrine One Page</span><h3>MN Studio</h3>
+<p class="s-meta">Site réalisé par Kadraa Consulting · <a href="https://www.mnstudio.fr/" target="_blank" rel="noopener">mnstudio.fr</a></p>
+<blockquote class="quote">« Très très professionnel, à l'écoute, disponible, travail rapide et parfait ! Prix imbattable en plus de ça, que du positif !! Très très satisfaite de Kadraa Consulting »<cite>MN Studio · identités visuelles et créations événementielles</cite></blockquote>
+<div class="metrics"><div class="metric"><span>Qualité du site<b>5/5</b></span><i style="--v:1.0"></i></div><div class="metric"><span>Écoute du prestataire<b>5/5</b></span><i style="--v:1.0"></i></div><div class="metric"><span>Respect des délais<b>5/5</b></span><i style="--v:1.0"></i></div><div class="metric"><span>Rapport qualité / prix<b>5/5</b></span><i style="--v:1.0"></i></div></div>
+<div class="badges"><span class="reco">Recommandé 10/10</span><span>Parfaitement autonome après la livraison</span></div></div>
+</article>
+<article class="site">
+<div class="s-visual" data-reveal><a class="bframe" data-tilt href="https://www.tenniswithcodi.com/" target="_blank" rel="noopener" aria-label="Visiter le site Tennis with Codi">
+<div class="bbar"><div class="bdots"><i></i><i></i><i></i></div><div class="burl">tenniswithcodi.com</div></div>
+<div class="shot tn"><div class="m-nav"><b>TENNIS WITH CODI</b><span><span>Programme</span><span>Formules</span><span>Réserver</span></span></div><h4>Coaching individuel &amp; duo</h4><p>Un accompagnement de tennis sur mesure, avec agenda en ligne et réservation de créneaux.</p><span class="m-btn">Réserver sa séance</span><img class="shot-img" src="site-tn.jpg" alt="Capture du site Tennis with Codi" onerror="this.remove()"></div>
+<span class="visit">Visiter le site ↗</span></a>
+<p class="s-note">Aperçu illustré · cliquez pour ouvrir le vrai site</p></div>
+<div class="s-info" data-reveal style="--d:.12s"><span class="kicker">Site professionnel</span><h3>Tennis with Codi</h3>
+<p class="s-meta">Site réalisé par Kadraa Consulting · <a href="https://www.tenniswithcodi.com/" target="_blank" rel="noopener">tenniswithcodi.com</a></p>
+<blockquote class="quote">« Antoine a su répondre à tous mes besoins et demandes concernant la création de mon site internet, en plus d'avoir été d'une grande efficacité. La qualité du visuel, la simplicité d'utilisation et la rapidité de livraison ont été très appréciées. »<cite>Tennis with Codi · coaching privé de tennis</cite></blockquote>
+<div class="metrics"><div class="metric"><span>Qualité du site<b>5/5</b></span><i style="--v:1.0"></i></div><div class="metric"><span>Écoute du prestataire<b>5/5</b></span><i style="--v:1.0"></i></div><div class="metric"><span>Respect des délais<b>5/5</b></span><i style="--v:1.0"></i></div><div class="metric"><span>Rapport qualité / prix<b>5/5</b></span><i style="--v:1.0"></i></div></div>
+<div class="badges"><span class="reco">Recommandé 10/10</span><span>Parfaitement autonome après la livraison</span></div></div>
+</article>
+</section>
+<section class="sec" id="projets" style="padding-top:0">
+<div class="sec-head" data-reveal><span class="kicker">Autres projets accompagnés</span><h2>Ils nous ont aussi fait confiance.</h2></div>
+<article class="project">
+<div class="p-visual" data-reveal><div class="p-frame" data-tilt><img src="img2-luflaix.jpg" alt="Visuel du projet Luflaix" loading="lazy"></div></div>
+<div class="p-info" data-reveal style="--d:.12s"><span class="kicker">Projet</span><h3>Luflaix</h3><p>Nous avons travaillé avec Luflaix comme community manager afin de promouvoir la sortie de son premier produit.</p><div class="p-tags"><span>Identité de marque</span><span>Community manager</span><span>Développé sa visibilité</span></div>
+<div class="review"><div class="review-head"><span>Avis client · Luflaix</span><span class="stars">5/5</span></div><img src="avis-luflaix.png" alt="Avis laissé par le client Luflaix" data-zoom loading="lazy"></div></div>
+</article>
+<article class="project">
+<div class="p-visual" data-reveal><div class="p-frame" data-tilt><img src="img2-alexian.png" alt="Visuel du projet Alexian" loading="lazy"></div></div>
+<div class="p-info" data-reveal style="--d:.12s"><span class="kicker">Projet</span><h3>Alexian</h3><p>Un projet commun avec Alexian afin de promouvoir son activité sur Tiktok où nous avons travaillé en tant que community manager</p><div class="p-tags"><span>Univers minimaliste</span><span>Community manager</span><span>Présence sur les réseaux sociaux</span></div>
+<div class="review"><div class="review-head"><span>Avis client · Alexian</span><span class="stars">4/5</span></div><img src="avis-alexian.png" alt="Avis laissé par le client Alexian" data-zoom loading="lazy"></div></div>
+</article>
+<article class="project">
+<div class="p-visual" data-reveal><div class="p-frame" data-tilt><img src="img2-souna.png" alt="Visuel du projet Souna" loading="lazy"></div></div>
+<div class="p-info" data-reveal style="--d:.12s"><span class="kicker">Projet</span><h3>Souna</h3><p>Nous avons travaillé avec Souna en tant que community manager afin de proumoir son activité moonhealingexperiences</p><div class="p-tags"><span>Community manager</span><span>Accompagnement direct</span><span>Set up d'un agenda de réservation</span></div>
+<div class="review"><div class="review-head"><span>Avis client · Souna</span><span class="stars">5/5</span></div><img src="avis_souna.jpg" alt="Avis laissé par le client Souna" data-zoom loading="lazy"></div></div>
+</article>
 </section>
 
-<section class="cta-section">
-    <h3>Votre projet pourrait être le prochain</h3>
-    <a href="contact.html" class="cta-btn">Réserver mon audit gratuit</a>
-</section>
-
+<section class="sec" id="contact" style="padding-top:0">
+<div class="cta-panel" data-reveal>
+<span class="kicker">À vous de jouer</span>
+<h2>Votre projet pourrait être le prochain.</h2>
+<p>Un développeur pour vous répondre, un site sur mesure, des tarifs affichés dès 99,99€.</p>
+<div class="hero-actions"><a class="btn btn-primary" data-magnetic href="contact.html">Démarrer mon projet <span class="arrow">→</span></a><a class="btn btn-ghost" data-magnetic href="index.html#offre">Voir les offres</a></div>
+</div></section>
+<div class="lightbox" role="dialog" aria-label="Avis agrandi"><img src="" alt=""></div>
+</main>
 <footer>
-    <div class="footer-container">
-        <div class="footer-section">
-            <h3>À propos</h3>
-            <p>Kadraa Consulting accompagne les cabinets d'avocats indépendants dans leur acquisition de clients en ligne.</p>
-        </div>
-        <div class="footer-section">
-            <h3>Contact</h3>
-            <p>Email: kadraa.consulting@outlook.fr</p>
-            <p>Téléphone: +33 7 66 59 69 70</p>
-        </div>
-        <div class="footer-section">
-            <h3>Suivez-nous</h3>
-            <a href="#">Facebook</a> |
-            <a href="#">Instagram</a> |
-            <a href="#">LinkedIn</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 Kadraa Consulting. <a href="conditions_utilisations.html">Tous droits réservés.</a></p>
-    </div>
+<div class="footer-container">
+<div class="footer-section"><h3>À propos</h3><p>Kadraa Consulting crée des sites web sur mesure, clés en main, pour les indépendants et les petites entreprises.</p></div>
+<div class="footer-section"><h3>Contact</h3><p>Email: kadraa.consulting@outlook.fr</p><p>Téléphone: +33 7 66 59 69 70</p></div>
+<div class="footer-section"><h3>Suivez-nous</h3><a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">LinkedIn</a></div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 Kadraa Consulting. <a href="conditions_utilisations.html">Tous droits réservés.</a></p></div>
 </footer>
-
 <script>
-gsap.registerPlugin(ScrollTrigger);
+/* KADRAA CONSULTING — script commun « À propos » + « Portfolio » (JavaScript natif, sans dépendance) */
+(() => {
+'use strict';
+const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>Array.from(c.querySelectorAll(s));
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,FINE=matchMedia('(hover: hover) and (pointer: fine)').matches;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),lerp=(a,b,t)=>a+(b-a)*t,easeInOut=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,easeOut=t=>1-Math.pow(1-t,3);
+const root=document.documentElement;
 
-gsap.utils.toArray('.portfolio-item').forEach((item, index) => {
-  gsap.to(item, {
-    scrollTrigger: { trigger: item, start: 'top 88%', toggleActions: 'play none none reverse' },
-    opacity: 1, y: 0, duration: 0.7, delay: index * 0.12, ease: 'power3.out'
-  });
-});
+const ICONS={
+ layout:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+ refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+ chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14h4"/>',
+ tag:'<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/>',
+ code:'<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+ shield:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/>'
+};
+$$('[data-icon]').forEach(el=>{const p=ICONS[el.dataset.icon];if(p)el.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'});
 
-(function(){
-  const header = document.querySelector('.header-index');
-  function onScroll(){
-    const y = window.pageYOffset || 0;
-    if(y > 90){ header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
+function splitNode(node,st){Array.from(node.childNodes).forEach(ch=>{
+ if(ch.nodeType===3){const f=document.createDocumentFragment();
+  ch.textContent.split(/(\s+)/).forEach(tok=>{if(!tok)return;
+   if(/^\s+$/.test(tok)){f.appendChild(document.createTextNode(' '));return}
+   const w=document.createElement('span');w.className='w';w.setAttribute('aria-hidden','true');
+   Array.from(tok).forEach(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c;s.style.setProperty('--i',st.i++);w.appendChild(s)});
+   f.appendChild(w)});ch.replaceWith(f)}
+ else if(ch.nodeType===1)splitNode(ch,st)})}
+$$('.split').forEach(el=>{el.setAttribute('aria-label',el.textContent.replace(/\s+/g,' ').trim());if(!RM)splitNode(el,{i:0})});
+
+function countUp(el){const target=parseFloat(el.dataset.count),dec=parseInt(el.dataset.decimals||'0',10),suf=el.dataset.suffix||'';
+ const fmt=v=>v.toLocaleString('fr-FR',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;
+ if(RM){el.textContent=fmt(target);return}
+ const t0=performance.now();(function tick(n){const t=clamp((n-t0)/1500,0,1);el.textContent=fmt(target*easeOut(t));if(t<1)requestAnimationFrame(tick)})(t0)}
+function scramble(el){const final=el.textContent;if(RM)return;const pool='01#<>/+*[]{}ABCDEFGHJKLMNPQRSTUVWXYZ',t0=performance.now();
+ (function tick(n){const t=clamp((n-t0)/950,0,1);let o='';for(let i=0;i<final.length;i++){const c=final[i];o+=(!/[A-Za-z0-9]/.test(c)||t>(i+1)/(final.length+1))?c:pool[Math.floor(Math.random()*pool.length)]}
+  el.textContent=o;if(t<1)requestAnimationFrame(tick);else el.textContent=final})(t0)}
+
+const curtain=$('.curtain');let revealed=false;
+function reveal(){if(revealed)return;revealed=true;root.classList.remove('curtain-on');if(curtain)curtain.className='curtain leave';setTimeout(startObservers,RM?0:500)}
+function cover(cb){if(!curtain||RM){cb();return}curtain.style.transition='none';curtain.className='curtain';void curtain.offsetHeight;curtain.style.transition='';curtain.classList.add('cover');setTimeout(cb,720)}
+addEventListener('load',()=>setTimeout(reveal,RM?0:Math.max(200,650-performance.now())));setTimeout(reveal,3200);
+addEventListener('pageshow',e=>{if(e.persisted&&curtain){curtain.style.transition='';curtain.className='curtain leave';root.classList.remove('curtain-on')}});
+document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||e.defaultPrevented)return;const href=a.getAttribute('href')||'';
+ if(!href||href[0]==='#'||a.target==='_blank'||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0||/^(mailto:|tel:|javascript:)/i.test(href))return;
+ let u;try{u=new URL(a.href,location.href)}catch(_){return}if(u.origin!==location.origin)return;if(u.pathname===location.pathname&&u.hash)return;
+ e.preventDefault();cover(()=>{location.href=u.href})});
+
+function activate(el){if(el.hasAttribute('data-reveal')){el.classList.add('in');setTimeout(()=>el.classList.add('done'),1400)}
+ if(el.classList.contains('split'))el.classList.add('in');if(el.hasAttribute('data-count'))countUp(el);if(el.hasAttribute('data-scramble'))scramble(el)}
+function startObservers(){const t=$$('[data-reveal],.split,[data-count],[data-scramble]');
+ if(!('IntersectionObserver' in window)){t.forEach(activate);return}
+ const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){io.unobserve(en.target);activate(en.target)}}),{threshold:.15,rootMargin:'0px 0px -5% 0px'});
+ t.forEach(el=>io.observe(el))}
+
+function scrollToY(y,d=1100){if(RM){scrollTo(0,y);return}const s=scrollY,dist=y-s,t0=performance.now();(function st(n){const t=clamp((n-t0)/d,0,1);scrollTo(0,s+dist*easeInOut(t));if(t<1)requestAnimationFrame(st)})(t0)}
+const sidebar=$('#Mysidebar'),overlay=$('.overlay-mobile'),burger=$('.burger-menu');
+const openSb=e=>{e&&e.preventDefault();sidebar.classList.add('open');overlay.classList.add('active');burger&&burger.classList.add('active');document.body.style.overflow='hidden'};
+const closeSb=e=>{e&&e.preventDefault();sidebar.classList.remove('open');overlay.classList.remove('active');burger&&burger.classList.remove('active');document.body.style.overflow=''};
+if(sidebar){const ob=$('#openBtn'),cb=$('#Close-Btn');ob&&ob.addEventListener('click',openSb);cb&&cb.addEventListener('click',closeSb);overlay&&overlay.addEventListener('click',closeSb);
+ $$('[data-dropdown]',sidebar).forEach(l=>l.addEventListener('click',e=>{e.preventDefault();const dd=document.getElementById(l.dataset.dropdown+'-dropdown'),ar=$('.mobile-arrow',l);dd&&dd.classList.toggle('active');ar&&ar.classList.toggle('rotate')}))}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href');if(id.length<2)return;const t=$(id);if(!t)return;
+ e.preventDefault();if(sidebar&&sidebar.classList.contains('open'))closeSb();scrollToY(t.getBoundingClientRect().top+scrollY-80)});
+
+const header=$('.header-index'),bar=$('.scroll-progress span'),tl=$('.timeline'),tlFill=$('.tl-fill'),steps=$$('.step');let lastY=scrollY,ticking=false;
+function update(){ticking=false;const y=scrollY,vh=innerHeight,max=root.scrollHeight-vh;
+ if(bar)bar.style.transform='scaleX('+(max>0?clamp(y/max,0,1):0)+')';
+ if(header){header.classList.toggle('scrolled',y>60);if(y>lastY+8&&y>160)header.classList.add('nav-hidden');else if(y<lastY-8)header.classList.remove('nav-hidden')}
+ lastY=y;
+ if(tl&&tlFill){const r=tl.getBoundingClientRect(),line=vh*.55,p=clamp((line-r.top)/r.height,0,1);tlFill.style.height=Math.max(0,p*(r.height-16))+'px';
+  steps.forEach(s=>{const sr=s.getBoundingClientRect();s.classList.toggle('active',sr.top+sr.height*.35<line)})}}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update);update();
+
+$$('[data-spot]').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mx',(e.clientX-r.left)+'px');el.style.setProperty('--my',(e.clientY-r.top)+'px')}));
+$$('.btn').forEach(b=>b.addEventListener('pointerdown',e=>{const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),s=document.createElement('span');s.className='ripple';
+ s.style.cssText='width:'+d+'px;height:'+d+'px;left:'+(e.clientX-r.left-d/2)+'px;top:'+(e.clientY-r.top-d/2)+'px';b.appendChild(s);setTimeout(()=>s.remove(),650)}));
+if(FINE&&!RM){
+ $$('[data-tilt]').forEach(el=>{const z=el.parentElement;
+  z.addEventListener('pointermove',e=>{const r=z.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transition='transform .12s linear';el.style.transform='rotateY('+(x*10)+'deg) rotateX('+(-y*8)+'deg)'});
+  z.addEventListener('pointerleave',()=>{el.style.transition='transform .9s cubic-bezier(.22,.9,.32,1)';el.style.transform=''})});
+ $$('[data-magnetic]').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.transform='translate('+((e.clientX-(r.left+r.width/2))*.18)+'px,'+((e.clientY-(r.top+r.height/2))*.28)+'px)'});el.addEventListener('pointerleave',()=>{el.style.transform=''})});
+ const glow=$('.cursor-glow');if(glow){let gx=innerWidth/2,gy=innerHeight/2,tx=gx,ty=gy;addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;glow.classList.add('on')});document.addEventListener('pointerleave',()=>glow.classList.remove('on'));
+  (function loop(){gx=lerp(gx,tx,.09);gy=lerp(gy,ty,.09);glow.style.transform='translate3d('+gx+'px,'+gy+'px,0)';requestAnimationFrame(loop)})()}}
+
+(function constellation(){const cv=$('#bg-canvas');if(!cv||!cv.getContext)return;const ctx=cv.getContext('2d');if(!ctx)return;
+ let w,h,dpr,pts=[],mx=-9999,my=-9999,running=true;
+ function resize(){dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;cv.width=w*dpr;cv.height=h*dpr;cv.style.width=w+'px';cv.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
+  const n=clamp(Math.floor(w*h/21000),22,FINE?85:38);pts=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.4+.5}))}
+ function draw(){ctx.clearRect(0,0,w,h);for(let i=0;i<pts.length;i++){const p=pts[i];
+  if(!RM){p.x+=p.vx;p.y+=p.vy;if(p.x<-10)p.x=w+10;else if(p.x>w+10)p.x=-10;if(p.y<-10)p.y=h+10;else if(p.y>h+10)p.y=-10;
+   const dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy);if(d<150&&d>0){p.x+=dx/d*(150-d)*.012;p.y+=dy/d*(150-d)*.012}}
+  for(let j=i+1;j<pts.length;j++){const q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<125){ctx.strokeStyle='rgba(201,176,55,'+(.17*(1-d/125))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}
+  const dm=Math.hypot(p.x-mx,p.y-my);if(dm<180){ctx.strokeStyle='rgba(242,228,143,'+(.4*(1-dm/180))+')';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mx,my);ctx.stroke()}
+  ctx.fillStyle='rgba(201,176,55,.6)';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.2832);ctx.fill()}}
+ function loop(){if(running){draw();requestAnimationFrame(loop)}}
+ resize();let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{resize();if(RM)draw()},150)});
+ addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY});document.addEventListener('visibilitychange',()=>{running=!document.hidden;if(running&&!RM)loop()});
+ if(RM)draw();else loop()})();
+
+/* Agrandissement des avis (portfolio) */
+const lb=$('.lightbox');if(lb){const li=$('img',lb);
+ $$('[data-zoom]').forEach(im=>im.addEventListener('click',()=>{li.src=im.src;li.alt=im.alt;lb.classList.add('on')}));
+ lb.addEventListener('click',()=>lb.classList.remove('on'));addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')})}
 })();
 
-(function(){
-  const openBtn = document.getElementById('openBtn');
-  const burgerMenu = document.querySelector('.burger-menu');
-  const sidebar = document.getElementById('Mysidebar');
-  const overlay = document.querySelector('.overlay-mobile');
-  const closeBtn = document.getElementById('Close-Btn');
-
-  function openSidebar(e){
-    if(e) e.preventDefault();
-    sidebar.classList.add('open'); overlay.classList.add('active');
-    if(burgerMenu) burgerMenu.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeSidebar(e){
-    if(e) e.preventDefault();
-    sidebar.classList.remove('open'); overlay.classList.remove('active');
-    if(burgerMenu) burgerMenu.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-  if(openBtn) openBtn.addEventListener('click', openSidebar);
-  if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
-  if(overlay) overlay.addEventListener('click', closeSidebar);
-
-  const dropdownLinks = sidebar.querySelectorAll('[data-dropdown]');
-  dropdownLinks.forEach(link => {
-    link.addEventListener('click', function(e){
-      e.preventDefault();
-      const dropdownId = this.getAttribute('data-dropdown') + '-dropdown';
-      const dropdown = document.getElementById(dropdownId);
-      const arrow = this.querySelector('.mobile-arrow');
-      if(dropdown) { dropdown.classList.toggle('active'); if(arrow) arrow.classList.toggle('rotate'); }
-    });
-  });
-})();
 </script>
-
 </body>
 </html>
